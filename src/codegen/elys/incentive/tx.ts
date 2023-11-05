@@ -5,6 +5,7 @@ import { BinaryReader, BinaryWriter } from "../../binary";
  */
 export interface MsgWithdrawRewards {
   delegatorAddress: string;
+  denom: string;
 }
 export interface MsgWithdrawRewardsProtoMsg {
   typeUrl: "/elys.incentive.MsgWithdrawRewards";
@@ -16,6 +17,7 @@ export interface MsgWithdrawRewardsProtoMsg {
  */
 export interface MsgWithdrawRewardsAmino {
   delegator_address: string;
+  denom: string;
 }
 export interface MsgWithdrawRewardsAminoMsg {
   type: "/elys.incentive.MsgWithdrawRewards";
@@ -27,6 +29,7 @@ export interface MsgWithdrawRewardsAminoMsg {
  */
 export interface MsgWithdrawRewardsSDKType {
   delegator_address: string;
+  denom: string;
 }
 /** MsgWithdrawDelegatorRewardResponse defines the Msg/WithdrawDelegatorReward response type. */
 export interface MsgWithdrawRewardsResponse {}
@@ -49,6 +52,7 @@ export interface MsgWithdrawRewardsResponseSDKType {}
 export interface MsgWithdrawValidatorCommission {
   delegatorAddress: string;
   validatorAddress: string;
+  denom: string;
 }
 export interface MsgWithdrawValidatorCommissionProtoMsg {
   typeUrl: "/elys.incentive.MsgWithdrawValidatorCommission";
@@ -61,6 +65,7 @@ export interface MsgWithdrawValidatorCommissionProtoMsg {
 export interface MsgWithdrawValidatorCommissionAmino {
   delegator_address: string;
   validator_address: string;
+  denom: string;
 }
 export interface MsgWithdrawValidatorCommissionAminoMsg {
   type: "/elys.incentive.MsgWithdrawValidatorCommission";
@@ -73,6 +78,7 @@ export interface MsgWithdrawValidatorCommissionAminoMsg {
 export interface MsgWithdrawValidatorCommissionSDKType {
   delegator_address: string;
   validator_address: string;
+  denom: string;
 }
 /** MsgWithdrawValidatorCommissionResponse defines the Msg/WithdrawValidatorCommission response type. */
 export interface MsgWithdrawValidatorCommissionResponse {}
@@ -90,7 +96,8 @@ export interface MsgWithdrawValidatorCommissionResponseAminoMsg {
 export interface MsgWithdrawValidatorCommissionResponseSDKType {}
 function createBaseMsgWithdrawRewards(): MsgWithdrawRewards {
   return {
-    delegatorAddress: ""
+    delegatorAddress: "",
+    denom: ""
   };
 }
 export const MsgWithdrawRewards = {
@@ -98,6 +105,9 @@ export const MsgWithdrawRewards = {
   encode(message: MsgWithdrawRewards, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.delegatorAddress !== "") {
       writer.uint32(10).string(message.delegatorAddress);
+    }
+    if (message.denom !== "") {
+      writer.uint32(18).string(message.denom);
     }
     return writer;
   },
@@ -111,6 +121,9 @@ export const MsgWithdrawRewards = {
         case 1:
           message.delegatorAddress = reader.string();
           break;
+        case 2:
+          message.denom = reader.string();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -121,16 +134,19 @@ export const MsgWithdrawRewards = {
   fromPartial(object: Partial<MsgWithdrawRewards>): MsgWithdrawRewards {
     const message = createBaseMsgWithdrawRewards();
     message.delegatorAddress = object.delegatorAddress ?? "";
+    message.denom = object.denom ?? "";
     return message;
   },
   fromAmino(object: MsgWithdrawRewardsAmino): MsgWithdrawRewards {
     return {
-      delegatorAddress: object.delegator_address
+      delegatorAddress: object.delegator_address,
+      denom: object.denom
     };
   },
   toAmino(message: MsgWithdrawRewards): MsgWithdrawRewardsAmino {
     const obj: any = {};
     obj.delegator_address = message.delegatorAddress;
+    obj.denom = message.denom;
     return obj;
   },
   fromAminoMsg(object: MsgWithdrawRewardsAminoMsg): MsgWithdrawRewards {
@@ -201,7 +217,8 @@ export const MsgWithdrawRewardsResponse = {
 function createBaseMsgWithdrawValidatorCommission(): MsgWithdrawValidatorCommission {
   return {
     delegatorAddress: "",
-    validatorAddress: ""
+    validatorAddress: "",
+    denom: ""
   };
 }
 export const MsgWithdrawValidatorCommission = {
@@ -212,6 +229,9 @@ export const MsgWithdrawValidatorCommission = {
     }
     if (message.validatorAddress !== "") {
       writer.uint32(18).string(message.validatorAddress);
+    }
+    if (message.denom !== "") {
+      writer.uint32(26).string(message.denom);
     }
     return writer;
   },
@@ -228,6 +248,9 @@ export const MsgWithdrawValidatorCommission = {
         case 2:
           message.validatorAddress = reader.string();
           break;
+        case 3:
+          message.denom = reader.string();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -239,18 +262,21 @@ export const MsgWithdrawValidatorCommission = {
     const message = createBaseMsgWithdrawValidatorCommission();
     message.delegatorAddress = object.delegatorAddress ?? "";
     message.validatorAddress = object.validatorAddress ?? "";
+    message.denom = object.denom ?? "";
     return message;
   },
   fromAmino(object: MsgWithdrawValidatorCommissionAmino): MsgWithdrawValidatorCommission {
     return {
       delegatorAddress: object.delegator_address,
-      validatorAddress: object.validator_address
+      validatorAddress: object.validator_address,
+      denom: object.denom
     };
   },
   toAmino(message: MsgWithdrawValidatorCommission): MsgWithdrawValidatorCommissionAmino {
     const obj: any = {};
     obj.delegator_address = message.delegatorAddress;
     obj.validator_address = message.validatorAddress;
+    obj.denom = message.denom;
     return obj;
   },
   fromAminoMsg(object: MsgWithdrawValidatorCommissionAminoMsg): MsgWithdrawValidatorCommission {

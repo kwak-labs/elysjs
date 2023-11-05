@@ -48,6 +48,8 @@ export interface MTP {
   interestPaidCustodies: Coin[];
   interestUnpaidCollaterals: Coin[];
   custodies: Coin[];
+  takeProfitLiabilities: string;
+  takeProfitCustodies: Coin[];
   leverages: string[];
   mtpHealth: string;
   position: Position;
@@ -55,6 +57,7 @@ export interface MTP {
   ammPoolId: bigint;
   consolidateLeverage: string;
   sumCollateral: string;
+  takeProfitPrice: string;
 }
 export interface MTPProtoMsg {
   typeUrl: "/elys.margin.MTP";
@@ -68,6 +71,8 @@ export interface MTPAmino {
   interest_paid_custodies: CoinAmino[];
   interest_unpaid_collaterals: CoinAmino[];
   custodies: CoinAmino[];
+  take_profit_liabilities: string;
+  take_profit_custodies: CoinAmino[];
   leverages: string[];
   mtp_health: string;
   position: Position;
@@ -75,6 +80,7 @@ export interface MTPAmino {
   amm_pool_id: string;
   consolidate_leverage: string;
   sum_collateral: string;
+  take_profit_price: string;
 }
 export interface MTPAminoMsg {
   type: "/elys.margin.MTP";
@@ -88,6 +94,8 @@ export interface MTPSDKType {
   interest_paid_custodies: CoinSDKType[];
   interest_unpaid_collaterals: CoinSDKType[];
   custodies: CoinSDKType[];
+  take_profit_liabilities: string;
+  take_profit_custodies: CoinSDKType[];
   leverages: string[];
   mtp_health: string;
   position: Position;
@@ -95,6 +103,7 @@ export interface MTPSDKType {
   amm_pool_id: bigint;
   consolidate_leverage: string;
   sum_collateral: string;
+  take_profit_price: string;
 }
 export interface WhiteList {
   validatorList: string[];
@@ -122,13 +131,16 @@ function createBaseMTP(): MTP {
     interestPaidCustodies: [],
     interestUnpaidCollaterals: [],
     custodies: [],
+    takeProfitLiabilities: "",
+    takeProfitCustodies: [],
     leverages: [],
     mtpHealth: "",
     position: 0,
     id: BigInt(0),
     ammPoolId: BigInt(0),
     consolidateLeverage: "",
-    sumCollateral: ""
+    sumCollateral: "",
+    takeProfitPrice: ""
   };
 }
 export const MTP = {
@@ -155,26 +167,35 @@ export const MTP = {
     for (const v of message.custodies) {
       Coin.encode(v!, writer.uint32(58).fork()).ldelim();
     }
+    if (message.takeProfitLiabilities !== "") {
+      writer.uint32(66).string(message.takeProfitLiabilities);
+    }
+    for (const v of message.takeProfitCustodies) {
+      Coin.encode(v!, writer.uint32(74).fork()).ldelim();
+    }
     for (const v of message.leverages) {
-      writer.uint32(66).string(Decimal.fromUserInput(v!, 18).atomics);
+      writer.uint32(82).string(Decimal.fromUserInput(v!, 18).atomics);
     }
     if (message.mtpHealth !== "") {
-      writer.uint32(74).string(Decimal.fromUserInput(message.mtpHealth, 18).atomics);
+      writer.uint32(90).string(Decimal.fromUserInput(message.mtpHealth, 18).atomics);
     }
     if (message.position !== 0) {
-      writer.uint32(80).int32(message.position);
+      writer.uint32(96).int32(message.position);
     }
     if (message.id !== BigInt(0)) {
-      writer.uint32(88).uint64(message.id);
+      writer.uint32(104).uint64(message.id);
     }
     if (message.ammPoolId !== BigInt(0)) {
-      writer.uint32(96).uint64(message.ammPoolId);
+      writer.uint32(112).uint64(message.ammPoolId);
     }
     if (message.consolidateLeverage !== "") {
-      writer.uint32(106).string(Decimal.fromUserInput(message.consolidateLeverage, 18).atomics);
+      writer.uint32(122).string(Decimal.fromUserInput(message.consolidateLeverage, 18).atomics);
     }
     if (message.sumCollateral !== "") {
-      writer.uint32(114).string(message.sumCollateral);
+      writer.uint32(130).string(message.sumCollateral);
+    }
+    if (message.takeProfitPrice !== "") {
+      writer.uint32(138).string(Decimal.fromUserInput(message.takeProfitPrice, 18).atomics);
     }
     return writer;
   },
@@ -207,25 +228,34 @@ export const MTP = {
           message.custodies.push(Coin.decode(reader, reader.uint32()));
           break;
         case 8:
-          message.leverages.push(Decimal.fromAtomics(reader.string(), 18).toString());
+          message.takeProfitLiabilities = reader.string();
           break;
         case 9:
-          message.mtpHealth = Decimal.fromAtomics(reader.string(), 18).toString();
+          message.takeProfitCustodies.push(Coin.decode(reader, reader.uint32()));
           break;
         case 10:
-          message.position = (reader.int32() as any);
+          message.leverages.push(Decimal.fromAtomics(reader.string(), 18).toString());
           break;
         case 11:
-          message.id = reader.uint64();
+          message.mtpHealth = Decimal.fromAtomics(reader.string(), 18).toString();
           break;
         case 12:
-          message.ammPoolId = reader.uint64();
+          message.position = (reader.int32() as any);
           break;
         case 13:
-          message.consolidateLeverage = Decimal.fromAtomics(reader.string(), 18).toString();
+          message.id = reader.uint64();
           break;
         case 14:
+          message.ammPoolId = reader.uint64();
+          break;
+        case 15:
+          message.consolidateLeverage = Decimal.fromAtomics(reader.string(), 18).toString();
+          break;
+        case 16:
           message.sumCollateral = reader.string();
+          break;
+        case 17:
+          message.takeProfitPrice = Decimal.fromAtomics(reader.string(), 18).toString();
           break;
         default:
           reader.skipType(tag & 7);
@@ -243,6 +273,8 @@ export const MTP = {
     message.interestPaidCustodies = object.interestPaidCustodies?.map(e => Coin.fromPartial(e)) || [];
     message.interestUnpaidCollaterals = object.interestUnpaidCollaterals?.map(e => Coin.fromPartial(e)) || [];
     message.custodies = object.custodies?.map(e => Coin.fromPartial(e)) || [];
+    message.takeProfitLiabilities = object.takeProfitLiabilities ?? "";
+    message.takeProfitCustodies = object.takeProfitCustodies?.map(e => Coin.fromPartial(e)) || [];
     message.leverages = object.leverages?.map(e => e) || [];
     message.mtpHealth = object.mtpHealth ?? "";
     message.position = object.position ?? 0;
@@ -250,6 +282,7 @@ export const MTP = {
     message.ammPoolId = object.ammPoolId !== undefined && object.ammPoolId !== null ? BigInt(object.ammPoolId.toString()) : BigInt(0);
     message.consolidateLeverage = object.consolidateLeverage ?? "";
     message.sumCollateral = object.sumCollateral ?? "";
+    message.takeProfitPrice = object.takeProfitPrice ?? "";
     return message;
   },
   fromAmino(object: MTPAmino): MTP {
@@ -261,13 +294,16 @@ export const MTP = {
       interestPaidCustodies: Array.isArray(object?.interest_paid_custodies) ? object.interest_paid_custodies.map((e: any) => Coin.fromAmino(e)) : [],
       interestUnpaidCollaterals: Array.isArray(object?.interest_unpaid_collaterals) ? object.interest_unpaid_collaterals.map((e: any) => Coin.fromAmino(e)) : [],
       custodies: Array.isArray(object?.custodies) ? object.custodies.map((e: any) => Coin.fromAmino(e)) : [],
+      takeProfitLiabilities: object.take_profit_liabilities,
+      takeProfitCustodies: Array.isArray(object?.take_profit_custodies) ? object.take_profit_custodies.map((e: any) => Coin.fromAmino(e)) : [],
       leverages: Array.isArray(object?.leverages) ? object.leverages.map((e: any) => e) : [],
       mtpHealth: object.mtp_health,
       position: isSet(object.position) ? positionFromJSON(object.position) : -1,
       id: BigInt(object.id),
       ammPoolId: BigInt(object.amm_pool_id),
       consolidateLeverage: object.consolidate_leverage,
-      sumCollateral: object.sum_collateral
+      sumCollateral: object.sum_collateral,
+      takeProfitPrice: object.take_profit_price
     };
   },
   toAmino(message: MTP): MTPAmino {
@@ -299,6 +335,12 @@ export const MTP = {
     } else {
       obj.custodies = [];
     }
+    obj.take_profit_liabilities = message.takeProfitLiabilities;
+    if (message.takeProfitCustodies) {
+      obj.take_profit_custodies = message.takeProfitCustodies.map(e => e ? Coin.toAmino(e) : undefined);
+    } else {
+      obj.take_profit_custodies = [];
+    }
     if (message.leverages) {
       obj.leverages = message.leverages.map(e => e);
     } else {
@@ -310,6 +352,7 @@ export const MTP = {
     obj.amm_pool_id = message.ammPoolId ? message.ammPoolId.toString() : undefined;
     obj.consolidate_leverage = message.consolidateLeverage;
     obj.sum_collateral = message.sumCollateral;
+    obj.take_profit_price = message.takeProfitPrice;
     return obj;
   },
   fromAminoMsg(object: MTPAminoMsg): MTP {

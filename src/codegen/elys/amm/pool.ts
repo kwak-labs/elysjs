@@ -37,6 +37,29 @@ export interface PoolSDKType {
   totalWeight: string;
   rebalanceTreasury: string;
 }
+export interface OraclePoolSlippageTrack {
+  poolId: bigint;
+  timestamp: bigint;
+  tracked: Coin[];
+}
+export interface OraclePoolSlippageTrackProtoMsg {
+  typeUrl: "/elys.amm.OraclePoolSlippageTrack";
+  value: Uint8Array;
+}
+export interface OraclePoolSlippageTrackAmino {
+  poolId: string;
+  timestamp: string;
+  tracked: CoinAmino[];
+}
+export interface OraclePoolSlippageTrackAminoMsg {
+  type: "/elys.amm.OraclePoolSlippageTrack";
+  value: OraclePoolSlippageTrackAmino;
+}
+export interface OraclePoolSlippageTrackSDKType {
+  poolId: bigint;
+  timestamp: bigint;
+  tracked: CoinSDKType[];
+}
 function createBasePool(): Pool {
   return {
     poolId: BigInt(0),
@@ -159,6 +182,91 @@ export const Pool = {
     return {
       typeUrl: "/elys.amm.Pool",
       value: Pool.encode(message).finish()
+    };
+  }
+};
+function createBaseOraclePoolSlippageTrack(): OraclePoolSlippageTrack {
+  return {
+    poolId: BigInt(0),
+    timestamp: BigInt(0),
+    tracked: []
+  };
+}
+export const OraclePoolSlippageTrack = {
+  typeUrl: "/elys.amm.OraclePoolSlippageTrack",
+  encode(message: OraclePoolSlippageTrack, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.poolId !== BigInt(0)) {
+      writer.uint32(8).uint64(message.poolId);
+    }
+    if (message.timestamp !== BigInt(0)) {
+      writer.uint32(16).uint64(message.timestamp);
+    }
+    for (const v of message.tracked) {
+      Coin.encode(v!, writer.uint32(26).fork()).ldelim();
+    }
+    return writer;
+  },
+  decode(input: BinaryReader | Uint8Array, length?: number): OraclePoolSlippageTrack {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseOraclePoolSlippageTrack();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.poolId = reader.uint64();
+          break;
+        case 2:
+          message.timestamp = reader.uint64();
+          break;
+        case 3:
+          message.tracked.push(Coin.decode(reader, reader.uint32()));
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromPartial(object: Partial<OraclePoolSlippageTrack>): OraclePoolSlippageTrack {
+    const message = createBaseOraclePoolSlippageTrack();
+    message.poolId = object.poolId !== undefined && object.poolId !== null ? BigInt(object.poolId.toString()) : BigInt(0);
+    message.timestamp = object.timestamp !== undefined && object.timestamp !== null ? BigInt(object.timestamp.toString()) : BigInt(0);
+    message.tracked = object.tracked?.map(e => Coin.fromPartial(e)) || [];
+    return message;
+  },
+  fromAmino(object: OraclePoolSlippageTrackAmino): OraclePoolSlippageTrack {
+    return {
+      poolId: BigInt(object.poolId),
+      timestamp: BigInt(object.timestamp),
+      tracked: Array.isArray(object?.tracked) ? object.tracked.map((e: any) => Coin.fromAmino(e)) : []
+    };
+  },
+  toAmino(message: OraclePoolSlippageTrack): OraclePoolSlippageTrackAmino {
+    const obj: any = {};
+    obj.poolId = message.poolId ? message.poolId.toString() : undefined;
+    obj.timestamp = message.timestamp ? message.timestamp.toString() : undefined;
+    if (message.tracked) {
+      obj.tracked = message.tracked.map(e => e ? Coin.toAmino(e) : undefined);
+    } else {
+      obj.tracked = [];
+    }
+    return obj;
+  },
+  fromAminoMsg(object: OraclePoolSlippageTrackAminoMsg): OraclePoolSlippageTrack {
+    return OraclePoolSlippageTrack.fromAmino(object.value);
+  },
+  fromProtoMsg(message: OraclePoolSlippageTrackProtoMsg): OraclePoolSlippageTrack {
+    return OraclePoolSlippageTrack.decode(message.value);
+  },
+  toProto(message: OraclePoolSlippageTrack): Uint8Array {
+    return OraclePoolSlippageTrack.encode(message).finish();
+  },
+  toProtoMsg(message: OraclePoolSlippageTrack): OraclePoolSlippageTrackProtoMsg {
+    return {
+      typeUrl: "/elys.amm.OraclePoolSlippageTrack",
+      value: OraclePoolSlippageTrack.encode(message).finish()
     };
   }
 };

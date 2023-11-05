@@ -2,7 +2,7 @@ import { PageRequest, PageRequestAmino, PageRequestSDKType, PageResponse, PageRe
 import { SwapAmountInRoute, SwapAmountInRouteAmino, SwapAmountInRouteSDKType } from "./swap_route";
 import { Coin, CoinAmino, CoinSDKType } from "../../cosmos/base/v1beta1/coin";
 import { Params, ParamsAmino, ParamsSDKType } from "./params";
-import { Pool, PoolAmino, PoolSDKType } from "./pool";
+import { Pool, PoolAmino, PoolSDKType, OraclePoolSlippageTrack, OraclePoolSlippageTrackAmino, OraclePoolSlippageTrackSDKType } from "./pool";
 import { DenomLiquidity, DenomLiquidityAmino, DenomLiquiditySDKType } from "./denom_liquidity";
 import { BinaryReader, BinaryWriter } from "../../binary";
 import { Decimal } from "@cosmjs/math";
@@ -223,6 +223,68 @@ export interface QuerySwapEstimationResponseAminoMsg {
 export interface QuerySwapEstimationResponseSDKType {
   spotPrice: string;
   tokenOut: CoinSDKType;
+}
+export interface QuerySlippageTrackRequest {
+  poolId: bigint;
+}
+export interface QuerySlippageTrackRequestProtoMsg {
+  typeUrl: "/elys.amm.QuerySlippageTrackRequest";
+  value: Uint8Array;
+}
+export interface QuerySlippageTrackRequestAmino {
+  poolId: string;
+}
+export interface QuerySlippageTrackRequestAminoMsg {
+  type: "/elys.amm.QuerySlippageTrackRequest";
+  value: QuerySlippageTrackRequestAmino;
+}
+export interface QuerySlippageTrackRequestSDKType {
+  poolId: bigint;
+}
+export interface QuerySlippageTrackResponse {
+  track: OraclePoolSlippageTrack;
+}
+export interface QuerySlippageTrackResponseProtoMsg {
+  typeUrl: "/elys.amm.QuerySlippageTrackResponse";
+  value: Uint8Array;
+}
+export interface QuerySlippageTrackResponseAmino {
+  track?: OraclePoolSlippageTrackAmino;
+}
+export interface QuerySlippageTrackResponseAminoMsg {
+  type: "/elys.amm.QuerySlippageTrackResponse";
+  value: QuerySlippageTrackResponseAmino;
+}
+export interface QuerySlippageTrackResponseSDKType {
+  track: OraclePoolSlippageTrackSDKType;
+}
+export interface QuerySlippageTrackAllRequest {}
+export interface QuerySlippageTrackAllRequestProtoMsg {
+  typeUrl: "/elys.amm.QuerySlippageTrackAllRequest";
+  value: Uint8Array;
+}
+export interface QuerySlippageTrackAllRequestAmino {}
+export interface QuerySlippageTrackAllRequestAminoMsg {
+  type: "/elys.amm.QuerySlippageTrackAllRequest";
+  value: QuerySlippageTrackAllRequestAmino;
+}
+export interface QuerySlippageTrackAllRequestSDKType {}
+export interface QuerySlippageTrackAllResponse {
+  tracks: OraclePoolSlippageTrack[];
+}
+export interface QuerySlippageTrackAllResponseProtoMsg {
+  typeUrl: "/elys.amm.QuerySlippageTrackAllResponse";
+  value: Uint8Array;
+}
+export interface QuerySlippageTrackAllResponseAmino {
+  tracks: OraclePoolSlippageTrackAmino[];
+}
+export interface QuerySlippageTrackAllResponseAminoMsg {
+  type: "/elys.amm.QuerySlippageTrackAllResponse";
+  value: QuerySlippageTrackAllResponseAmino;
+}
+export interface QuerySlippageTrackAllResponseSDKType {
+  tracks: OraclePoolSlippageTrackSDKType[];
 }
 function createBaseQueryParamsRequest(): QueryParamsRequest {
   return {};
@@ -993,6 +1055,242 @@ export const QuerySwapEstimationResponse = {
     return {
       typeUrl: "/elys.amm.QuerySwapEstimationResponse",
       value: QuerySwapEstimationResponse.encode(message).finish()
+    };
+  }
+};
+function createBaseQuerySlippageTrackRequest(): QuerySlippageTrackRequest {
+  return {
+    poolId: BigInt(0)
+  };
+}
+export const QuerySlippageTrackRequest = {
+  typeUrl: "/elys.amm.QuerySlippageTrackRequest",
+  encode(message: QuerySlippageTrackRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.poolId !== BigInt(0)) {
+      writer.uint32(8).uint64(message.poolId);
+    }
+    return writer;
+  },
+  decode(input: BinaryReader | Uint8Array, length?: number): QuerySlippageTrackRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQuerySlippageTrackRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.poolId = reader.uint64();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromPartial(object: Partial<QuerySlippageTrackRequest>): QuerySlippageTrackRequest {
+    const message = createBaseQuerySlippageTrackRequest();
+    message.poolId = object.poolId !== undefined && object.poolId !== null ? BigInt(object.poolId.toString()) : BigInt(0);
+    return message;
+  },
+  fromAmino(object: QuerySlippageTrackRequestAmino): QuerySlippageTrackRequest {
+    return {
+      poolId: BigInt(object.poolId)
+    };
+  },
+  toAmino(message: QuerySlippageTrackRequest): QuerySlippageTrackRequestAmino {
+    const obj: any = {};
+    obj.poolId = message.poolId ? message.poolId.toString() : undefined;
+    return obj;
+  },
+  fromAminoMsg(object: QuerySlippageTrackRequestAminoMsg): QuerySlippageTrackRequest {
+    return QuerySlippageTrackRequest.fromAmino(object.value);
+  },
+  fromProtoMsg(message: QuerySlippageTrackRequestProtoMsg): QuerySlippageTrackRequest {
+    return QuerySlippageTrackRequest.decode(message.value);
+  },
+  toProto(message: QuerySlippageTrackRequest): Uint8Array {
+    return QuerySlippageTrackRequest.encode(message).finish();
+  },
+  toProtoMsg(message: QuerySlippageTrackRequest): QuerySlippageTrackRequestProtoMsg {
+    return {
+      typeUrl: "/elys.amm.QuerySlippageTrackRequest",
+      value: QuerySlippageTrackRequest.encode(message).finish()
+    };
+  }
+};
+function createBaseQuerySlippageTrackResponse(): QuerySlippageTrackResponse {
+  return {
+    track: OraclePoolSlippageTrack.fromPartial({})
+  };
+}
+export const QuerySlippageTrackResponse = {
+  typeUrl: "/elys.amm.QuerySlippageTrackResponse",
+  encode(message: QuerySlippageTrackResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.track !== undefined) {
+      OraclePoolSlippageTrack.encode(message.track, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+  decode(input: BinaryReader | Uint8Array, length?: number): QuerySlippageTrackResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQuerySlippageTrackResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.track = OraclePoolSlippageTrack.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromPartial(object: Partial<QuerySlippageTrackResponse>): QuerySlippageTrackResponse {
+    const message = createBaseQuerySlippageTrackResponse();
+    message.track = object.track !== undefined && object.track !== null ? OraclePoolSlippageTrack.fromPartial(object.track) : undefined;
+    return message;
+  },
+  fromAmino(object: QuerySlippageTrackResponseAmino): QuerySlippageTrackResponse {
+    return {
+      track: object?.track ? OraclePoolSlippageTrack.fromAmino(object.track) : undefined
+    };
+  },
+  toAmino(message: QuerySlippageTrackResponse): QuerySlippageTrackResponseAmino {
+    const obj: any = {};
+    obj.track = message.track ? OraclePoolSlippageTrack.toAmino(message.track) : undefined;
+    return obj;
+  },
+  fromAminoMsg(object: QuerySlippageTrackResponseAminoMsg): QuerySlippageTrackResponse {
+    return QuerySlippageTrackResponse.fromAmino(object.value);
+  },
+  fromProtoMsg(message: QuerySlippageTrackResponseProtoMsg): QuerySlippageTrackResponse {
+    return QuerySlippageTrackResponse.decode(message.value);
+  },
+  toProto(message: QuerySlippageTrackResponse): Uint8Array {
+    return QuerySlippageTrackResponse.encode(message).finish();
+  },
+  toProtoMsg(message: QuerySlippageTrackResponse): QuerySlippageTrackResponseProtoMsg {
+    return {
+      typeUrl: "/elys.amm.QuerySlippageTrackResponse",
+      value: QuerySlippageTrackResponse.encode(message).finish()
+    };
+  }
+};
+function createBaseQuerySlippageTrackAllRequest(): QuerySlippageTrackAllRequest {
+  return {};
+}
+export const QuerySlippageTrackAllRequest = {
+  typeUrl: "/elys.amm.QuerySlippageTrackAllRequest",
+  encode(_: QuerySlippageTrackAllRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    return writer;
+  },
+  decode(input: BinaryReader | Uint8Array, length?: number): QuerySlippageTrackAllRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQuerySlippageTrackAllRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromPartial(_: Partial<QuerySlippageTrackAllRequest>): QuerySlippageTrackAllRequest {
+    const message = createBaseQuerySlippageTrackAllRequest();
+    return message;
+  },
+  fromAmino(_: QuerySlippageTrackAllRequestAmino): QuerySlippageTrackAllRequest {
+    return {};
+  },
+  toAmino(_: QuerySlippageTrackAllRequest): QuerySlippageTrackAllRequestAmino {
+    const obj: any = {};
+    return obj;
+  },
+  fromAminoMsg(object: QuerySlippageTrackAllRequestAminoMsg): QuerySlippageTrackAllRequest {
+    return QuerySlippageTrackAllRequest.fromAmino(object.value);
+  },
+  fromProtoMsg(message: QuerySlippageTrackAllRequestProtoMsg): QuerySlippageTrackAllRequest {
+    return QuerySlippageTrackAllRequest.decode(message.value);
+  },
+  toProto(message: QuerySlippageTrackAllRequest): Uint8Array {
+    return QuerySlippageTrackAllRequest.encode(message).finish();
+  },
+  toProtoMsg(message: QuerySlippageTrackAllRequest): QuerySlippageTrackAllRequestProtoMsg {
+    return {
+      typeUrl: "/elys.amm.QuerySlippageTrackAllRequest",
+      value: QuerySlippageTrackAllRequest.encode(message).finish()
+    };
+  }
+};
+function createBaseQuerySlippageTrackAllResponse(): QuerySlippageTrackAllResponse {
+  return {
+    tracks: []
+  };
+}
+export const QuerySlippageTrackAllResponse = {
+  typeUrl: "/elys.amm.QuerySlippageTrackAllResponse",
+  encode(message: QuerySlippageTrackAllResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    for (const v of message.tracks) {
+      OraclePoolSlippageTrack.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+  decode(input: BinaryReader | Uint8Array, length?: number): QuerySlippageTrackAllResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQuerySlippageTrackAllResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.tracks.push(OraclePoolSlippageTrack.decode(reader, reader.uint32()));
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromPartial(object: Partial<QuerySlippageTrackAllResponse>): QuerySlippageTrackAllResponse {
+    const message = createBaseQuerySlippageTrackAllResponse();
+    message.tracks = object.tracks?.map(e => OraclePoolSlippageTrack.fromPartial(e)) || [];
+    return message;
+  },
+  fromAmino(object: QuerySlippageTrackAllResponseAmino): QuerySlippageTrackAllResponse {
+    return {
+      tracks: Array.isArray(object?.tracks) ? object.tracks.map((e: any) => OraclePoolSlippageTrack.fromAmino(e)) : []
+    };
+  },
+  toAmino(message: QuerySlippageTrackAllResponse): QuerySlippageTrackAllResponseAmino {
+    const obj: any = {};
+    if (message.tracks) {
+      obj.tracks = message.tracks.map(e => e ? OraclePoolSlippageTrack.toAmino(e) : undefined);
+    } else {
+      obj.tracks = [];
+    }
+    return obj;
+  },
+  fromAminoMsg(object: QuerySlippageTrackAllResponseAminoMsg): QuerySlippageTrackAllResponse {
+    return QuerySlippageTrackAllResponse.fromAmino(object.value);
+  },
+  fromProtoMsg(message: QuerySlippageTrackAllResponseProtoMsg): QuerySlippageTrackAllResponse {
+    return QuerySlippageTrackAllResponse.decode(message.value);
+  },
+  toProto(message: QuerySlippageTrackAllResponse): Uint8Array {
+    return QuerySlippageTrackAllResponse.encode(message).finish();
+  },
+  toProtoMsg(message: QuerySlippageTrackAllResponse): QuerySlippageTrackAllResponseProtoMsg {
+    return {
+      typeUrl: "/elys.amm.QuerySlippageTrackAllResponse",
+      value: QuerySlippageTrackAllResponse.encode(message).finish()
     };
   }
 };

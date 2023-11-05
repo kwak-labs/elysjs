@@ -1,5 +1,5 @@
 import { Params, ParamsAmino, ParamsSDKType } from "./params";
-import { Pool, PoolAmino, PoolSDKType } from "./pool";
+import { Pool, PoolAmino, PoolSDKType, OraclePoolSlippageTrack, OraclePoolSlippageTrackAmino, OraclePoolSlippageTrackSDKType } from "./pool";
 import { DenomLiquidity, DenomLiquidityAmino, DenomLiquiditySDKType } from "./denom_liquidity";
 import { BinaryReader, BinaryWriter } from "../../binary";
 /** GenesisState defines the amm module's genesis state. */
@@ -7,6 +7,7 @@ export interface GenesisState {
   params: Params;
   poolList: Pool[];
   denomLiquidityList: DenomLiquidity[];
+  slippageTracks: OraclePoolSlippageTrack[];
 }
 export interface GenesisStateProtoMsg {
   typeUrl: "/elys.amm.GenesisState";
@@ -17,6 +18,7 @@ export interface GenesisStateAmino {
   params?: ParamsAmino;
   poolList: PoolAmino[];
   denomLiquidityList: DenomLiquidityAmino[];
+  slippageTracks: OraclePoolSlippageTrackAmino[];
 }
 export interface GenesisStateAminoMsg {
   type: "/elys.amm.GenesisState";
@@ -27,12 +29,14 @@ export interface GenesisStateSDKType {
   params: ParamsSDKType;
   poolList: PoolSDKType[];
   denomLiquidityList: DenomLiquiditySDKType[];
+  slippageTracks: OraclePoolSlippageTrackSDKType[];
 }
 function createBaseGenesisState(): GenesisState {
   return {
     params: Params.fromPartial({}),
     poolList: [],
-    denomLiquidityList: []
+    denomLiquidityList: [],
+    slippageTracks: []
   };
 }
 export const GenesisState = {
@@ -46,6 +50,9 @@ export const GenesisState = {
     }
     for (const v of message.denomLiquidityList) {
       DenomLiquidity.encode(v!, writer.uint32(26).fork()).ldelim();
+    }
+    for (const v of message.slippageTracks) {
+      OraclePoolSlippageTrack.encode(v!, writer.uint32(34).fork()).ldelim();
     }
     return writer;
   },
@@ -65,6 +72,9 @@ export const GenesisState = {
         case 3:
           message.denomLiquidityList.push(DenomLiquidity.decode(reader, reader.uint32()));
           break;
+        case 4:
+          message.slippageTracks.push(OraclePoolSlippageTrack.decode(reader, reader.uint32()));
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -77,13 +87,15 @@ export const GenesisState = {
     message.params = object.params !== undefined && object.params !== null ? Params.fromPartial(object.params) : undefined;
     message.poolList = object.poolList?.map(e => Pool.fromPartial(e)) || [];
     message.denomLiquidityList = object.denomLiquidityList?.map(e => DenomLiquidity.fromPartial(e)) || [];
+    message.slippageTracks = object.slippageTracks?.map(e => OraclePoolSlippageTrack.fromPartial(e)) || [];
     return message;
   },
   fromAmino(object: GenesisStateAmino): GenesisState {
     return {
       params: object?.params ? Params.fromAmino(object.params) : undefined,
       poolList: Array.isArray(object?.poolList) ? object.poolList.map((e: any) => Pool.fromAmino(e)) : [],
-      denomLiquidityList: Array.isArray(object?.denomLiquidityList) ? object.denomLiquidityList.map((e: any) => DenomLiquidity.fromAmino(e)) : []
+      denomLiquidityList: Array.isArray(object?.denomLiquidityList) ? object.denomLiquidityList.map((e: any) => DenomLiquidity.fromAmino(e)) : [],
+      slippageTracks: Array.isArray(object?.slippageTracks) ? object.slippageTracks.map((e: any) => OraclePoolSlippageTrack.fromAmino(e)) : []
     };
   },
   toAmino(message: GenesisState): GenesisStateAmino {
@@ -98,6 +110,11 @@ export const GenesisState = {
       obj.denomLiquidityList = message.denomLiquidityList.map(e => e ? DenomLiquidity.toAmino(e) : undefined);
     } else {
       obj.denomLiquidityList = [];
+    }
+    if (message.slippageTracks) {
+      obj.slippageTracks = message.slippageTracks.map(e => e ? OraclePoolSlippageTrack.toAmino(e) : undefined);
+    } else {
+      obj.slippageTracks = [];
     }
     return obj;
   },

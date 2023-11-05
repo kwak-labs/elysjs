@@ -3,6 +3,8 @@ import { Decimal } from "@cosmjs/math";
 export interface PoolAsset {
   liabilities: string;
   custody: string;
+  takeProfitLiabilities: string;
+  takeProfitCustody: string;
   assetBalance: string;
   blockInterest: string;
   assetDenom: string;
@@ -14,6 +16,8 @@ export interface PoolAssetProtoMsg {
 export interface PoolAssetAmino {
   liabilities: string;
   custody: string;
+  take_profit_liabilities: string;
+  take_profit_custody: string;
   asset_balance: string;
   block_interest: string;
   asset_denom: string;
@@ -25,6 +29,8 @@ export interface PoolAssetAminoMsg {
 export interface PoolAssetSDKType {
   liabilities: string;
   custody: string;
+  take_profit_liabilities: string;
+  take_profit_custody: string;
   asset_balance: string;
   block_interest: string;
   asset_denom: string;
@@ -68,6 +74,8 @@ function createBasePoolAsset(): PoolAsset {
   return {
     liabilities: "",
     custody: "",
+    takeProfitLiabilities: "",
+    takeProfitCustody: "",
     assetBalance: "",
     blockInterest: "",
     assetDenom: ""
@@ -82,14 +90,20 @@ export const PoolAsset = {
     if (message.custody !== "") {
       writer.uint32(18).string(message.custody);
     }
+    if (message.takeProfitLiabilities !== "") {
+      writer.uint32(26).string(message.takeProfitLiabilities);
+    }
+    if (message.takeProfitCustody !== "") {
+      writer.uint32(34).string(message.takeProfitCustody);
+    }
     if (message.assetBalance !== "") {
-      writer.uint32(26).string(message.assetBalance);
+      writer.uint32(42).string(message.assetBalance);
     }
     if (message.blockInterest !== "") {
-      writer.uint32(34).string(message.blockInterest);
+      writer.uint32(50).string(message.blockInterest);
     }
     if (message.assetDenom !== "") {
-      writer.uint32(42).string(message.assetDenom);
+      writer.uint32(58).string(message.assetDenom);
     }
     return writer;
   },
@@ -107,12 +121,18 @@ export const PoolAsset = {
           message.custody = reader.string();
           break;
         case 3:
-          message.assetBalance = reader.string();
+          message.takeProfitLiabilities = reader.string();
           break;
         case 4:
-          message.blockInterest = reader.string();
+          message.takeProfitCustody = reader.string();
           break;
         case 5:
+          message.assetBalance = reader.string();
+          break;
+        case 6:
+          message.blockInterest = reader.string();
+          break;
+        case 7:
           message.assetDenom = reader.string();
           break;
         default:
@@ -126,6 +146,8 @@ export const PoolAsset = {
     const message = createBasePoolAsset();
     message.liabilities = object.liabilities ?? "";
     message.custody = object.custody ?? "";
+    message.takeProfitLiabilities = object.takeProfitLiabilities ?? "";
+    message.takeProfitCustody = object.takeProfitCustody ?? "";
     message.assetBalance = object.assetBalance ?? "";
     message.blockInterest = object.blockInterest ?? "";
     message.assetDenom = object.assetDenom ?? "";
@@ -135,6 +157,8 @@ export const PoolAsset = {
     return {
       liabilities: object.liabilities,
       custody: object.custody,
+      takeProfitLiabilities: object.take_profit_liabilities,
+      takeProfitCustody: object.take_profit_custody,
       assetBalance: object.asset_balance,
       blockInterest: object.block_interest,
       assetDenom: object.asset_denom
@@ -144,6 +168,8 @@ export const PoolAsset = {
     const obj: any = {};
     obj.liabilities = message.liabilities;
     obj.custody = message.custody;
+    obj.take_profit_liabilities = message.takeProfitLiabilities;
+    obj.take_profit_custody = message.takeProfitCustody;
     obj.asset_balance = message.assetBalance;
     obj.block_interest = message.blockInterest;
     obj.asset_denom = message.assetDenom;

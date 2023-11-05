@@ -1,6 +1,6 @@
 import { setPaginationParams } from "../../helpers";
 import { LCDClient } from "@cosmology/lcd";
-import { QueryParamsRequest, QueryParamsResponseSDKType, QueryGetPoolRequest, QueryGetPoolResponseSDKType, QueryAllPoolRequest, QueryAllPoolResponseSDKType, QueryGetDenomLiquidityRequest, QueryGetDenomLiquidityResponseSDKType, QueryAllDenomLiquidityRequest, QueryAllDenomLiquidityResponseSDKType, QuerySwapEstimationRequest, QuerySwapEstimationResponseSDKType } from "./query";
+import { QueryParamsRequest, QueryParamsResponseSDKType, QueryGetPoolRequest, QueryGetPoolResponseSDKType, QueryAllPoolRequest, QueryAllPoolResponseSDKType, QueryGetDenomLiquidityRequest, QueryGetDenomLiquidityResponseSDKType, QueryAllDenomLiquidityRequest, QueryAllDenomLiquidityResponseSDKType, QuerySwapEstimationRequest, QuerySwapEstimationResponseSDKType, QuerySlippageTrackRequest, QuerySlippageTrackResponseSDKType, QuerySlippageTrackAllRequest, QuerySlippageTrackAllResponseSDKType } from "./query";
 export class LCDQueryClient {
   req: LCDClient;
   constructor({
@@ -15,6 +15,8 @@ export class LCDQueryClient {
     this.denomLiquidity = this.denomLiquidity.bind(this);
     this.denomLiquidityAll = this.denomLiquidityAll.bind(this);
     this.swapEstimation = this.swapEstimation.bind(this);
+    this.slippageTrack = this.slippageTrack.bind(this);
+    this.slippageTrackAll = this.slippageTrackAll.bind(this);
   }
   /* Parameters queries the parameters of the module. */
   async params(_params: QueryParamsRequest = {}): Promise<QueryParamsResponseSDKType> {
@@ -70,5 +72,15 @@ export class LCDQueryClient {
     }
     const endpoint = `elys-network/elys/amm/swap_estimation`;
     return await this.req.get<QuerySwapEstimationResponseSDKType>(endpoint, options);
+  }
+  /* Queries slippage track for a week. */
+  async slippageTrack(params: QuerySlippageTrackRequest): Promise<QuerySlippageTrackResponseSDKType> {
+    const endpoint = `elys-network/elys/amm/slippage_track/${params.poolId}`;
+    return await this.req.get<QuerySlippageTrackResponseSDKType>(endpoint);
+  }
+  /* Queries all slippage tracks for a week. */
+  async slippageTrackAll(_params: QuerySlippageTrackAllRequest = {}): Promise<QuerySlippageTrackAllResponseSDKType> {
+    const endpoint = `elys-network/elys/amm/slippage_tracks`;
+    return await this.req.get<QuerySlippageTrackAllResponseSDKType>(endpoint);
   }
 }
