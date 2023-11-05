@@ -1,0 +1,33 @@
+syntax = "proto3";
+package elys.incentive;
+
+import "gogoproto/gogo.proto";
+import "elys/incentive/incentive.proto";
+import "elys/incentive/pool.proto";
+
+option go_package = "github.com/elys-network/elys/x/incentive/types";
+
+// Params defines the parameters for the module.
+message Params {
+  option (gogoproto.goproto_stringer) = false;
+	repeated IncentiveInfo lp_incentives = 1 [(gogoproto.nullable) = false];
+	repeated IncentiveInfo stake_incentives = 2 [(gogoproto.nullable) = false];
+ 
+  string community_tax = 3 [
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
+
+  bool withdraw_addr_enabled = 4;
+  // Dex revenue percent for lps, 100 - reward_portion_for_lps = revenue percent for stakers.
+  string reward_portion_for_lps = 5 [
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
+  
+  // Pool information
+  // poolId, reward wallet, mulitplier
+	repeated PoolInfo pool_infos = 6 [(gogoproto.nullable) = false];
+
+	int64 elys_stake_tracking_rate = 7;
+}

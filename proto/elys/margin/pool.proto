@@ -1,0 +1,44 @@
+syntax = "proto3";
+package elys.margin;
+
+import "gogoproto/gogo.proto";
+
+option go_package = "github.com/elys-network/elys/x/margin/types";
+
+message PoolAsset {
+  string liabilities = 1 [
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+    (gogoproto.nullable) = false
+  ];
+  string custody = 2 [
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+    (gogoproto.nullable) = false
+  ];
+  string asset_balance = 3 [
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+    (gogoproto.nullable) = false,
+    (gogoproto.moretags) = "yaml:\"asset_balance\""
+  ];
+  string block_interest = 4 [
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+    (gogoproto.nullable) = false
+  ];
+  string asset_denom =  5;
+}
+
+message Pool {
+  uint64 ammPoolId = 1; 
+  string health = 2 [
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
+  bool enabled = 3; 
+  bool closed = 4; 
+  string interest_rate = 5 [
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
+  repeated PoolAsset poolAssets = 6 [(gogoproto.nullable) = false]; 
+  int64 lastHeightInterestRateComputed = 7;
+}
+
