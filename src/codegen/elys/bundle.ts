@@ -90,71 +90,71 @@ import * as _190 from "./tokenomics/tx";
 import * as _191 from "./transferhook/genesis";
 import * as _192 from "./transferhook/params";
 import * as _193 from "./transferhook/query";
-import * as _361 from "./amm/tx.amino";
-import * as _362 from "./assetprofile/tx.amino";
-import * as _363 from "./clock/v1/tx.amino";
-import * as _364 from "./commitment/tx.amino";
-import * as _365 from "./incentive/tx.amino";
-import * as _366 from "./leveragelp/tx.amino";
-import * as _367 from "./margin/tx.amino";
-import * as _368 from "./oracle/tx.amino";
-import * as _369 from "./stablestake/tx.amino";
-import * as _370 from "./tokenomics/tx.amino";
-import * as _371 from "./amm/tx.registry";
-import * as _372 from "./assetprofile/tx.registry";
-import * as _373 from "./clock/v1/tx.registry";
-import * as _374 from "./commitment/tx.registry";
-import * as _375 from "./incentive/tx.registry";
-import * as _376 from "./leveragelp/tx.registry";
-import * as _377 from "./margin/tx.registry";
-import * as _378 from "./oracle/tx.registry";
-import * as _379 from "./stablestake/tx.registry";
-import * as _380 from "./tokenomics/tx.registry";
-import * as _381 from "./accountedpool/query.lcd";
-import * as _382 from "./amm/query.lcd";
-import * as _383 from "./assetprofile/query.lcd";
-import * as _384 from "./burner/query.lcd";
-import * as _385 from "./clock/v1/query.lcd";
-import * as _386 from "./commitment/query.lcd";
-import * as _387 from "./epochs/v1/query.lcd";
-import * as _388 from "./incentive/query.lcd";
-import * as _389 from "./leveragelp/query.lcd";
-import * as _390 from "./liquidityprovider/query.lcd";
-import * as _391 from "./margin/query.lcd";
-import * as _392 from "./oracle/query.lcd";
-import * as _393 from "./parameter/query.lcd";
-import * as _394 from "./stablestake/query.lcd";
-import * as _395 from "./tokenomics/query.lcd";
-import * as _396 from "./transferhook/query.lcd";
-import * as _397 from "./accountedpool/query.rpc.Query";
-import * as _398 from "./amm/query.rpc.Query";
-import * as _399 from "./assetprofile/query.rpc.Query";
-import * as _400 from "./burner/query.rpc.Query";
-import * as _401 from "./clock/v1/query.rpc.Query";
-import * as _402 from "./commitment/query.rpc.Query";
-import * as _403 from "./epochs/v1/query.rpc.Query";
-import * as _404 from "./incentive/query.rpc.Query";
-import * as _405 from "./leveragelp/query.rpc.Query";
-import * as _406 from "./liquidityprovider/query.rpc.Query";
-import * as _407 from "./margin/query.rpc.Query";
-import * as _408 from "./oracle/query.rpc.Query";
-import * as _409 from "./parameter/query.rpc.Query";
-import * as _410 from "./stablestake/query.rpc.Query";
-import * as _411 from "./tokenomics/query.rpc.Query";
-import * as _412 from "./transferhook/query.rpc.Query";
-import * as _413 from "./amm/tx.rpc.msg";
-import * as _414 from "./assetprofile/tx.rpc.msg";
-import * as _415 from "./clock/v1/tx.rpc.msg";
-import * as _416 from "./commitment/tx.rpc.msg";
-import * as _417 from "./incentive/tx.rpc.msg";
-import * as _418 from "./leveragelp/tx.rpc.msg";
-import * as _419 from "./margin/tx.rpc.msg";
-import * as _420 from "./oracle/tx.rpc.msg";
-import * as _421 from "./stablestake/tx.rpc.msg";
-import * as _422 from "./tokenomics/tx.rpc.msg";
-import * as _482 from "./lcd";
-import * as _483 from "./rpc.query";
-import * as _484 from "./rpc.tx";
+import * as _319 from "./amm/tx.amino";
+import * as _320 from "./assetprofile/tx.amino";
+import * as _321 from "./clock/v1/tx.amino";
+import * as _322 from "./commitment/tx.amino";
+import * as _323 from "./incentive/tx.amino";
+import * as _324 from "./leveragelp/tx.amino";
+import * as _325 from "./margin/tx.amino";
+import * as _326 from "./oracle/tx.amino";
+import * as _327 from "./stablestake/tx.amino";
+import * as _328 from "./tokenomics/tx.amino";
+import * as _329 from "./amm/tx.registry";
+import * as _330 from "./assetprofile/tx.registry";
+import * as _331 from "./clock/v1/tx.registry";
+import * as _332 from "./commitment/tx.registry";
+import * as _333 from "./incentive/tx.registry";
+import * as _334 from "./leveragelp/tx.registry";
+import * as _335 from "./margin/tx.registry";
+import * as _336 from "./oracle/tx.registry";
+import * as _337 from "./stablestake/tx.registry";
+import * as _338 from "./tokenomics/tx.registry";
+import * as _339 from "./accountedpool/query.lcd";
+import * as _340 from "./amm/query.lcd";
+import * as _341 from "./assetprofile/query.lcd";
+import * as _342 from "./burner/query.lcd";
+import * as _343 from "./clock/v1/query.lcd";
+import * as _344 from "./commitment/query.lcd";
+import * as _345 from "./epochs/v1/query.lcd";
+import * as _346 from "./incentive/query.lcd";
+import * as _347 from "./leveragelp/query.lcd";
+import * as _348 from "./liquidityprovider/query.lcd";
+import * as _349 from "./margin/query.lcd";
+import * as _350 from "./oracle/query.lcd";
+import * as _351 from "./parameter/query.lcd";
+import * as _352 from "./stablestake/query.lcd";
+import * as _353 from "./tokenomics/query.lcd";
+import * as _354 from "./transferhook/query.lcd";
+import * as _355 from "./accountedpool/query.rpc.Query";
+import * as _356 from "./amm/query.rpc.Query";
+import * as _357 from "./assetprofile/query.rpc.Query";
+import * as _358 from "./burner/query.rpc.Query";
+import * as _359 from "./clock/v1/query.rpc.Query";
+import * as _360 from "./commitment/query.rpc.Query";
+import * as _361 from "./epochs/v1/query.rpc.Query";
+import * as _362 from "./incentive/query.rpc.Query";
+import * as _363 from "./leveragelp/query.rpc.Query";
+import * as _364 from "./liquidityprovider/query.rpc.Query";
+import * as _365 from "./margin/query.rpc.Query";
+import * as _366 from "./oracle/query.rpc.Query";
+import * as _367 from "./parameter/query.rpc.Query";
+import * as _368 from "./stablestake/query.rpc.Query";
+import * as _369 from "./tokenomics/query.rpc.Query";
+import * as _370 from "./transferhook/query.rpc.Query";
+import * as _371 from "./amm/tx.rpc.msg";
+import * as _372 from "./assetprofile/tx.rpc.msg";
+import * as _373 from "./clock/v1/tx.rpc.msg";
+import * as _374 from "./commitment/tx.rpc.msg";
+import * as _375 from "./incentive/tx.rpc.msg";
+import * as _376 from "./leveragelp/tx.rpc.msg";
+import * as _377 from "./margin/tx.rpc.msg";
+import * as _378 from "./oracle/tx.rpc.msg";
+import * as _379 from "./stablestake/tx.rpc.msg";
+import * as _380 from "./tokenomics/tx.rpc.msg";
+import * as _408 from "./lcd";
+import * as _409 from "./rpc.query";
+import * as _410 from "./rpc.tx";
 export namespace elys {
   export const accountedpool = {
     ..._102,
@@ -162,8 +162,8 @@ export namespace elys {
     ..._104,
     ..._105,
     ..._106,
-    ..._381,
-    ..._397
+    ..._339,
+    ..._355
   };
   export const amm = {
     ..._107,
@@ -176,11 +176,11 @@ export namespace elys {
     ..._114,
     ..._115,
     ..._116,
-    ..._361,
-    ..._371,
-    ..._382,
-    ..._398,
-    ..._413
+    ..._319,
+    ..._329,
+    ..._340,
+    ..._356,
+    ..._371
   };
   export const assetprofile = {
     ..._117,
@@ -188,11 +188,11 @@ export namespace elys {
     ..._119,
     ..._120,
     ..._121,
-    ..._362,
-    ..._372,
-    ..._383,
-    ..._399,
-    ..._414
+    ..._320,
+    ..._330,
+    ..._341,
+    ..._357,
+    ..._372
   };
   export const burner = {
     ..._122,
@@ -200,8 +200,8 @@ export namespace elys {
     ..._124,
     ..._125,
     ..._126,
-    ..._384,
-    ..._400
+    ..._342,
+    ..._358
   };
   export namespace clock {
     export const v1 = {
@@ -209,11 +209,11 @@ export namespace elys {
       ..._128,
       ..._129,
       ..._130,
-      ..._363,
-      ..._373,
-      ..._385,
-      ..._401,
-      ..._415
+      ..._321,
+      ..._331,
+      ..._343,
+      ..._359,
+      ..._373
     };
   }
   export const commitment = {
@@ -222,18 +222,18 @@ export namespace elys {
     ..._133,
     ..._134,
     ..._135,
-    ..._364,
-    ..._374,
-    ..._386,
-    ..._402,
-    ..._416
+    ..._322,
+    ..._332,
+    ..._344,
+    ..._360,
+    ..._374
   };
   export namespace epochs {
     export const v1 = {
       ..._136,
       ..._137,
-      ..._387,
-      ..._403
+      ..._345,
+      ..._361
     };
   }
   export const incentive = {
@@ -246,11 +246,11 @@ export namespace elys {
     ..._144,
     ..._145,
     ..._146,
-    ..._365,
-    ..._375,
-    ..._388,
-    ..._404,
-    ..._417
+    ..._323,
+    ..._333,
+    ..._346,
+    ..._362,
+    ..._375
   };
   export const leveragelp = {
     ..._147,
@@ -259,19 +259,19 @@ export namespace elys {
     ..._150,
     ..._151,
     ..._152,
-    ..._366,
-    ..._376,
-    ..._389,
-    ..._405,
-    ..._418
+    ..._324,
+    ..._334,
+    ..._347,
+    ..._363,
+    ..._376
   };
   export const liquidityprovider = {
     ..._153,
     ..._154,
     ..._155,
     ..._156,
-    ..._390,
-    ..._406
+    ..._348,
+    ..._364
   };
   export const margin = {
     ..._157,
@@ -280,11 +280,11 @@ export namespace elys {
     ..._160,
     ..._161,
     ..._162,
-    ..._367,
-    ..._377,
-    ..._391,
-    ..._407,
-    ..._419
+    ..._325,
+    ..._335,
+    ..._349,
+    ..._365,
+    ..._377
   };
   export const oracle = {
     ..._163,
@@ -296,11 +296,11 @@ export namespace elys {
     ..._169,
     ..._170,
     ..._171,
-    ..._368,
-    ..._378,
-    ..._392,
-    ..._408,
-    ..._420
+    ..._326,
+    ..._336,
+    ..._350,
+    ..._366,
+    ..._378
   };
   export const parameter = {
     ..._172,
@@ -309,8 +309,8 @@ export namespace elys {
     ..._175,
     ..._176,
     ..._177,
-    ..._393,
-    ..._409
+    ..._351,
+    ..._367
   };
   export const stablestake = {
     ..._178,
@@ -318,11 +318,11 @@ export namespace elys {
     ..._180,
     ..._181,
     ..._182,
-    ..._369,
-    ..._379,
-    ..._394,
-    ..._410,
-    ..._421
+    ..._327,
+    ..._337,
+    ..._352,
+    ..._368,
+    ..._379
   };
   export const tokenomics = {
     ..._183,
@@ -333,22 +333,22 @@ export namespace elys {
     ..._188,
     ..._189,
     ..._190,
-    ..._370,
-    ..._380,
-    ..._395,
-    ..._411,
-    ..._422
+    ..._328,
+    ..._338,
+    ..._353,
+    ..._369,
+    ..._380
   };
   export const transferhook = {
     ..._191,
     ..._192,
     ..._193,
-    ..._396,
-    ..._412
+    ..._354,
+    ..._370
   };
   export const ClientFactory = {
-    ..._482,
-    ..._483,
-    ..._484
+    ..._408,
+    ..._409,
+    ..._410
   };
 }
