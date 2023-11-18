@@ -46,14 +46,14 @@ export interface QueryGetEntryRequestProtoMsg {
   value: Uint8Array;
 }
 export interface QueryGetEntryRequestAmino {
-  baseDenom: string;
+  base_denom: string;
 }
 export interface QueryGetEntryRequestAminoMsg {
   type: "/elys.assetprofile.QueryGetEntryRequest";
   value: QueryGetEntryRequestAmino;
 }
 export interface QueryGetEntryRequestSDKType {
-  baseDenom: string;
+  base_denom: string;
 }
 export interface QueryGetEntryResponse {
   entry: Entry;
@@ -256,12 +256,12 @@ export const QueryGetEntryRequest = {
   },
   fromAmino(object: QueryGetEntryRequestAmino): QueryGetEntryRequest {
     return {
-      baseDenom: object.baseDenom
+      baseDenom: object.base_denom
     };
   },
   toAmino(message: QueryGetEntryRequest): QueryGetEntryRequestAmino {
     const obj: any = {};
-    obj.baseDenom = message.baseDenom;
+    obj.base_denom = message.baseDenom;
     return obj;
   },
   fromAminoMsg(object: QueryGetEntryRequestAminoMsg): QueryGetEntryRequest {

@@ -64,7 +64,7 @@ export interface QueryAllAnteHandlerParamResponseProtoMsg {
   value: Uint8Array;
 }
 export interface QueryAllAnteHandlerParamResponseAmino {
-  anteHandlerParam: AnteHandlerParamAmino[];
+  ante_handler_param: AnteHandlerParamAmino[];
   pagination?: PageResponseAmino;
 }
 export interface QueryAllAnteHandlerParamResponseAminoMsg {
@@ -72,7 +72,7 @@ export interface QueryAllAnteHandlerParamResponseAminoMsg {
   value: QueryAllAnteHandlerParamResponseAmino;
 }
 export interface QueryAllAnteHandlerParamResponseSDKType {
-  anteHandlerParam: AnteHandlerParamSDKType[];
+  ante_handler_param: AnteHandlerParamSDKType[];
   pagination?: PageResponseSDKType;
 }
 function createBaseQueryParamsRequest(): QueryParamsRequest {
@@ -291,16 +291,16 @@ export const QueryAllAnteHandlerParamResponse = {
   },
   fromAmino(object: QueryAllAnteHandlerParamResponseAmino): QueryAllAnteHandlerParamResponse {
     return {
-      anteHandlerParam: Array.isArray(object?.anteHandlerParam) ? object.anteHandlerParam.map((e: any) => AnteHandlerParam.fromAmino(e)) : [],
+      anteHandlerParam: Array.isArray(object?.ante_handler_param) ? object.ante_handler_param.map((e: any) => AnteHandlerParam.fromAmino(e)) : [],
       pagination: object?.pagination ? PageResponse.fromAmino(object.pagination) : undefined
     };
   },
   toAmino(message: QueryAllAnteHandlerParamResponse): QueryAllAnteHandlerParamResponseAmino {
     const obj: any = {};
     if (message.anteHandlerParam) {
-      obj.anteHandlerParam = message.anteHandlerParam.map(e => e ? AnteHandlerParam.toAmino(e) : undefined);
+      obj.ante_handler_param = message.anteHandlerParam.map(e => e ? AnteHandlerParam.toAmino(e) : undefined);
     } else {
-      obj.anteHandlerParam = [];
+      obj.ante_handler_param = [];
     }
     obj.pagination = message.pagination ? PageResponse.toAmino(message.pagination) : undefined;
     return obj;

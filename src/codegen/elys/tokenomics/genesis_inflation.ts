@@ -12,8 +12,8 @@ export interface GenesisInflationProtoMsg {
 }
 export interface GenesisInflationAmino {
   inflation?: InflationEntryAmino;
-  seedVesting: string;
-  strategicSalesVesting: string;
+  seed_vesting: string;
+  strategic_sales_vesting: string;
   authority: string;
 }
 export interface GenesisInflationAminoMsg {
@@ -22,8 +22,8 @@ export interface GenesisInflationAminoMsg {
 }
 export interface GenesisInflationSDKType {
   inflation?: InflationEntrySDKType;
-  seedVesting: bigint;
-  strategicSalesVesting: bigint;
+  seed_vesting: bigint;
+  strategic_sales_vesting: bigint;
   authority: string;
 }
 function createBaseGenesisInflation(): GenesisInflation {
@@ -88,16 +88,16 @@ export const GenesisInflation = {
   fromAmino(object: GenesisInflationAmino): GenesisInflation {
     return {
       inflation: object?.inflation ? InflationEntry.fromAmino(object.inflation) : undefined,
-      seedVesting: BigInt(object.seedVesting),
-      strategicSalesVesting: BigInt(object.strategicSalesVesting),
+      seedVesting: BigInt(object.seed_vesting),
+      strategicSalesVesting: BigInt(object.strategic_sales_vesting),
       authority: object.authority
     };
   },
   toAmino(message: GenesisInflation): GenesisInflationAmino {
     const obj: any = {};
     obj.inflation = message.inflation ? InflationEntry.toAmino(message.inflation) : undefined;
-    obj.seedVesting = message.seedVesting ? message.seedVesting.toString() : undefined;
-    obj.strategicSalesVesting = message.strategicSalesVesting ? message.strategicSalesVesting.toString() : undefined;
+    obj.seed_vesting = message.seedVesting ? message.seedVesting.toString() : undefined;
+    obj.strategic_sales_vesting = message.strategicSalesVesting ? message.strategicSalesVesting.toString() : undefined;
     obj.authority = message.authority;
     return obj;
   },

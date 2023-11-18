@@ -11,22 +11,22 @@ export interface InflationEntryProtoMsg {
   value: Uint8Array;
 }
 export interface InflationEntryAmino {
-  lmRewards: string;
-  icsStakingRewards: string;
-  communityFund: string;
-  strategicReserve: string;
-  teamTokensVested: string;
+  lm_rewards: string;
+  ics_staking_rewards: string;
+  community_fund: string;
+  strategic_reserve: string;
+  team_tokens_vested: string;
 }
 export interface InflationEntryAminoMsg {
   type: "/elys.tokenomics.InflationEntry";
   value: InflationEntryAmino;
 }
 export interface InflationEntrySDKType {
-  lmRewards: bigint;
-  icsStakingRewards: bigint;
-  communityFund: bigint;
-  strategicReserve: bigint;
-  teamTokensVested: bigint;
+  lm_rewards: bigint;
+  ics_staking_rewards: bigint;
+  community_fund: bigint;
+  strategic_reserve: bigint;
+  team_tokens_vested: bigint;
 }
 function createBaseInflationEntry(): InflationEntry {
   return {
@@ -97,20 +97,20 @@ export const InflationEntry = {
   },
   fromAmino(object: InflationEntryAmino): InflationEntry {
     return {
-      lmRewards: BigInt(object.lmRewards),
-      icsStakingRewards: BigInt(object.icsStakingRewards),
-      communityFund: BigInt(object.communityFund),
-      strategicReserve: BigInt(object.strategicReserve),
-      teamTokensVested: BigInt(object.teamTokensVested)
+      lmRewards: BigInt(object.lm_rewards),
+      icsStakingRewards: BigInt(object.ics_staking_rewards),
+      communityFund: BigInt(object.community_fund),
+      strategicReserve: BigInt(object.strategic_reserve),
+      teamTokensVested: BigInt(object.team_tokens_vested)
     };
   },
   toAmino(message: InflationEntry): InflationEntryAmino {
     const obj: any = {};
-    obj.lmRewards = message.lmRewards ? message.lmRewards.toString() : undefined;
-    obj.icsStakingRewards = message.icsStakingRewards ? message.icsStakingRewards.toString() : undefined;
-    obj.communityFund = message.communityFund ? message.communityFund.toString() : undefined;
-    obj.strategicReserve = message.strategicReserve ? message.strategicReserve.toString() : undefined;
-    obj.teamTokensVested = message.teamTokensVested ? message.teamTokensVested.toString() : undefined;
+    obj.lm_rewards = message.lmRewards ? message.lmRewards.toString() : undefined;
+    obj.ics_staking_rewards = message.icsStakingRewards ? message.icsStakingRewards.toString() : undefined;
+    obj.community_fund = message.communityFund ? message.communityFund.toString() : undefined;
+    obj.strategic_reserve = message.strategicReserve ? message.strategicReserve.toString() : undefined;
+    obj.team_tokens_vested = message.teamTokensVested ? message.teamTokensVested.toString() : undefined;
     return obj;
   },
   fromAminoMsg(object: InflationEntryAminoMsg): InflationEntry {

@@ -1,10 +1,16 @@
+import { Coin, CoinAmino, CoinSDKType } from "../../cosmos/base/v1beta1/coin";
 import { BinaryReader, BinaryWriter } from "../../binary";
 /** GenesisState defines the commitment module's genesis state. */
 export interface Commitments {
   creator: string;
   committedTokens: CommittedTokens[];
-  uncommittedTokens: UncommittedTokens[];
+  rewardsUnclaimed: Coin[];
+  claimed: Coin[];
   vestingTokens: VestingTokens[];
+  rewardsByElysUnclaimed: Coin[];
+  rewardsByEdenUnclaimed: Coin[];
+  rewardsByEdenbUnclaimed: Coin[];
+  rewardsByUsdcUnclaimed: Coin[];
 }
 export interface CommitmentsProtoMsg {
   typeUrl: "/elys.commitment.Commitments";
@@ -14,8 +20,13 @@ export interface CommitmentsProtoMsg {
 export interface CommitmentsAmino {
   creator: string;
   committed_tokens: CommittedTokensAmino[];
-  uncommitted_tokens: UncommittedTokensAmino[];
+  rewards_unclaimed: CoinAmino[];
+  claimed: CoinAmino[];
   vesting_tokens: VestingTokensAmino[];
+  rewards_by_elys_unclaimed: CoinAmino[];
+  rewards_by_eden_unclaimed: CoinAmino[];
+  rewards_by_edenb_unclaimed: CoinAmino[];
+  rewards_by_usdc_unclaimed: CoinAmino[];
 }
 export interface CommitmentsAminoMsg {
   type: "/elys.commitment.Commitments";
@@ -25,12 +36,38 @@ export interface CommitmentsAminoMsg {
 export interface CommitmentsSDKType {
   creator: string;
   committed_tokens: CommittedTokensSDKType[];
-  uncommitted_tokens: UncommittedTokensSDKType[];
+  rewards_unclaimed: CoinSDKType[];
+  claimed: CoinSDKType[];
   vesting_tokens: VestingTokensSDKType[];
+  rewards_by_elys_unclaimed: CoinSDKType[];
+  rewards_by_eden_unclaimed: CoinSDKType[];
+  rewards_by_edenb_unclaimed: CoinSDKType[];
+  rewards_by_usdc_unclaimed: CoinSDKType[];
+}
+export interface Lockup {
+  amount: string;
+  unlockTimestamp: bigint;
+}
+export interface LockupProtoMsg {
+  typeUrl: "/elys.commitment.Lockup";
+  value: Uint8Array;
+}
+export interface LockupAmino {
+  amount: string;
+  unlock_timestamp: string;
+}
+export interface LockupAminoMsg {
+  type: "/elys.commitment.Lockup";
+  value: LockupAmino;
+}
+export interface LockupSDKType {
+  amount: string;
+  unlock_timestamp: bigint;
 }
 export interface CommittedTokens {
   denom: string;
   amount: string;
+  lockups: Lockup[];
 }
 export interface CommittedTokensProtoMsg {
   typeUrl: "/elys.commitment.CommittedTokens";
@@ -39,6 +76,7 @@ export interface CommittedTokensProtoMsg {
 export interface CommittedTokensAmino {
   denom: string;
   amount: string;
+  lockups: LockupAmino[];
 }
 export interface CommittedTokensAminoMsg {
   type: "/elys.commitment.CommittedTokens";
@@ -47,24 +85,25 @@ export interface CommittedTokensAminoMsg {
 export interface CommittedTokensSDKType {
   denom: string;
   amount: string;
+  lockups: LockupSDKType[];
 }
-export interface UncommittedTokens {
+export interface RewardsUnclaimed {
   denom: string;
   amount: string;
 }
-export interface UncommittedTokensProtoMsg {
-  typeUrl: "/elys.commitment.UncommittedTokens";
+export interface RewardsUnclaimedProtoMsg {
+  typeUrl: "/elys.commitment.RewardsUnclaimed";
   value: Uint8Array;
 }
-export interface UncommittedTokensAmino {
+export interface RewardsUnclaimedAmino {
   denom: string;
   amount: string;
 }
-export interface UncommittedTokensAminoMsg {
-  type: "/elys.commitment.UncommittedTokens";
-  value: UncommittedTokensAmino;
+export interface RewardsUnclaimedAminoMsg {
+  type: "/elys.commitment.RewardsUnclaimed";
+  value: RewardsUnclaimedAmino;
 }
-export interface UncommittedTokensSDKType {
+export interface RewardsUnclaimedSDKType {
   denom: string;
   amount: string;
 }
@@ -104,8 +143,13 @@ function createBaseCommitments(): Commitments {
   return {
     creator: "",
     committedTokens: [],
-    uncommittedTokens: [],
-    vestingTokens: []
+    rewardsUnclaimed: [],
+    claimed: [],
+    vestingTokens: [],
+    rewardsByElysUnclaimed: [],
+    rewardsByEdenUnclaimed: [],
+    rewardsByEdenbUnclaimed: [],
+    rewardsByUsdcUnclaimed: []
   };
 }
 export const Commitments = {
@@ -117,11 +161,26 @@ export const Commitments = {
     for (const v of message.committedTokens) {
       CommittedTokens.encode(v!, writer.uint32(18).fork()).ldelim();
     }
-    for (const v of message.uncommittedTokens) {
-      UncommittedTokens.encode(v!, writer.uint32(26).fork()).ldelim();
+    for (const v of message.rewardsUnclaimed) {
+      Coin.encode(v!, writer.uint32(26).fork()).ldelim();
+    }
+    for (const v of message.claimed) {
+      Coin.encode(v!, writer.uint32(34).fork()).ldelim();
     }
     for (const v of message.vestingTokens) {
-      VestingTokens.encode(v!, writer.uint32(34).fork()).ldelim();
+      VestingTokens.encode(v!, writer.uint32(42).fork()).ldelim();
+    }
+    for (const v of message.rewardsByElysUnclaimed) {
+      Coin.encode(v!, writer.uint32(50).fork()).ldelim();
+    }
+    for (const v of message.rewardsByEdenUnclaimed) {
+      Coin.encode(v!, writer.uint32(58).fork()).ldelim();
+    }
+    for (const v of message.rewardsByEdenbUnclaimed) {
+      Coin.encode(v!, writer.uint32(66).fork()).ldelim();
+    }
+    for (const v of message.rewardsByUsdcUnclaimed) {
+      Coin.encode(v!, writer.uint32(74).fork()).ldelim();
     }
     return writer;
   },
@@ -139,10 +198,25 @@ export const Commitments = {
           message.committedTokens.push(CommittedTokens.decode(reader, reader.uint32()));
           break;
         case 3:
-          message.uncommittedTokens.push(UncommittedTokens.decode(reader, reader.uint32()));
+          message.rewardsUnclaimed.push(Coin.decode(reader, reader.uint32()));
           break;
         case 4:
+          message.claimed.push(Coin.decode(reader, reader.uint32()));
+          break;
+        case 5:
           message.vestingTokens.push(VestingTokens.decode(reader, reader.uint32()));
+          break;
+        case 6:
+          message.rewardsByElysUnclaimed.push(Coin.decode(reader, reader.uint32()));
+          break;
+        case 7:
+          message.rewardsByEdenUnclaimed.push(Coin.decode(reader, reader.uint32()));
+          break;
+        case 8:
+          message.rewardsByEdenbUnclaimed.push(Coin.decode(reader, reader.uint32()));
+          break;
+        case 9:
+          message.rewardsByUsdcUnclaimed.push(Coin.decode(reader, reader.uint32()));
           break;
         default:
           reader.skipType(tag & 7);
@@ -155,16 +229,26 @@ export const Commitments = {
     const message = createBaseCommitments();
     message.creator = object.creator ?? "";
     message.committedTokens = object.committedTokens?.map(e => CommittedTokens.fromPartial(e)) || [];
-    message.uncommittedTokens = object.uncommittedTokens?.map(e => UncommittedTokens.fromPartial(e)) || [];
+    message.rewardsUnclaimed = object.rewardsUnclaimed?.map(e => Coin.fromPartial(e)) || [];
+    message.claimed = object.claimed?.map(e => Coin.fromPartial(e)) || [];
     message.vestingTokens = object.vestingTokens?.map(e => VestingTokens.fromPartial(e)) || [];
+    message.rewardsByElysUnclaimed = object.rewardsByElysUnclaimed?.map(e => Coin.fromPartial(e)) || [];
+    message.rewardsByEdenUnclaimed = object.rewardsByEdenUnclaimed?.map(e => Coin.fromPartial(e)) || [];
+    message.rewardsByEdenbUnclaimed = object.rewardsByEdenbUnclaimed?.map(e => Coin.fromPartial(e)) || [];
+    message.rewardsByUsdcUnclaimed = object.rewardsByUsdcUnclaimed?.map(e => Coin.fromPartial(e)) || [];
     return message;
   },
   fromAmino(object: CommitmentsAmino): Commitments {
     return {
       creator: object.creator,
       committedTokens: Array.isArray(object?.committed_tokens) ? object.committed_tokens.map((e: any) => CommittedTokens.fromAmino(e)) : [],
-      uncommittedTokens: Array.isArray(object?.uncommitted_tokens) ? object.uncommitted_tokens.map((e: any) => UncommittedTokens.fromAmino(e)) : [],
-      vestingTokens: Array.isArray(object?.vesting_tokens) ? object.vesting_tokens.map((e: any) => VestingTokens.fromAmino(e)) : []
+      rewardsUnclaimed: Array.isArray(object?.rewards_unclaimed) ? object.rewards_unclaimed.map((e: any) => Coin.fromAmino(e)) : [],
+      claimed: Array.isArray(object?.claimed) ? object.claimed.map((e: any) => Coin.fromAmino(e)) : [],
+      vestingTokens: Array.isArray(object?.vesting_tokens) ? object.vesting_tokens.map((e: any) => VestingTokens.fromAmino(e)) : [],
+      rewardsByElysUnclaimed: Array.isArray(object?.rewards_by_elys_unclaimed) ? object.rewards_by_elys_unclaimed.map((e: any) => Coin.fromAmino(e)) : [],
+      rewardsByEdenUnclaimed: Array.isArray(object?.rewards_by_eden_unclaimed) ? object.rewards_by_eden_unclaimed.map((e: any) => Coin.fromAmino(e)) : [],
+      rewardsByEdenbUnclaimed: Array.isArray(object?.rewards_by_edenb_unclaimed) ? object.rewards_by_edenb_unclaimed.map((e: any) => Coin.fromAmino(e)) : [],
+      rewardsByUsdcUnclaimed: Array.isArray(object?.rewards_by_usdc_unclaimed) ? object.rewards_by_usdc_unclaimed.map((e: any) => Coin.fromAmino(e)) : []
     };
   },
   toAmino(message: Commitments): CommitmentsAmino {
@@ -175,15 +259,40 @@ export const Commitments = {
     } else {
       obj.committed_tokens = [];
     }
-    if (message.uncommittedTokens) {
-      obj.uncommitted_tokens = message.uncommittedTokens.map(e => e ? UncommittedTokens.toAmino(e) : undefined);
+    if (message.rewardsUnclaimed) {
+      obj.rewards_unclaimed = message.rewardsUnclaimed.map(e => e ? Coin.toAmino(e) : undefined);
     } else {
-      obj.uncommitted_tokens = [];
+      obj.rewards_unclaimed = [];
+    }
+    if (message.claimed) {
+      obj.claimed = message.claimed.map(e => e ? Coin.toAmino(e) : undefined);
+    } else {
+      obj.claimed = [];
     }
     if (message.vestingTokens) {
       obj.vesting_tokens = message.vestingTokens.map(e => e ? VestingTokens.toAmino(e) : undefined);
     } else {
       obj.vesting_tokens = [];
+    }
+    if (message.rewardsByElysUnclaimed) {
+      obj.rewards_by_elys_unclaimed = message.rewardsByElysUnclaimed.map(e => e ? Coin.toAmino(e) : undefined);
+    } else {
+      obj.rewards_by_elys_unclaimed = [];
+    }
+    if (message.rewardsByEdenUnclaimed) {
+      obj.rewards_by_eden_unclaimed = message.rewardsByEdenUnclaimed.map(e => e ? Coin.toAmino(e) : undefined);
+    } else {
+      obj.rewards_by_eden_unclaimed = [];
+    }
+    if (message.rewardsByEdenbUnclaimed) {
+      obj.rewards_by_edenb_unclaimed = message.rewardsByEdenbUnclaimed.map(e => e ? Coin.toAmino(e) : undefined);
+    } else {
+      obj.rewards_by_edenb_unclaimed = [];
+    }
+    if (message.rewardsByUsdcUnclaimed) {
+      obj.rewards_by_usdc_unclaimed = message.rewardsByUsdcUnclaimed.map(e => e ? Coin.toAmino(e) : undefined);
+    } else {
+      obj.rewards_by_usdc_unclaimed = [];
     }
     return obj;
   },
@@ -203,10 +312,82 @@ export const Commitments = {
     };
   }
 };
+function createBaseLockup(): Lockup {
+  return {
+    amount: "",
+    unlockTimestamp: BigInt(0)
+  };
+}
+export const Lockup = {
+  typeUrl: "/elys.commitment.Lockup",
+  encode(message: Lockup, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.amount !== "") {
+      writer.uint32(10).string(message.amount);
+    }
+    if (message.unlockTimestamp !== BigInt(0)) {
+      writer.uint32(16).uint64(message.unlockTimestamp);
+    }
+    return writer;
+  },
+  decode(input: BinaryReader | Uint8Array, length?: number): Lockup {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseLockup();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.amount = reader.string();
+          break;
+        case 2:
+          message.unlockTimestamp = reader.uint64();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromPartial(object: Partial<Lockup>): Lockup {
+    const message = createBaseLockup();
+    message.amount = object.amount ?? "";
+    message.unlockTimestamp = object.unlockTimestamp !== undefined && object.unlockTimestamp !== null ? BigInt(object.unlockTimestamp.toString()) : BigInt(0);
+    return message;
+  },
+  fromAmino(object: LockupAmino): Lockup {
+    return {
+      amount: object.amount,
+      unlockTimestamp: BigInt(object.unlock_timestamp)
+    };
+  },
+  toAmino(message: Lockup): LockupAmino {
+    const obj: any = {};
+    obj.amount = message.amount;
+    obj.unlock_timestamp = message.unlockTimestamp ? message.unlockTimestamp.toString() : undefined;
+    return obj;
+  },
+  fromAminoMsg(object: LockupAminoMsg): Lockup {
+    return Lockup.fromAmino(object.value);
+  },
+  fromProtoMsg(message: LockupProtoMsg): Lockup {
+    return Lockup.decode(message.value);
+  },
+  toProto(message: Lockup): Uint8Array {
+    return Lockup.encode(message).finish();
+  },
+  toProtoMsg(message: Lockup): LockupProtoMsg {
+    return {
+      typeUrl: "/elys.commitment.Lockup",
+      value: Lockup.encode(message).finish()
+    };
+  }
+};
 function createBaseCommittedTokens(): CommittedTokens {
   return {
     denom: "",
-    amount: ""
+    amount: "",
+    lockups: []
   };
 }
 export const CommittedTokens = {
@@ -217,6 +398,9 @@ export const CommittedTokens = {
     }
     if (message.amount !== "") {
       writer.uint32(18).string(message.amount);
+    }
+    for (const v of message.lockups) {
+      Lockup.encode(v!, writer.uint32(26).fork()).ldelim();
     }
     return writer;
   },
@@ -233,6 +417,9 @@ export const CommittedTokens = {
         case 2:
           message.amount = reader.string();
           break;
+        case 3:
+          message.lockups.push(Lockup.decode(reader, reader.uint32()));
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -244,18 +431,25 @@ export const CommittedTokens = {
     const message = createBaseCommittedTokens();
     message.denom = object.denom ?? "";
     message.amount = object.amount ?? "";
+    message.lockups = object.lockups?.map(e => Lockup.fromPartial(e)) || [];
     return message;
   },
   fromAmino(object: CommittedTokensAmino): CommittedTokens {
     return {
       denom: object.denom,
-      amount: object.amount
+      amount: object.amount,
+      lockups: Array.isArray(object?.lockups) ? object.lockups.map((e: any) => Lockup.fromAmino(e)) : []
     };
   },
   toAmino(message: CommittedTokens): CommittedTokensAmino {
     const obj: any = {};
     obj.denom = message.denom;
     obj.amount = message.amount;
+    if (message.lockups) {
+      obj.lockups = message.lockups.map(e => e ? Lockup.toAmino(e) : undefined);
+    } else {
+      obj.lockups = [];
+    }
     return obj;
   },
   fromAminoMsg(object: CommittedTokensAminoMsg): CommittedTokens {
@@ -274,15 +468,15 @@ export const CommittedTokens = {
     };
   }
 };
-function createBaseUncommittedTokens(): UncommittedTokens {
+function createBaseRewardsUnclaimed(): RewardsUnclaimed {
   return {
     denom: "",
     amount: ""
   };
 }
-export const UncommittedTokens = {
-  typeUrl: "/elys.commitment.UncommittedTokens",
-  encode(message: UncommittedTokens, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+export const RewardsUnclaimed = {
+  typeUrl: "/elys.commitment.RewardsUnclaimed",
+  encode(message: RewardsUnclaimed, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.denom !== "") {
       writer.uint32(10).string(message.denom);
     }
@@ -291,10 +485,10 @@ export const UncommittedTokens = {
     }
     return writer;
   },
-  decode(input: BinaryReader | Uint8Array, length?: number): UncommittedTokens {
+  decode(input: BinaryReader | Uint8Array, length?: number): RewardsUnclaimed {
     const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseUncommittedTokens();
+    const message = createBaseRewardsUnclaimed();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -311,37 +505,37 @@ export const UncommittedTokens = {
     }
     return message;
   },
-  fromPartial(object: Partial<UncommittedTokens>): UncommittedTokens {
-    const message = createBaseUncommittedTokens();
+  fromPartial(object: Partial<RewardsUnclaimed>): RewardsUnclaimed {
+    const message = createBaseRewardsUnclaimed();
     message.denom = object.denom ?? "";
     message.amount = object.amount ?? "";
     return message;
   },
-  fromAmino(object: UncommittedTokensAmino): UncommittedTokens {
+  fromAmino(object: RewardsUnclaimedAmino): RewardsUnclaimed {
     return {
       denom: object.denom,
       amount: object.amount
     };
   },
-  toAmino(message: UncommittedTokens): UncommittedTokensAmino {
+  toAmino(message: RewardsUnclaimed): RewardsUnclaimedAmino {
     const obj: any = {};
     obj.denom = message.denom;
     obj.amount = message.amount;
     return obj;
   },
-  fromAminoMsg(object: UncommittedTokensAminoMsg): UncommittedTokens {
-    return UncommittedTokens.fromAmino(object.value);
+  fromAminoMsg(object: RewardsUnclaimedAminoMsg): RewardsUnclaimed {
+    return RewardsUnclaimed.fromAmino(object.value);
   },
-  fromProtoMsg(message: UncommittedTokensProtoMsg): UncommittedTokens {
-    return UncommittedTokens.decode(message.value);
+  fromProtoMsg(message: RewardsUnclaimedProtoMsg): RewardsUnclaimed {
+    return RewardsUnclaimed.decode(message.value);
   },
-  toProto(message: UncommittedTokens): Uint8Array {
-    return UncommittedTokens.encode(message).finish();
+  toProto(message: RewardsUnclaimed): Uint8Array {
+    return RewardsUnclaimed.encode(message).finish();
   },
-  toProtoMsg(message: UncommittedTokens): UncommittedTokensProtoMsg {
+  toProtoMsg(message: RewardsUnclaimed): RewardsUnclaimedProtoMsg {
     return {
-      typeUrl: "/elys.commitment.UncommittedTokens",
-      value: UncommittedTokens.encode(message).finish()
+      typeUrl: "/elys.commitment.RewardsUnclaimed",
+      value: RewardsUnclaimed.encode(message).finish()
     };
   }
 };

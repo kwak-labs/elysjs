@@ -13,7 +13,7 @@ export interface PoolProtoMsg {
   value: Uint8Array;
 }
 export interface PoolAmino {
-  ammPoolId: string;
+  amm_pool_id: string;
   health: string;
   enabled: boolean;
   closed: boolean;
@@ -25,7 +25,7 @@ export interface PoolAminoMsg {
   value: PoolAmino;
 }
 export interface PoolSDKType {
-  ammPoolId: bigint;
+  amm_pool_id: bigint;
   health: string;
   enabled: boolean;
   closed: boolean;
@@ -109,7 +109,7 @@ export const Pool = {
   },
   fromAmino(object: PoolAmino): Pool {
     return {
-      ammPoolId: BigInt(object.ammPoolId),
+      ammPoolId: BigInt(object.amm_pool_id),
       health: object.health,
       enabled: object.enabled,
       closed: object.closed,
@@ -119,7 +119,7 @@ export const Pool = {
   },
   toAmino(message: Pool): PoolAmino {
     const obj: any = {};
-    obj.ammPoolId = message.ammPoolId ? message.ammPoolId.toString() : undefined;
+    obj.amm_pool_id = message.ammPoolId ? message.ammPoolId.toString() : undefined;
     obj.health = message.health;
     obj.enabled = message.enabled;
     obj.closed = message.closed;

@@ -18,12 +18,12 @@ export interface MsgOpenProtoMsg {
 }
 export interface MsgOpenAmino {
   creator: string;
-  collateralAsset: string;
-  collateralAmount: string;
-  borrowAsset: string;
+  collateral_asset: string;
+  collateral_amount: string;
+  borrow_asset: string;
   position: Position;
   leverage: string;
-  takeProfitPrice: string;
+  take_profit_price: string;
 }
 export interface MsgOpenAminoMsg {
   type: "/elys.margin.MsgOpen";
@@ -31,24 +31,30 @@ export interface MsgOpenAminoMsg {
 }
 export interface MsgOpenSDKType {
   creator: string;
-  collateralAsset: string;
-  collateralAmount: string;
-  borrowAsset: string;
+  collateral_asset: string;
+  collateral_amount: string;
+  borrow_asset: string;
   position: Position;
   leverage: string;
-  takeProfitPrice: string;
+  take_profit_price: string;
 }
-export interface MsgOpenResponse {}
+export interface MsgOpenResponse {
+  id: bigint;
+}
 export interface MsgOpenResponseProtoMsg {
   typeUrl: "/elys.margin.MsgOpenResponse";
   value: Uint8Array;
 }
-export interface MsgOpenResponseAmino {}
+export interface MsgOpenResponseAmino {
+  id: string;
+}
 export interface MsgOpenResponseAminoMsg {
   type: "/elys.margin.MsgOpenResponse";
   value: MsgOpenResponseAmino;
 }
-export interface MsgOpenResponseSDKType {}
+export interface MsgOpenResponseSDKType {
+  id: bigint;
+}
 export interface MsgClose {
   creator: string;
   id: bigint;
@@ -69,17 +75,118 @@ export interface MsgCloseSDKType {
   creator: string;
   id: bigint;
 }
-export interface MsgCloseResponse {}
+export interface MsgCloseResponse {
+  id: bigint;
+}
 export interface MsgCloseResponseProtoMsg {
   typeUrl: "/elys.margin.MsgCloseResponse";
   value: Uint8Array;
 }
-export interface MsgCloseResponseAmino {}
+export interface MsgCloseResponseAmino {
+  id: string;
+}
 export interface MsgCloseResponseAminoMsg {
   type: "/elys.margin.MsgCloseResponse";
   value: MsgCloseResponseAmino;
 }
-export interface MsgCloseResponseSDKType {}
+export interface MsgCloseResponseSDKType {
+  id: bigint;
+}
+export interface MsgBrokerOpen {
+  creator: string;
+  collateralAsset: string;
+  collateralAmount: string;
+  borrowAsset: string;
+  position: Position;
+  leverage: string;
+  takeProfitPrice: string;
+  owner: string;
+}
+export interface MsgBrokerOpenProtoMsg {
+  typeUrl: "/elys.margin.MsgBrokerOpen";
+  value: Uint8Array;
+}
+export interface MsgBrokerOpenAmino {
+  creator: string;
+  collateral_asset: string;
+  collateral_amount: string;
+  borrow_asset: string;
+  position: Position;
+  leverage: string;
+  take_profit_price: string;
+  owner: string;
+}
+export interface MsgBrokerOpenAminoMsg {
+  type: "/elys.margin.MsgBrokerOpen";
+  value: MsgBrokerOpenAmino;
+}
+export interface MsgBrokerOpenSDKType {
+  creator: string;
+  collateral_asset: string;
+  collateral_amount: string;
+  borrow_asset: string;
+  position: Position;
+  leverage: string;
+  take_profit_price: string;
+  owner: string;
+}
+export interface MsgBrokerOpenResponse {
+  id: bigint;
+}
+export interface MsgBrokerOpenResponseProtoMsg {
+  typeUrl: "/elys.margin.MsgBrokerOpenResponse";
+  value: Uint8Array;
+}
+export interface MsgBrokerOpenResponseAmino {
+  id: string;
+}
+export interface MsgBrokerOpenResponseAminoMsg {
+  type: "/elys.margin.MsgBrokerOpenResponse";
+  value: MsgBrokerOpenResponseAmino;
+}
+export interface MsgBrokerOpenResponseSDKType {
+  id: bigint;
+}
+export interface MsgBrokerClose {
+  creator: string;
+  id: bigint;
+  owner: string;
+}
+export interface MsgBrokerCloseProtoMsg {
+  typeUrl: "/elys.margin.MsgBrokerClose";
+  value: Uint8Array;
+}
+export interface MsgBrokerCloseAmino {
+  creator: string;
+  id: string;
+  owner: string;
+}
+export interface MsgBrokerCloseAminoMsg {
+  type: "/elys.margin.MsgBrokerClose";
+  value: MsgBrokerCloseAmino;
+}
+export interface MsgBrokerCloseSDKType {
+  creator: string;
+  id: bigint;
+  owner: string;
+}
+export interface MsgBrokerCloseResponse {
+  id: bigint;
+}
+export interface MsgBrokerCloseResponseProtoMsg {
+  typeUrl: "/elys.margin.MsgBrokerCloseResponse";
+  value: Uint8Array;
+}
+export interface MsgBrokerCloseResponseAmino {
+  id: string;
+}
+export interface MsgBrokerCloseResponseAminoMsg {
+  type: "/elys.margin.MsgBrokerCloseResponse";
+  value: MsgBrokerCloseResponseAmino;
+}
+export interface MsgBrokerCloseResponseSDKType {
+  id: bigint;
+}
 export interface MsgUpdateParams {
   /** authority is the address that controls the module (defaults to x/gov unless overwritten). */
   authority: string;
@@ -127,7 +234,7 @@ export interface MsgUpdatePoolsProtoMsg {
 export interface MsgUpdatePoolsAmino {
   authority: string;
   pools: string[];
-  closedPools: string[];
+  closed_pools: string[];
 }
 export interface MsgUpdatePoolsAminoMsg {
   type: "/elys.margin.MsgUpdatePools";
@@ -136,7 +243,7 @@ export interface MsgUpdatePoolsAminoMsg {
 export interface MsgUpdatePoolsSDKType {
   authority: string;
   pools: string[];
-  closedPools: string[];
+  closed_pools: string[];
 }
 export interface MsgUpdatePoolsResponse {}
 export interface MsgUpdatePoolsResponseProtoMsg {
@@ -159,7 +266,7 @@ export interface MsgWhitelistProtoMsg {
 }
 export interface MsgWhitelistAmino {
   authority: string;
-  whitelistedAddress: string;
+  whitelisted_address: string;
 }
 export interface MsgWhitelistAminoMsg {
   type: "/elys.margin.MsgWhitelist";
@@ -167,7 +274,7 @@ export interface MsgWhitelistAminoMsg {
 }
 export interface MsgWhitelistSDKType {
   authority: string;
-  whitelistedAddress: string;
+  whitelisted_address: string;
 }
 export interface MsgWhitelistResponse {}
 export interface MsgWhitelistResponseProtoMsg {
@@ -190,7 +297,7 @@ export interface MsgDewhitelistProtoMsg {
 }
 export interface MsgDewhitelistAmino {
   authority: string;
-  whitelistedAddress: string;
+  whitelisted_address: string;
 }
 export interface MsgDewhitelistAminoMsg {
   type: "/elys.margin.MsgDewhitelist";
@@ -198,7 +305,7 @@ export interface MsgDewhitelistAminoMsg {
 }
 export interface MsgDewhitelistSDKType {
   authority: string;
-  whitelistedAddress: string;
+  whitelisted_address: string;
 }
 export interface MsgDewhitelistResponse {}
 export interface MsgDewhitelistResponseProtoMsg {
@@ -297,23 +404,23 @@ export const MsgOpen = {
   fromAmino(object: MsgOpenAmino): MsgOpen {
     return {
       creator: object.creator,
-      collateralAsset: object.collateralAsset,
-      collateralAmount: object.collateralAmount,
-      borrowAsset: object.borrowAsset,
+      collateralAsset: object.collateral_asset,
+      collateralAmount: object.collateral_amount,
+      borrowAsset: object.borrow_asset,
       position: isSet(object.position) ? positionFromJSON(object.position) : -1,
       leverage: object.leverage,
-      takeProfitPrice: object.takeProfitPrice
+      takeProfitPrice: object.take_profit_price
     };
   },
   toAmino(message: MsgOpen): MsgOpenAmino {
     const obj: any = {};
     obj.creator = message.creator;
-    obj.collateralAsset = message.collateralAsset;
-    obj.collateralAmount = message.collateralAmount;
-    obj.borrowAsset = message.borrowAsset;
+    obj.collateral_asset = message.collateralAsset;
+    obj.collateral_amount = message.collateralAmount;
+    obj.borrow_asset = message.borrowAsset;
     obj.position = message.position;
     obj.leverage = message.leverage;
-    obj.takeProfitPrice = message.takeProfitPrice;
+    obj.take_profit_price = message.takeProfitPrice;
     return obj;
   },
   fromAminoMsg(object: MsgOpenAminoMsg): MsgOpen {
@@ -333,11 +440,16 @@ export const MsgOpen = {
   }
 };
 function createBaseMsgOpenResponse(): MsgOpenResponse {
-  return {};
+  return {
+    id: BigInt(0)
+  };
 }
 export const MsgOpenResponse = {
   typeUrl: "/elys.margin.MsgOpenResponse",
-  encode(_: MsgOpenResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+  encode(message: MsgOpenResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.id !== BigInt(0)) {
+      writer.uint32(8).uint64(message.id);
+    }
     return writer;
   },
   decode(input: BinaryReader | Uint8Array, length?: number): MsgOpenResponse {
@@ -347,6 +459,9 @@ export const MsgOpenResponse = {
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
+        case 1:
+          message.id = reader.uint64();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -354,15 +469,19 @@ export const MsgOpenResponse = {
     }
     return message;
   },
-  fromPartial(_: Partial<MsgOpenResponse>): MsgOpenResponse {
+  fromPartial(object: Partial<MsgOpenResponse>): MsgOpenResponse {
     const message = createBaseMsgOpenResponse();
+    message.id = object.id !== undefined && object.id !== null ? BigInt(object.id.toString()) : BigInt(0);
     return message;
   },
-  fromAmino(_: MsgOpenResponseAmino): MsgOpenResponse {
-    return {};
+  fromAmino(object: MsgOpenResponseAmino): MsgOpenResponse {
+    return {
+      id: BigInt(object.id)
+    };
   },
-  toAmino(_: MsgOpenResponse): MsgOpenResponseAmino {
+  toAmino(message: MsgOpenResponse): MsgOpenResponseAmino {
     const obj: any = {};
+    obj.id = message.id ? message.id.toString() : undefined;
     return obj;
   },
   fromAminoMsg(object: MsgOpenResponseAminoMsg): MsgOpenResponse {
@@ -453,11 +572,16 @@ export const MsgClose = {
   }
 };
 function createBaseMsgCloseResponse(): MsgCloseResponse {
-  return {};
+  return {
+    id: BigInt(0)
+  };
 }
 export const MsgCloseResponse = {
   typeUrl: "/elys.margin.MsgCloseResponse",
-  encode(_: MsgCloseResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+  encode(message: MsgCloseResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.id !== BigInt(0)) {
+      writer.uint32(8).uint64(message.id);
+    }
     return writer;
   },
   decode(input: BinaryReader | Uint8Array, length?: number): MsgCloseResponse {
@@ -467,6 +591,9 @@ export const MsgCloseResponse = {
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
+        case 1:
+          message.id = reader.uint64();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -474,15 +601,19 @@ export const MsgCloseResponse = {
     }
     return message;
   },
-  fromPartial(_: Partial<MsgCloseResponse>): MsgCloseResponse {
+  fromPartial(object: Partial<MsgCloseResponse>): MsgCloseResponse {
     const message = createBaseMsgCloseResponse();
+    message.id = object.id !== undefined && object.id !== null ? BigInt(object.id.toString()) : BigInt(0);
     return message;
   },
-  fromAmino(_: MsgCloseResponseAmino): MsgCloseResponse {
-    return {};
+  fromAmino(object: MsgCloseResponseAmino): MsgCloseResponse {
+    return {
+      id: BigInt(object.id)
+    };
   },
-  toAmino(_: MsgCloseResponse): MsgCloseResponseAmino {
+  toAmino(message: MsgCloseResponse): MsgCloseResponseAmino {
     const obj: any = {};
+    obj.id = message.id ? message.id.toString() : undefined;
     return obj;
   },
   fromAminoMsg(object: MsgCloseResponseAminoMsg): MsgCloseResponse {
@@ -498,6 +629,340 @@ export const MsgCloseResponse = {
     return {
       typeUrl: "/elys.margin.MsgCloseResponse",
       value: MsgCloseResponse.encode(message).finish()
+    };
+  }
+};
+function createBaseMsgBrokerOpen(): MsgBrokerOpen {
+  return {
+    creator: "",
+    collateralAsset: "",
+    collateralAmount: "",
+    borrowAsset: "",
+    position: 0,
+    leverage: "",
+    takeProfitPrice: "",
+    owner: ""
+  };
+}
+export const MsgBrokerOpen = {
+  typeUrl: "/elys.margin.MsgBrokerOpen",
+  encode(message: MsgBrokerOpen, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.collateralAsset !== "") {
+      writer.uint32(18).string(message.collateralAsset);
+    }
+    if (message.collateralAmount !== "") {
+      writer.uint32(26).string(message.collateralAmount);
+    }
+    if (message.borrowAsset !== "") {
+      writer.uint32(34).string(message.borrowAsset);
+    }
+    if (message.position !== 0) {
+      writer.uint32(40).int32(message.position);
+    }
+    if (message.leverage !== "") {
+      writer.uint32(50).string(Decimal.fromUserInput(message.leverage, 18).atomics);
+    }
+    if (message.takeProfitPrice !== "") {
+      writer.uint32(58).string(Decimal.fromUserInput(message.takeProfitPrice, 18).atomics);
+    }
+    if (message.owner !== "") {
+      writer.uint32(66).string(message.owner);
+    }
+    return writer;
+  },
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgBrokerOpen {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMsgBrokerOpen();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.collateralAsset = reader.string();
+          break;
+        case 3:
+          message.collateralAmount = reader.string();
+          break;
+        case 4:
+          message.borrowAsset = reader.string();
+          break;
+        case 5:
+          message.position = (reader.int32() as any);
+          break;
+        case 6:
+          message.leverage = Decimal.fromAtomics(reader.string(), 18).toString();
+          break;
+        case 7:
+          message.takeProfitPrice = Decimal.fromAtomics(reader.string(), 18).toString();
+          break;
+        case 8:
+          message.owner = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromPartial(object: Partial<MsgBrokerOpen>): MsgBrokerOpen {
+    const message = createBaseMsgBrokerOpen();
+    message.creator = object.creator ?? "";
+    message.collateralAsset = object.collateralAsset ?? "";
+    message.collateralAmount = object.collateralAmount ?? "";
+    message.borrowAsset = object.borrowAsset ?? "";
+    message.position = object.position ?? 0;
+    message.leverage = object.leverage ?? "";
+    message.takeProfitPrice = object.takeProfitPrice ?? "";
+    message.owner = object.owner ?? "";
+    return message;
+  },
+  fromAmino(object: MsgBrokerOpenAmino): MsgBrokerOpen {
+    return {
+      creator: object.creator,
+      collateralAsset: object.collateral_asset,
+      collateralAmount: object.collateral_amount,
+      borrowAsset: object.borrow_asset,
+      position: isSet(object.position) ? positionFromJSON(object.position) : -1,
+      leverage: object.leverage,
+      takeProfitPrice: object.take_profit_price,
+      owner: object.owner
+    };
+  },
+  toAmino(message: MsgBrokerOpen): MsgBrokerOpenAmino {
+    const obj: any = {};
+    obj.creator = message.creator;
+    obj.collateral_asset = message.collateralAsset;
+    obj.collateral_amount = message.collateralAmount;
+    obj.borrow_asset = message.borrowAsset;
+    obj.position = message.position;
+    obj.leverage = message.leverage;
+    obj.take_profit_price = message.takeProfitPrice;
+    obj.owner = message.owner;
+    return obj;
+  },
+  fromAminoMsg(object: MsgBrokerOpenAminoMsg): MsgBrokerOpen {
+    return MsgBrokerOpen.fromAmino(object.value);
+  },
+  fromProtoMsg(message: MsgBrokerOpenProtoMsg): MsgBrokerOpen {
+    return MsgBrokerOpen.decode(message.value);
+  },
+  toProto(message: MsgBrokerOpen): Uint8Array {
+    return MsgBrokerOpen.encode(message).finish();
+  },
+  toProtoMsg(message: MsgBrokerOpen): MsgBrokerOpenProtoMsg {
+    return {
+      typeUrl: "/elys.margin.MsgBrokerOpen",
+      value: MsgBrokerOpen.encode(message).finish()
+    };
+  }
+};
+function createBaseMsgBrokerOpenResponse(): MsgBrokerOpenResponse {
+  return {
+    id: BigInt(0)
+  };
+}
+export const MsgBrokerOpenResponse = {
+  typeUrl: "/elys.margin.MsgBrokerOpenResponse",
+  encode(message: MsgBrokerOpenResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.id !== BigInt(0)) {
+      writer.uint32(8).uint64(message.id);
+    }
+    return writer;
+  },
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgBrokerOpenResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMsgBrokerOpenResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.id = reader.uint64();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromPartial(object: Partial<MsgBrokerOpenResponse>): MsgBrokerOpenResponse {
+    const message = createBaseMsgBrokerOpenResponse();
+    message.id = object.id !== undefined && object.id !== null ? BigInt(object.id.toString()) : BigInt(0);
+    return message;
+  },
+  fromAmino(object: MsgBrokerOpenResponseAmino): MsgBrokerOpenResponse {
+    return {
+      id: BigInt(object.id)
+    };
+  },
+  toAmino(message: MsgBrokerOpenResponse): MsgBrokerOpenResponseAmino {
+    const obj: any = {};
+    obj.id = message.id ? message.id.toString() : undefined;
+    return obj;
+  },
+  fromAminoMsg(object: MsgBrokerOpenResponseAminoMsg): MsgBrokerOpenResponse {
+    return MsgBrokerOpenResponse.fromAmino(object.value);
+  },
+  fromProtoMsg(message: MsgBrokerOpenResponseProtoMsg): MsgBrokerOpenResponse {
+    return MsgBrokerOpenResponse.decode(message.value);
+  },
+  toProto(message: MsgBrokerOpenResponse): Uint8Array {
+    return MsgBrokerOpenResponse.encode(message).finish();
+  },
+  toProtoMsg(message: MsgBrokerOpenResponse): MsgBrokerOpenResponseProtoMsg {
+    return {
+      typeUrl: "/elys.margin.MsgBrokerOpenResponse",
+      value: MsgBrokerOpenResponse.encode(message).finish()
+    };
+  }
+};
+function createBaseMsgBrokerClose(): MsgBrokerClose {
+  return {
+    creator: "",
+    id: BigInt(0),
+    owner: ""
+  };
+}
+export const MsgBrokerClose = {
+  typeUrl: "/elys.margin.MsgBrokerClose",
+  encode(message: MsgBrokerClose, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.id !== BigInt(0)) {
+      writer.uint32(16).uint64(message.id);
+    }
+    if (message.owner !== "") {
+      writer.uint32(26).string(message.owner);
+    }
+    return writer;
+  },
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgBrokerClose {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMsgBrokerClose();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.id = reader.uint64();
+          break;
+        case 3:
+          message.owner = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromPartial(object: Partial<MsgBrokerClose>): MsgBrokerClose {
+    const message = createBaseMsgBrokerClose();
+    message.creator = object.creator ?? "";
+    message.id = object.id !== undefined && object.id !== null ? BigInt(object.id.toString()) : BigInt(0);
+    message.owner = object.owner ?? "";
+    return message;
+  },
+  fromAmino(object: MsgBrokerCloseAmino): MsgBrokerClose {
+    return {
+      creator: object.creator,
+      id: BigInt(object.id),
+      owner: object.owner
+    };
+  },
+  toAmino(message: MsgBrokerClose): MsgBrokerCloseAmino {
+    const obj: any = {};
+    obj.creator = message.creator;
+    obj.id = message.id ? message.id.toString() : undefined;
+    obj.owner = message.owner;
+    return obj;
+  },
+  fromAminoMsg(object: MsgBrokerCloseAminoMsg): MsgBrokerClose {
+    return MsgBrokerClose.fromAmino(object.value);
+  },
+  fromProtoMsg(message: MsgBrokerCloseProtoMsg): MsgBrokerClose {
+    return MsgBrokerClose.decode(message.value);
+  },
+  toProto(message: MsgBrokerClose): Uint8Array {
+    return MsgBrokerClose.encode(message).finish();
+  },
+  toProtoMsg(message: MsgBrokerClose): MsgBrokerCloseProtoMsg {
+    return {
+      typeUrl: "/elys.margin.MsgBrokerClose",
+      value: MsgBrokerClose.encode(message).finish()
+    };
+  }
+};
+function createBaseMsgBrokerCloseResponse(): MsgBrokerCloseResponse {
+  return {
+    id: BigInt(0)
+  };
+}
+export const MsgBrokerCloseResponse = {
+  typeUrl: "/elys.margin.MsgBrokerCloseResponse",
+  encode(message: MsgBrokerCloseResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.id !== BigInt(0)) {
+      writer.uint32(8).uint64(message.id);
+    }
+    return writer;
+  },
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgBrokerCloseResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMsgBrokerCloseResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.id = reader.uint64();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromPartial(object: Partial<MsgBrokerCloseResponse>): MsgBrokerCloseResponse {
+    const message = createBaseMsgBrokerCloseResponse();
+    message.id = object.id !== undefined && object.id !== null ? BigInt(object.id.toString()) : BigInt(0);
+    return message;
+  },
+  fromAmino(object: MsgBrokerCloseResponseAmino): MsgBrokerCloseResponse {
+    return {
+      id: BigInt(object.id)
+    };
+  },
+  toAmino(message: MsgBrokerCloseResponse): MsgBrokerCloseResponseAmino {
+    const obj: any = {};
+    obj.id = message.id ? message.id.toString() : undefined;
+    return obj;
+  },
+  fromAminoMsg(object: MsgBrokerCloseResponseAminoMsg): MsgBrokerCloseResponse {
+    return MsgBrokerCloseResponse.fromAmino(object.value);
+  },
+  fromProtoMsg(message: MsgBrokerCloseResponseProtoMsg): MsgBrokerCloseResponse {
+    return MsgBrokerCloseResponse.decode(message.value);
+  },
+  toProto(message: MsgBrokerCloseResponse): Uint8Array {
+    return MsgBrokerCloseResponse.encode(message).finish();
+  },
+  toProtoMsg(message: MsgBrokerCloseResponse): MsgBrokerCloseResponseProtoMsg {
+    return {
+      typeUrl: "/elys.margin.MsgBrokerCloseResponse",
+      value: MsgBrokerCloseResponse.encode(message).finish()
     };
   }
 };
@@ -676,7 +1141,7 @@ export const MsgUpdatePools = {
     return {
       authority: object.authority,
       pools: Array.isArray(object?.pools) ? object.pools.map((e: any) => e) : [],
-      closedPools: Array.isArray(object?.closedPools) ? object.closedPools.map((e: any) => e) : []
+      closedPools: Array.isArray(object?.closed_pools) ? object.closed_pools.map((e: any) => e) : []
     };
   },
   toAmino(message: MsgUpdatePools): MsgUpdatePoolsAmino {
@@ -688,9 +1153,9 @@ export const MsgUpdatePools = {
       obj.pools = [];
     }
     if (message.closedPools) {
-      obj.closedPools = message.closedPools.map(e => e);
+      obj.closed_pools = message.closedPools.map(e => e);
     } else {
-      obj.closedPools = [];
+      obj.closed_pools = [];
     }
     return obj;
   },
@@ -805,13 +1270,13 @@ export const MsgWhitelist = {
   fromAmino(object: MsgWhitelistAmino): MsgWhitelist {
     return {
       authority: object.authority,
-      whitelistedAddress: object.whitelistedAddress
+      whitelistedAddress: object.whitelisted_address
     };
   },
   toAmino(message: MsgWhitelist): MsgWhitelistAmino {
     const obj: any = {};
     obj.authority = message.authority;
-    obj.whitelistedAddress = message.whitelistedAddress;
+    obj.whitelisted_address = message.whitelistedAddress;
     return obj;
   },
   fromAminoMsg(object: MsgWhitelistAminoMsg): MsgWhitelist {
@@ -925,13 +1390,13 @@ export const MsgDewhitelist = {
   fromAmino(object: MsgDewhitelistAmino): MsgDewhitelist {
     return {
       authority: object.authority,
-      whitelistedAddress: object.whitelistedAddress
+      whitelistedAddress: object.whitelisted_address
     };
   },
   toAmino(message: MsgDewhitelist): MsgDewhitelistAmino {
     const obj: any = {};
     obj.authority = message.authority;
-    obj.whitelistedAddress = message.whitelistedAddress;
+    obj.whitelisted_address = message.whitelistedAddress;
     return obj;
   },
   fromAminoMsg(object: MsgDewhitelistAminoMsg): MsgDewhitelist {

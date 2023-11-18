@@ -13,8 +13,8 @@ export interface AssetInfoProtoMsg {
 export interface AssetInfoAmino {
   denom: string;
   display: string;
-  bandTicker: string;
-  elysTicker: string;
+  band_ticker: string;
+  elys_ticker: string;
   decimal: string;
 }
 export interface AssetInfoAminoMsg {
@@ -24,8 +24,8 @@ export interface AssetInfoAminoMsg {
 export interface AssetInfoSDKType {
   denom: string;
   display: string;
-  bandTicker: string;
-  elysTicker: string;
+  band_ticker: string;
+  elys_ticker: string;
   decimal: bigint;
 }
 function createBaseAssetInfo(): AssetInfo {
@@ -99,8 +99,8 @@ export const AssetInfo = {
     return {
       denom: object.denom,
       display: object.display,
-      bandTicker: object.bandTicker,
-      elysTicker: object.elysTicker,
+      bandTicker: object.band_ticker,
+      elysTicker: object.elys_ticker,
       decimal: BigInt(object.decimal)
     };
   },
@@ -108,8 +108,8 @@ export const AssetInfo = {
     const obj: any = {};
     obj.denom = message.denom;
     obj.display = message.display;
-    obj.bandTicker = message.bandTicker;
-    obj.elysTicker = message.elysTicker;
+    obj.band_ticker = message.bandTicker;
+    obj.elys_ticker = message.elysTicker;
     obj.decimal = message.decimal ? message.decimal.toString() : undefined;
     return obj;
   },

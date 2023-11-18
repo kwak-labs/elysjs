@@ -18,10 +18,10 @@ export interface GenesisStateProtoMsg {
 /** GenesisState defines the oracle module's genesis state. */
 export interface GenesisStateAmino {
   params?: ParamsAmino;
-  portId: string;
-  assetInfos: AssetInfoAmino[];
+  port_id: string;
+  asset_infos: AssetInfoAmino[];
   prices: PriceAmino[];
-  priceFeeders: PriceFeederAmino[];
+  price_feeders: PriceFeederAmino[];
 }
 export interface GenesisStateAminoMsg {
   type: "/elys.oracle.GenesisState";
@@ -30,10 +30,10 @@ export interface GenesisStateAminoMsg {
 /** GenesisState defines the oracle module's genesis state. */
 export interface GenesisStateSDKType {
   params: ParamsSDKType;
-  portId: string;
-  assetInfos: AssetInfoSDKType[];
+  port_id: string;
+  asset_infos: AssetInfoSDKType[];
   prices: PriceSDKType[];
-  priceFeeders: PriceFeederSDKType[];
+  price_feeders: PriceFeederSDKType[];
 }
 function createBaseGenesisState(): GenesisState {
   return {
@@ -105,20 +105,20 @@ export const GenesisState = {
   fromAmino(object: GenesisStateAmino): GenesisState {
     return {
       params: object?.params ? Params.fromAmino(object.params) : undefined,
-      portId: object.portId,
-      assetInfos: Array.isArray(object?.assetInfos) ? object.assetInfos.map((e: any) => AssetInfo.fromAmino(e)) : [],
+      portId: object.port_id,
+      assetInfos: Array.isArray(object?.asset_infos) ? object.asset_infos.map((e: any) => AssetInfo.fromAmino(e)) : [],
       prices: Array.isArray(object?.prices) ? object.prices.map((e: any) => Price.fromAmino(e)) : [],
-      priceFeeders: Array.isArray(object?.priceFeeders) ? object.priceFeeders.map((e: any) => PriceFeeder.fromAmino(e)) : []
+      priceFeeders: Array.isArray(object?.price_feeders) ? object.price_feeders.map((e: any) => PriceFeeder.fromAmino(e)) : []
     };
   },
   toAmino(message: GenesisState): GenesisStateAmino {
     const obj: any = {};
     obj.params = message.params ? Params.toAmino(message.params) : undefined;
-    obj.portId = message.portId;
+    obj.port_id = message.portId;
     if (message.assetInfos) {
-      obj.assetInfos = message.assetInfos.map(e => e ? AssetInfo.toAmino(e) : undefined);
+      obj.asset_infos = message.assetInfos.map(e => e ? AssetInfo.toAmino(e) : undefined);
     } else {
-      obj.assetInfos = [];
+      obj.asset_infos = [];
     }
     if (message.prices) {
       obj.prices = message.prices.map(e => e ? Price.toAmino(e) : undefined);
@@ -126,9 +126,9 @@ export const GenesisState = {
       obj.prices = [];
     }
     if (message.priceFeeders) {
-      obj.priceFeeders = message.priceFeeders.map(e => e ? PriceFeeder.toAmino(e) : undefined);
+      obj.price_feeders = message.priceFeeders.map(e => e ? PriceFeeder.toAmino(e) : undefined);
     } else {
-      obj.priceFeeders = [];
+      obj.price_feeders = [];
     }
     return obj;
   },

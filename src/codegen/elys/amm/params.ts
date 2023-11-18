@@ -9,7 +9,7 @@ export interface ParamsProtoMsg {
 }
 /** Params defines the parameters for the module. */
 export interface ParamsAmino {
-  poolCreationFee: string;
+  pool_creation_fee: string;
 }
 export interface ParamsAminoMsg {
   type: "/elys.amm.Params";
@@ -17,7 +17,7 @@ export interface ParamsAminoMsg {
 }
 /** Params defines the parameters for the module. */
 export interface ParamsSDKType {
-  poolCreationFee: bigint;
+  pool_creation_fee: bigint;
 }
 function createBaseParams(): Params {
   return {
@@ -56,12 +56,12 @@ export const Params = {
   },
   fromAmino(object: ParamsAmino): Params {
     return {
-      poolCreationFee: BigInt(object.poolCreationFee)
+      poolCreationFee: BigInt(object.pool_creation_fee)
     };
   },
   toAmino(message: Params): ParamsAmino {
     const obj: any = {};
-    obj.poolCreationFee = message.poolCreationFee ? message.poolCreationFee.toString() : undefined;
+    obj.pool_creation_fee = message.poolCreationFee ? message.poolCreationFee.toString() : undefined;
     return obj;
   },
   fromAminoMsg(object: ParamsAminoMsg): Params {

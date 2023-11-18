@@ -16,26 +16,26 @@ export interface PoolProtoMsg {
   value: Uint8Array;
 }
 export interface PoolAmino {
-  poolId: string;
+  pool_id: string;
   address: string;
-  poolParams?: PoolParamsAmino;
-  totalShares?: CoinAmino;
-  poolAssets: PoolAssetAmino[];
-  totalWeight: string;
-  rebalanceTreasury: string;
+  pool_params?: PoolParamsAmino;
+  total_shares?: CoinAmino;
+  pool_assets: PoolAssetAmino[];
+  total_weight: string;
+  rebalance_treasury: string;
 }
 export interface PoolAminoMsg {
   type: "/elys.amm.Pool";
   value: PoolAmino;
 }
 export interface PoolSDKType {
-  poolId: bigint;
+  pool_id: bigint;
   address: string;
-  poolParams: PoolParamsSDKType;
-  totalShares: CoinSDKType;
-  poolAssets: PoolAssetSDKType[];
-  totalWeight: string;
-  rebalanceTreasury: string;
+  pool_params: PoolParamsSDKType;
+  total_shares: CoinSDKType;
+  pool_assets: PoolAssetSDKType[];
+  total_weight: string;
+  rebalance_treasury: string;
 }
 export interface OraclePoolSlippageTrack {
   poolId: bigint;
@@ -47,7 +47,7 @@ export interface OraclePoolSlippageTrackProtoMsg {
   value: Uint8Array;
 }
 export interface OraclePoolSlippageTrackAmino {
-  poolId: string;
+  pool_id: string;
   timestamp: string;
   tracked: CoinAmino[];
 }
@@ -56,7 +56,7 @@ export interface OraclePoolSlippageTrackAminoMsg {
   value: OraclePoolSlippageTrackAmino;
 }
 export interface OraclePoolSlippageTrackSDKType {
-  poolId: bigint;
+  pool_id: bigint;
   timestamp: bigint;
   tracked: CoinSDKType[];
 }
@@ -145,28 +145,28 @@ export const Pool = {
   },
   fromAmino(object: PoolAmino): Pool {
     return {
-      poolId: BigInt(object.poolId),
+      poolId: BigInt(object.pool_id),
       address: object.address,
-      poolParams: object?.poolParams ? PoolParams.fromAmino(object.poolParams) : undefined,
-      totalShares: object?.totalShares ? Coin.fromAmino(object.totalShares) : undefined,
-      poolAssets: Array.isArray(object?.poolAssets) ? object.poolAssets.map((e: any) => PoolAsset.fromAmino(e)) : [],
-      totalWeight: object.totalWeight,
-      rebalanceTreasury: object.rebalanceTreasury
+      poolParams: object?.pool_params ? PoolParams.fromAmino(object.pool_params) : undefined,
+      totalShares: object?.total_shares ? Coin.fromAmino(object.total_shares) : undefined,
+      poolAssets: Array.isArray(object?.pool_assets) ? object.pool_assets.map((e: any) => PoolAsset.fromAmino(e)) : [],
+      totalWeight: object.total_weight,
+      rebalanceTreasury: object.rebalance_treasury
     };
   },
   toAmino(message: Pool): PoolAmino {
     const obj: any = {};
-    obj.poolId = message.poolId ? message.poolId.toString() : undefined;
+    obj.pool_id = message.poolId ? message.poolId.toString() : undefined;
     obj.address = message.address;
-    obj.poolParams = message.poolParams ? PoolParams.toAmino(message.poolParams) : undefined;
-    obj.totalShares = message.totalShares ? Coin.toAmino(message.totalShares) : undefined;
+    obj.pool_params = message.poolParams ? PoolParams.toAmino(message.poolParams) : undefined;
+    obj.total_shares = message.totalShares ? Coin.toAmino(message.totalShares) : undefined;
     if (message.poolAssets) {
-      obj.poolAssets = message.poolAssets.map(e => e ? PoolAsset.toAmino(e) : undefined);
+      obj.pool_assets = message.poolAssets.map(e => e ? PoolAsset.toAmino(e) : undefined);
     } else {
-      obj.poolAssets = [];
+      obj.pool_assets = [];
     }
-    obj.totalWeight = message.totalWeight;
-    obj.rebalanceTreasury = message.rebalanceTreasury;
+    obj.total_weight = message.totalWeight;
+    obj.rebalance_treasury = message.rebalanceTreasury;
     return obj;
   },
   fromAminoMsg(object: PoolAminoMsg): Pool {
@@ -238,14 +238,14 @@ export const OraclePoolSlippageTrack = {
   },
   fromAmino(object: OraclePoolSlippageTrackAmino): OraclePoolSlippageTrack {
     return {
-      poolId: BigInt(object.poolId),
+      poolId: BigInt(object.pool_id),
       timestamp: BigInt(object.timestamp),
       tracked: Array.isArray(object?.tracked) ? object.tracked.map((e: any) => Coin.fromAmino(e)) : []
     };
   },
   toAmino(message: OraclePoolSlippageTrack): OraclePoolSlippageTrackAmino {
     const obj: any = {};
-    obj.poolId = message.poolId ? message.poolId.toString() : undefined;
+    obj.pool_id = message.poolId ? message.poolId.toString() : undefined;
     obj.timestamp = message.timestamp ? message.timestamp.toString() : undefined;
     if (message.tracked) {
       obj.tracked = message.tracked.map(e => e ? Coin.toAmino(e) : undefined);

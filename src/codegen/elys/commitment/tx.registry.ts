@@ -1,6 +1,6 @@
 import { GeneratedType, Registry } from "@cosmjs/proto-signing";
-import { MsgCommitTokens, MsgUncommitTokens, MsgWithdrawTokens, MsgCommitLiquidTokens, MsgVest, MsgCancelVest, MsgVestNow, MsgUpdateVestingInfo, MsgVestLiquid } from "./tx";
-export const registry: ReadonlyArray<[string, GeneratedType]> = [["/elys.commitment.MsgCommitTokens", MsgCommitTokens], ["/elys.commitment.MsgUncommitTokens", MsgUncommitTokens], ["/elys.commitment.MsgWithdrawTokens", MsgWithdrawTokens], ["/elys.commitment.MsgCommitLiquidTokens", MsgCommitLiquidTokens], ["/elys.commitment.MsgVest", MsgVest], ["/elys.commitment.MsgCancelVest", MsgCancelVest], ["/elys.commitment.MsgVestNow", MsgVestNow], ["/elys.commitment.MsgUpdateVestingInfo", MsgUpdateVestingInfo], ["/elys.commitment.MsgVestLiquid", MsgVestLiquid]];
+import { MsgCommitLiquidTokens, MsgCommitClaimedRewards, MsgUncommitTokens, MsgVest, MsgVestNow, MsgVestLiquid, MsgCancelVest, MsgUpdateVestingInfo, MsgStake, MsgUnstake } from "./tx";
+export const registry: ReadonlyArray<[string, GeneratedType]> = [["/elys.commitment.MsgCommitLiquidTokens", MsgCommitLiquidTokens], ["/elys.commitment.MsgCommitClaimedRewards", MsgCommitClaimedRewards], ["/elys.commitment.MsgUncommitTokens", MsgUncommitTokens], ["/elys.commitment.MsgVest", MsgVest], ["/elys.commitment.MsgVestNow", MsgVestNow], ["/elys.commitment.MsgVestLiquid", MsgVestLiquid], ["/elys.commitment.MsgCancelVest", MsgCancelVest], ["/elys.commitment.MsgUpdateVestingInfo", MsgUpdateVestingInfo], ["/elys.commitment.MsgStake", MsgStake], ["/elys.commitment.MsgUnstake", MsgUnstake]];
 export const load = (protoRegistry: Registry) => {
   registry.forEach(([typeUrl, mod]) => {
     protoRegistry.register(typeUrl, mod);
@@ -8,10 +8,16 @@ export const load = (protoRegistry: Registry) => {
 };
 export const MessageComposer = {
   encoded: {
-    commitTokens(value: MsgCommitTokens) {
+    commitLiquidTokens(value: MsgCommitLiquidTokens) {
       return {
-        typeUrl: "/elys.commitment.MsgCommitTokens",
-        value: MsgCommitTokens.encode(value).finish()
+        typeUrl: "/elys.commitment.MsgCommitLiquidTokens",
+        value: MsgCommitLiquidTokens.encode(value).finish()
+      };
+    },
+    commitClaimedRewards(value: MsgCommitClaimedRewards) {
+      return {
+        typeUrl: "/elys.commitment.MsgCommitClaimedRewards",
+        value: MsgCommitClaimedRewards.encode(value).finish()
       };
     },
     uncommitTokens(value: MsgUncommitTokens) {
@@ -20,28 +26,10 @@ export const MessageComposer = {
         value: MsgUncommitTokens.encode(value).finish()
       };
     },
-    withdrawTokens(value: MsgWithdrawTokens) {
-      return {
-        typeUrl: "/elys.commitment.MsgWithdrawTokens",
-        value: MsgWithdrawTokens.encode(value).finish()
-      };
-    },
-    commitLiquidTokens(value: MsgCommitLiquidTokens) {
-      return {
-        typeUrl: "/elys.commitment.MsgCommitLiquidTokens",
-        value: MsgCommitLiquidTokens.encode(value).finish()
-      };
-    },
     vest(value: MsgVest) {
       return {
         typeUrl: "/elys.commitment.MsgVest",
         value: MsgVest.encode(value).finish()
-      };
-    },
-    cancelVest(value: MsgCancelVest) {
-      return {
-        typeUrl: "/elys.commitment.MsgCancelVest",
-        value: MsgCancelVest.encode(value).finish()
       };
     },
     vestNow(value: MsgVestNow) {
@@ -50,23 +38,47 @@ export const MessageComposer = {
         value: MsgVestNow.encode(value).finish()
       };
     },
+    vestLiquid(value: MsgVestLiquid) {
+      return {
+        typeUrl: "/elys.commitment.MsgVestLiquid",
+        value: MsgVestLiquid.encode(value).finish()
+      };
+    },
+    cancelVest(value: MsgCancelVest) {
+      return {
+        typeUrl: "/elys.commitment.MsgCancelVest",
+        value: MsgCancelVest.encode(value).finish()
+      };
+    },
     updateVestingInfo(value: MsgUpdateVestingInfo) {
       return {
         typeUrl: "/elys.commitment.MsgUpdateVestingInfo",
         value: MsgUpdateVestingInfo.encode(value).finish()
       };
     },
-    vestLiquid(value: MsgVestLiquid) {
+    stake(value: MsgStake) {
       return {
-        typeUrl: "/elys.commitment.MsgVestLiquid",
-        value: MsgVestLiquid.encode(value).finish()
+        typeUrl: "/elys.commitment.MsgStake",
+        value: MsgStake.encode(value).finish()
+      };
+    },
+    unstake(value: MsgUnstake) {
+      return {
+        typeUrl: "/elys.commitment.MsgUnstake",
+        value: MsgUnstake.encode(value).finish()
       };
     }
   },
   withTypeUrl: {
-    commitTokens(value: MsgCommitTokens) {
+    commitLiquidTokens(value: MsgCommitLiquidTokens) {
       return {
-        typeUrl: "/elys.commitment.MsgCommitTokens",
+        typeUrl: "/elys.commitment.MsgCommitLiquidTokens",
+        value
+      };
+    },
+    commitClaimedRewards(value: MsgCommitClaimedRewards) {
+      return {
+        typeUrl: "/elys.commitment.MsgCommitClaimedRewards",
         value
       };
     },
@@ -76,27 +88,9 @@ export const MessageComposer = {
         value
       };
     },
-    withdrawTokens(value: MsgWithdrawTokens) {
-      return {
-        typeUrl: "/elys.commitment.MsgWithdrawTokens",
-        value
-      };
-    },
-    commitLiquidTokens(value: MsgCommitLiquidTokens) {
-      return {
-        typeUrl: "/elys.commitment.MsgCommitLiquidTokens",
-        value
-      };
-    },
     vest(value: MsgVest) {
       return {
         typeUrl: "/elys.commitment.MsgVest",
-        value
-      };
-    },
-    cancelVest(value: MsgCancelVest) {
-      return {
-        typeUrl: "/elys.commitment.MsgCancelVest",
         value
       };
     },
@@ -106,24 +100,48 @@ export const MessageComposer = {
         value
       };
     },
+    vestLiquid(value: MsgVestLiquid) {
+      return {
+        typeUrl: "/elys.commitment.MsgVestLiquid",
+        value
+      };
+    },
+    cancelVest(value: MsgCancelVest) {
+      return {
+        typeUrl: "/elys.commitment.MsgCancelVest",
+        value
+      };
+    },
     updateVestingInfo(value: MsgUpdateVestingInfo) {
       return {
         typeUrl: "/elys.commitment.MsgUpdateVestingInfo",
         value
       };
     },
-    vestLiquid(value: MsgVestLiquid) {
+    stake(value: MsgStake) {
       return {
-        typeUrl: "/elys.commitment.MsgVestLiquid",
+        typeUrl: "/elys.commitment.MsgStake",
+        value
+      };
+    },
+    unstake(value: MsgUnstake) {
+      return {
+        typeUrl: "/elys.commitment.MsgUnstake",
         value
       };
     }
   },
   fromPartial: {
-    commitTokens(value: MsgCommitTokens) {
+    commitLiquidTokens(value: MsgCommitLiquidTokens) {
       return {
-        typeUrl: "/elys.commitment.MsgCommitTokens",
-        value: MsgCommitTokens.fromPartial(value)
+        typeUrl: "/elys.commitment.MsgCommitLiquidTokens",
+        value: MsgCommitLiquidTokens.fromPartial(value)
+      };
+    },
+    commitClaimedRewards(value: MsgCommitClaimedRewards) {
+      return {
+        typeUrl: "/elys.commitment.MsgCommitClaimedRewards",
+        value: MsgCommitClaimedRewards.fromPartial(value)
       };
     },
     uncommitTokens(value: MsgUncommitTokens) {
@@ -132,28 +150,10 @@ export const MessageComposer = {
         value: MsgUncommitTokens.fromPartial(value)
       };
     },
-    withdrawTokens(value: MsgWithdrawTokens) {
-      return {
-        typeUrl: "/elys.commitment.MsgWithdrawTokens",
-        value: MsgWithdrawTokens.fromPartial(value)
-      };
-    },
-    commitLiquidTokens(value: MsgCommitLiquidTokens) {
-      return {
-        typeUrl: "/elys.commitment.MsgCommitLiquidTokens",
-        value: MsgCommitLiquidTokens.fromPartial(value)
-      };
-    },
     vest(value: MsgVest) {
       return {
         typeUrl: "/elys.commitment.MsgVest",
         value: MsgVest.fromPartial(value)
-      };
-    },
-    cancelVest(value: MsgCancelVest) {
-      return {
-        typeUrl: "/elys.commitment.MsgCancelVest",
-        value: MsgCancelVest.fromPartial(value)
       };
     },
     vestNow(value: MsgVestNow) {
@@ -162,16 +162,34 @@ export const MessageComposer = {
         value: MsgVestNow.fromPartial(value)
       };
     },
+    vestLiquid(value: MsgVestLiquid) {
+      return {
+        typeUrl: "/elys.commitment.MsgVestLiquid",
+        value: MsgVestLiquid.fromPartial(value)
+      };
+    },
+    cancelVest(value: MsgCancelVest) {
+      return {
+        typeUrl: "/elys.commitment.MsgCancelVest",
+        value: MsgCancelVest.fromPartial(value)
+      };
+    },
     updateVestingInfo(value: MsgUpdateVestingInfo) {
       return {
         typeUrl: "/elys.commitment.MsgUpdateVestingInfo",
         value: MsgUpdateVestingInfo.fromPartial(value)
       };
     },
-    vestLiquid(value: MsgVestLiquid) {
+    stake(value: MsgStake) {
       return {
-        typeUrl: "/elys.commitment.MsgVestLiquid",
-        value: MsgVestLiquid.fromPartial(value)
+        typeUrl: "/elys.commitment.MsgStake",
+        value: MsgStake.fromPartial(value)
+      };
+    },
+    unstake(value: MsgUnstake) {
+      return {
+        typeUrl: "/elys.commitment.MsgUnstake",
+        value: MsgUnstake.fromPartial(value)
       };
     }
   }

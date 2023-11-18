@@ -24,22 +24,22 @@ export interface MsgCreateEntryProtoMsg {
 }
 export interface MsgCreateEntryAmino {
   authority: string;
-  baseDenom: string;
+  base_denom: string;
   decimals: string;
   denom: string;
   path: string;
-  ibcChannelId: string;
-  ibcCounterpartyChannelId: string;
-  displayName: string;
-  displaySymbol: string;
+  ibc_channel_id: string;
+  ibc_counterparty_channel_id: string;
+  display_name: string;
+  display_symbol: string;
   network: string;
   address: string;
-  externalSymbol: string;
-  transferLimit: string;
+  external_symbol: string;
+  transfer_limit: string;
   permissions: string[];
-  unitDenom: string;
-  ibcCounterpartyDenom: string;
-  ibcCounterpartyChainId: string;
+  unit_denom: string;
+  ibc_counterparty_denom: string;
+  ibc_counterparty_chain_id: string;
 }
 export interface MsgCreateEntryAminoMsg {
   type: "/elys.assetprofile.MsgCreateEntry";
@@ -47,22 +47,22 @@ export interface MsgCreateEntryAminoMsg {
 }
 export interface MsgCreateEntrySDKType {
   authority: string;
-  baseDenom: string;
+  base_denom: string;
   decimals: bigint;
   denom: string;
   path: string;
-  ibcChannelId: string;
-  ibcCounterpartyChannelId: string;
-  displayName: string;
-  displaySymbol: string;
+  ibc_channel_id: string;
+  ibc_counterparty_channel_id: string;
+  display_name: string;
+  display_symbol: string;
   network: string;
   address: string;
-  externalSymbol: string;
-  transferLimit: string;
+  external_symbol: string;
+  transfer_limit: string;
   permissions: string[];
-  unitDenom: string;
-  ibcCounterpartyDenom: string;
-  ibcCounterpartyChainId: string;
+  unit_denom: string;
+  ibc_counterparty_denom: string;
+  ibc_counterparty_chain_id: string;
 }
 export interface MsgCreateEntryResponse {}
 export interface MsgCreateEntryResponseProtoMsg {
@@ -100,22 +100,22 @@ export interface MsgUpdateEntryProtoMsg {
 }
 export interface MsgUpdateEntryAmino {
   authority: string;
-  baseDenom: string;
+  base_denom: string;
   decimals: string;
   denom: string;
   path: string;
-  ibcChannelId: string;
-  ibcCounterpartyChannelId: string;
-  displayName: string;
-  displaySymbol: string;
+  ibc_channel_id: string;
+  ibc_counterparty_channel_id: string;
+  display_name: string;
+  display_symbol: string;
   network: string;
   address: string;
-  externalSymbol: string;
-  transferLimit: string;
+  external_symbol: string;
+  transfer_limit: string;
   permissions: string[];
-  unitDenom: string;
-  ibcCounterpartyDenom: string;
-  ibcCounterpartyChainId: string;
+  unit_denom: string;
+  ibc_counterparty_denom: string;
+  ibc_counterparty_chain_id: string;
 }
 export interface MsgUpdateEntryAminoMsg {
   type: "/elys.assetprofile.MsgUpdateEntry";
@@ -123,22 +123,22 @@ export interface MsgUpdateEntryAminoMsg {
 }
 export interface MsgUpdateEntrySDKType {
   authority: string;
-  baseDenom: string;
+  base_denom: string;
   decimals: bigint;
   denom: string;
   path: string;
-  ibcChannelId: string;
-  ibcCounterpartyChannelId: string;
-  displayName: string;
-  displaySymbol: string;
+  ibc_channel_id: string;
+  ibc_counterparty_channel_id: string;
+  display_name: string;
+  display_symbol: string;
   network: string;
   address: string;
-  externalSymbol: string;
-  transferLimit: string;
+  external_symbol: string;
+  transfer_limit: string;
   permissions: string[];
-  unitDenom: string;
-  ibcCounterpartyDenom: string;
-  ibcCounterpartyChainId: string;
+  unit_denom: string;
+  ibc_counterparty_denom: string;
+  ibc_counterparty_chain_id: string;
 }
 export interface MsgUpdateEntryResponse {}
 export interface MsgUpdateEntryResponseProtoMsg {
@@ -161,7 +161,7 @@ export interface MsgDeleteEntryProtoMsg {
 }
 export interface MsgDeleteEntryAmino {
   authority: string;
-  baseDenom: string;
+  base_denom: string;
 }
 export interface MsgDeleteEntryAminoMsg {
   type: "/elys.assetprofile.MsgDeleteEntry";
@@ -169,7 +169,7 @@ export interface MsgDeleteEntryAminoMsg {
 }
 export interface MsgDeleteEntrySDKType {
   authority: string;
-  baseDenom: string;
+  base_denom: string;
 }
 export interface MsgDeleteEntryResponse {}
 export interface MsgDeleteEntryResponseProtoMsg {
@@ -348,47 +348,47 @@ export const MsgCreateEntry = {
   fromAmino(object: MsgCreateEntryAmino): MsgCreateEntry {
     return {
       authority: object.authority,
-      baseDenom: object.baseDenom,
+      baseDenom: object.base_denom,
       decimals: BigInt(object.decimals),
       denom: object.denom,
       path: object.path,
-      ibcChannelId: object.ibcChannelId,
-      ibcCounterpartyChannelId: object.ibcCounterpartyChannelId,
-      displayName: object.displayName,
-      displaySymbol: object.displaySymbol,
+      ibcChannelId: object.ibc_channel_id,
+      ibcCounterpartyChannelId: object.ibc_counterparty_channel_id,
+      displayName: object.display_name,
+      displaySymbol: object.display_symbol,
       network: object.network,
       address: object.address,
-      externalSymbol: object.externalSymbol,
-      transferLimit: object.transferLimit,
+      externalSymbol: object.external_symbol,
+      transferLimit: object.transfer_limit,
       permissions: Array.isArray(object?.permissions) ? object.permissions.map((e: any) => e) : [],
-      unitDenom: object.unitDenom,
-      ibcCounterpartyDenom: object.ibcCounterpartyDenom,
-      ibcCounterpartyChainId: object.ibcCounterpartyChainId
+      unitDenom: object.unit_denom,
+      ibcCounterpartyDenom: object.ibc_counterparty_denom,
+      ibcCounterpartyChainId: object.ibc_counterparty_chain_id
     };
   },
   toAmino(message: MsgCreateEntry): MsgCreateEntryAmino {
     const obj: any = {};
     obj.authority = message.authority;
-    obj.baseDenom = message.baseDenom;
+    obj.base_denom = message.baseDenom;
     obj.decimals = message.decimals ? message.decimals.toString() : undefined;
     obj.denom = message.denom;
     obj.path = message.path;
-    obj.ibcChannelId = message.ibcChannelId;
-    obj.ibcCounterpartyChannelId = message.ibcCounterpartyChannelId;
-    obj.displayName = message.displayName;
-    obj.displaySymbol = message.displaySymbol;
+    obj.ibc_channel_id = message.ibcChannelId;
+    obj.ibc_counterparty_channel_id = message.ibcCounterpartyChannelId;
+    obj.display_name = message.displayName;
+    obj.display_symbol = message.displaySymbol;
     obj.network = message.network;
     obj.address = message.address;
-    obj.externalSymbol = message.externalSymbol;
-    obj.transferLimit = message.transferLimit;
+    obj.external_symbol = message.externalSymbol;
+    obj.transfer_limit = message.transferLimit;
     if (message.permissions) {
       obj.permissions = message.permissions.map(e => e);
     } else {
       obj.permissions = [];
     }
-    obj.unitDenom = message.unitDenom;
-    obj.ibcCounterpartyDenom = message.ibcCounterpartyDenom;
-    obj.ibcCounterpartyChainId = message.ibcCounterpartyChainId;
+    obj.unit_denom = message.unitDenom;
+    obj.ibc_counterparty_denom = message.ibcCounterpartyDenom;
+    obj.ibc_counterparty_chain_id = message.ibcCounterpartyChainId;
     return obj;
   },
   fromAminoMsg(object: MsgCreateEntryAminoMsg): MsgCreateEntry {
@@ -622,47 +622,47 @@ export const MsgUpdateEntry = {
   fromAmino(object: MsgUpdateEntryAmino): MsgUpdateEntry {
     return {
       authority: object.authority,
-      baseDenom: object.baseDenom,
+      baseDenom: object.base_denom,
       decimals: BigInt(object.decimals),
       denom: object.denom,
       path: object.path,
-      ibcChannelId: object.ibcChannelId,
-      ibcCounterpartyChannelId: object.ibcCounterpartyChannelId,
-      displayName: object.displayName,
-      displaySymbol: object.displaySymbol,
+      ibcChannelId: object.ibc_channel_id,
+      ibcCounterpartyChannelId: object.ibc_counterparty_channel_id,
+      displayName: object.display_name,
+      displaySymbol: object.display_symbol,
       network: object.network,
       address: object.address,
-      externalSymbol: object.externalSymbol,
-      transferLimit: object.transferLimit,
+      externalSymbol: object.external_symbol,
+      transferLimit: object.transfer_limit,
       permissions: Array.isArray(object?.permissions) ? object.permissions.map((e: any) => e) : [],
-      unitDenom: object.unitDenom,
-      ibcCounterpartyDenom: object.ibcCounterpartyDenom,
-      ibcCounterpartyChainId: object.ibcCounterpartyChainId
+      unitDenom: object.unit_denom,
+      ibcCounterpartyDenom: object.ibc_counterparty_denom,
+      ibcCounterpartyChainId: object.ibc_counterparty_chain_id
     };
   },
   toAmino(message: MsgUpdateEntry): MsgUpdateEntryAmino {
     const obj: any = {};
     obj.authority = message.authority;
-    obj.baseDenom = message.baseDenom;
+    obj.base_denom = message.baseDenom;
     obj.decimals = message.decimals ? message.decimals.toString() : undefined;
     obj.denom = message.denom;
     obj.path = message.path;
-    obj.ibcChannelId = message.ibcChannelId;
-    obj.ibcCounterpartyChannelId = message.ibcCounterpartyChannelId;
-    obj.displayName = message.displayName;
-    obj.displaySymbol = message.displaySymbol;
+    obj.ibc_channel_id = message.ibcChannelId;
+    obj.ibc_counterparty_channel_id = message.ibcCounterpartyChannelId;
+    obj.display_name = message.displayName;
+    obj.display_symbol = message.displaySymbol;
     obj.network = message.network;
     obj.address = message.address;
-    obj.externalSymbol = message.externalSymbol;
-    obj.transferLimit = message.transferLimit;
+    obj.external_symbol = message.externalSymbol;
+    obj.transfer_limit = message.transferLimit;
     if (message.permissions) {
       obj.permissions = message.permissions.map(e => e);
     } else {
       obj.permissions = [];
     }
-    obj.unitDenom = message.unitDenom;
-    obj.ibcCounterpartyDenom = message.ibcCounterpartyDenom;
-    obj.ibcCounterpartyChainId = message.ibcCounterpartyChainId;
+    obj.unit_denom = message.unitDenom;
+    obj.ibc_counterparty_denom = message.ibcCounterpartyDenom;
+    obj.ibc_counterparty_chain_id = message.ibcCounterpartyChainId;
     return obj;
   },
   fromAminoMsg(object: MsgUpdateEntryAminoMsg): MsgUpdateEntry {
@@ -776,13 +776,13 @@ export const MsgDeleteEntry = {
   fromAmino(object: MsgDeleteEntryAmino): MsgDeleteEntry {
     return {
       authority: object.authority,
-      baseDenom: object.baseDenom
+      baseDenom: object.base_denom
     };
   },
   toAmino(message: MsgDeleteEntry): MsgDeleteEntryAmino {
     const obj: any = {};
     obj.authority = message.authority;
-    obj.baseDenom = message.baseDenom;
+    obj.base_denom = message.baseDenom;
     return obj;
   },
   fromAminoMsg(object: MsgDeleteEntryAminoMsg): MsgDeleteEntry {

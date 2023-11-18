@@ -50,14 +50,14 @@ export interface QueryGetPoolRequestProtoMsg {
   value: Uint8Array;
 }
 export interface QueryGetPoolRequestAmino {
-  poolId: string;
+  pool_id: string;
 }
 export interface QueryGetPoolRequestAminoMsg {
   type: "/elys.amm.QueryGetPoolRequest";
   value: QueryGetPoolRequestAmino;
 }
 export interface QueryGetPoolRequestSDKType {
-  poolId: bigint;
+  pool_id: bigint;
 }
 export interface QueryGetPoolResponse {
   pool: Pool;
@@ -138,14 +138,14 @@ export interface QueryGetDenomLiquidityResponseProtoMsg {
   value: Uint8Array;
 }
 export interface QueryGetDenomLiquidityResponseAmino {
-  denomLiquidity?: DenomLiquidityAmino;
+  denom_liquidity?: DenomLiquidityAmino;
 }
 export interface QueryGetDenomLiquidityResponseAminoMsg {
   type: "/elys.amm.QueryGetDenomLiquidityResponse";
   value: QueryGetDenomLiquidityResponseAmino;
 }
 export interface QueryGetDenomLiquidityResponseSDKType {
-  denomLiquidity: DenomLiquiditySDKType;
+  denom_liquidity: DenomLiquiditySDKType;
 }
 export interface QueryAllDenomLiquidityRequest {
   pagination?: PageRequest;
@@ -173,7 +173,7 @@ export interface QueryAllDenomLiquidityResponseProtoMsg {
   value: Uint8Array;
 }
 export interface QueryAllDenomLiquidityResponseAmino {
-  denomLiquidity: DenomLiquidityAmino[];
+  denom_liquidity: DenomLiquidityAmino[];
   pagination?: PageResponseAmino;
 }
 export interface QueryAllDenomLiquidityResponseAminoMsg {
@@ -181,7 +181,7 @@ export interface QueryAllDenomLiquidityResponseAminoMsg {
   value: QueryAllDenomLiquidityResponseAmino;
 }
 export interface QueryAllDenomLiquidityResponseSDKType {
-  denomLiquidity: DenomLiquiditySDKType[];
+  denom_liquidity: DenomLiquiditySDKType[];
   pagination?: PageResponseSDKType;
 }
 export interface QuerySwapEstimationRequest {
@@ -194,7 +194,7 @@ export interface QuerySwapEstimationRequestProtoMsg {
 }
 export interface QuerySwapEstimationRequestAmino {
   routes: SwapAmountInRouteAmino[];
-  tokenIn?: CoinAmino;
+  token_in?: CoinAmino;
 }
 export interface QuerySwapEstimationRequestAminoMsg {
   type: "/elys.amm.QuerySwapEstimationRequest";
@@ -202,7 +202,7 @@ export interface QuerySwapEstimationRequestAminoMsg {
 }
 export interface QuerySwapEstimationRequestSDKType {
   routes: SwapAmountInRouteSDKType[];
-  tokenIn: CoinSDKType;
+  token_in: CoinSDKType;
 }
 export interface QuerySwapEstimationResponse {
   spotPrice: string;
@@ -213,16 +213,16 @@ export interface QuerySwapEstimationResponseProtoMsg {
   value: Uint8Array;
 }
 export interface QuerySwapEstimationResponseAmino {
-  spotPrice: string;
-  tokenOut?: CoinAmino;
+  spot_price: string;
+  token_out?: CoinAmino;
 }
 export interface QuerySwapEstimationResponseAminoMsg {
   type: "/elys.amm.QuerySwapEstimationResponse";
   value: QuerySwapEstimationResponseAmino;
 }
 export interface QuerySwapEstimationResponseSDKType {
-  spotPrice: string;
-  tokenOut: CoinSDKType;
+  spot_price: string;
+  token_out: CoinSDKType;
 }
 export interface QuerySlippageTrackRequest {
   poolId: bigint;
@@ -232,14 +232,14 @@ export interface QuerySlippageTrackRequestProtoMsg {
   value: Uint8Array;
 }
 export interface QuerySlippageTrackRequestAmino {
-  poolId: string;
+  pool_id: string;
 }
 export interface QuerySlippageTrackRequestAminoMsg {
   type: "/elys.amm.QuerySlippageTrackRequest";
   value: QuerySlippageTrackRequestAmino;
 }
 export interface QuerySlippageTrackRequestSDKType {
-  poolId: bigint;
+  pool_id: bigint;
 }
 export interface QuerySlippageTrackResponse {
   track: OraclePoolSlippageTrack;
@@ -285,6 +285,43 @@ export interface QuerySlippageTrackAllResponseAminoMsg {
 }
 export interface QuerySlippageTrackAllResponseSDKType {
   tracks: OraclePoolSlippageTrackSDKType[];
+}
+export interface QueryBalanceRequest {
+  address: string;
+  denom: string;
+}
+export interface QueryBalanceRequestProtoMsg {
+  typeUrl: "/elys.amm.QueryBalanceRequest";
+  value: Uint8Array;
+}
+export interface QueryBalanceRequestAmino {
+  address: string;
+  denom: string;
+}
+export interface QueryBalanceRequestAminoMsg {
+  type: "/elys.amm.QueryBalanceRequest";
+  value: QueryBalanceRequestAmino;
+}
+export interface QueryBalanceRequestSDKType {
+  address: string;
+  denom: string;
+}
+export interface QueryBalanceResponse {
+  balance: Coin;
+}
+export interface QueryBalanceResponseProtoMsg {
+  typeUrl: "/elys.amm.QueryBalanceResponse";
+  value: Uint8Array;
+}
+export interface QueryBalanceResponseAmino {
+  balance?: CoinAmino;
+}
+export interface QueryBalanceResponseAminoMsg {
+  type: "/elys.amm.QueryBalanceResponse";
+  value: QueryBalanceResponseAmino;
+}
+export interface QueryBalanceResponseSDKType {
+  balance: CoinSDKType;
 }
 function createBaseQueryParamsRequest(): QueryParamsRequest {
   return {};
@@ -433,12 +470,12 @@ export const QueryGetPoolRequest = {
   },
   fromAmino(object: QueryGetPoolRequestAmino): QueryGetPoolRequest {
     return {
-      poolId: BigInt(object.poolId)
+      poolId: BigInt(object.pool_id)
     };
   },
   toAmino(message: QueryGetPoolRequest): QueryGetPoolRequestAmino {
     const obj: any = {};
-    obj.poolId = message.poolId ? message.poolId.toString() : undefined;
+    obj.pool_id = message.poolId ? message.poolId.toString() : undefined;
     return obj;
   },
   fromAminoMsg(object: QueryGetPoolRequestAminoMsg): QueryGetPoolRequest {
@@ -752,12 +789,12 @@ export const QueryGetDenomLiquidityResponse = {
   },
   fromAmino(object: QueryGetDenomLiquidityResponseAmino): QueryGetDenomLiquidityResponse {
     return {
-      denomLiquidity: object?.denomLiquidity ? DenomLiquidity.fromAmino(object.denomLiquidity) : undefined
+      denomLiquidity: object?.denom_liquidity ? DenomLiquidity.fromAmino(object.denom_liquidity) : undefined
     };
   },
   toAmino(message: QueryGetDenomLiquidityResponse): QueryGetDenomLiquidityResponseAmino {
     const obj: any = {};
-    obj.denomLiquidity = message.denomLiquidity ? DenomLiquidity.toAmino(message.denomLiquidity) : undefined;
+    obj.denom_liquidity = message.denomLiquidity ? DenomLiquidity.toAmino(message.denomLiquidity) : undefined;
     return obj;
   },
   fromAminoMsg(object: QueryGetDenomLiquidityResponseAminoMsg): QueryGetDenomLiquidityResponse {
@@ -882,16 +919,16 @@ export const QueryAllDenomLiquidityResponse = {
   },
   fromAmino(object: QueryAllDenomLiquidityResponseAmino): QueryAllDenomLiquidityResponse {
     return {
-      denomLiquidity: Array.isArray(object?.denomLiquidity) ? object.denomLiquidity.map((e: any) => DenomLiquidity.fromAmino(e)) : [],
+      denomLiquidity: Array.isArray(object?.denom_liquidity) ? object.denom_liquidity.map((e: any) => DenomLiquidity.fromAmino(e)) : [],
       pagination: object?.pagination ? PageResponse.fromAmino(object.pagination) : undefined
     };
   },
   toAmino(message: QueryAllDenomLiquidityResponse): QueryAllDenomLiquidityResponseAmino {
     const obj: any = {};
     if (message.denomLiquidity) {
-      obj.denomLiquidity = message.denomLiquidity.map(e => e ? DenomLiquidity.toAmino(e) : undefined);
+      obj.denom_liquidity = message.denomLiquidity.map(e => e ? DenomLiquidity.toAmino(e) : undefined);
     } else {
-      obj.denomLiquidity = [];
+      obj.denom_liquidity = [];
     }
     obj.pagination = message.pagination ? PageResponse.toAmino(message.pagination) : undefined;
     return obj;
@@ -958,7 +995,7 @@ export const QuerySwapEstimationRequest = {
   fromAmino(object: QuerySwapEstimationRequestAmino): QuerySwapEstimationRequest {
     return {
       routes: Array.isArray(object?.routes) ? object.routes.map((e: any) => SwapAmountInRoute.fromAmino(e)) : [],
-      tokenIn: object?.tokenIn ? Coin.fromAmino(object.tokenIn) : undefined
+      tokenIn: object?.token_in ? Coin.fromAmino(object.token_in) : undefined
     };
   },
   toAmino(message: QuerySwapEstimationRequest): QuerySwapEstimationRequestAmino {
@@ -968,7 +1005,7 @@ export const QuerySwapEstimationRequest = {
     } else {
       obj.routes = [];
     }
-    obj.tokenIn = message.tokenIn ? Coin.toAmino(message.tokenIn) : undefined;
+    obj.token_in = message.tokenIn ? Coin.toAmino(message.tokenIn) : undefined;
     return obj;
   },
   fromAminoMsg(object: QuerySwapEstimationRequestAminoMsg): QuerySwapEstimationRequest {
@@ -1032,14 +1069,14 @@ export const QuerySwapEstimationResponse = {
   },
   fromAmino(object: QuerySwapEstimationResponseAmino): QuerySwapEstimationResponse {
     return {
-      spotPrice: object.spotPrice,
-      tokenOut: object?.tokenOut ? Coin.fromAmino(object.tokenOut) : undefined
+      spotPrice: object.spot_price,
+      tokenOut: object?.token_out ? Coin.fromAmino(object.token_out) : undefined
     };
   },
   toAmino(message: QuerySwapEstimationResponse): QuerySwapEstimationResponseAmino {
     const obj: any = {};
-    obj.spotPrice = message.spotPrice;
-    obj.tokenOut = message.tokenOut ? Coin.toAmino(message.tokenOut) : undefined;
+    obj.spot_price = message.spotPrice;
+    obj.token_out = message.tokenOut ? Coin.toAmino(message.tokenOut) : undefined;
     return obj;
   },
   fromAminoMsg(object: QuerySwapEstimationResponseAminoMsg): QuerySwapEstimationResponse {
@@ -1095,12 +1132,12 @@ export const QuerySlippageTrackRequest = {
   },
   fromAmino(object: QuerySlippageTrackRequestAmino): QuerySlippageTrackRequest {
     return {
-      poolId: BigInt(object.poolId)
+      poolId: BigInt(object.pool_id)
     };
   },
   toAmino(message: QuerySlippageTrackRequest): QuerySlippageTrackRequestAmino {
     const obj: any = {};
-    obj.poolId = message.poolId ? message.poolId.toString() : undefined;
+    obj.pool_id = message.poolId ? message.poolId.toString() : undefined;
     return obj;
   },
   fromAminoMsg(object: QuerySlippageTrackRequestAminoMsg): QuerySlippageTrackRequest {
@@ -1291,6 +1328,138 @@ export const QuerySlippageTrackAllResponse = {
     return {
       typeUrl: "/elys.amm.QuerySlippageTrackAllResponse",
       value: QuerySlippageTrackAllResponse.encode(message).finish()
+    };
+  }
+};
+function createBaseQueryBalanceRequest(): QueryBalanceRequest {
+  return {
+    address: "",
+    denom: ""
+  };
+}
+export const QueryBalanceRequest = {
+  typeUrl: "/elys.amm.QueryBalanceRequest",
+  encode(message: QueryBalanceRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.address !== "") {
+      writer.uint32(10).string(message.address);
+    }
+    if (message.denom !== "") {
+      writer.uint32(18).string(message.denom);
+    }
+    return writer;
+  },
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryBalanceRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryBalanceRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.address = reader.string();
+          break;
+        case 2:
+          message.denom = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromPartial(object: Partial<QueryBalanceRequest>): QueryBalanceRequest {
+    const message = createBaseQueryBalanceRequest();
+    message.address = object.address ?? "";
+    message.denom = object.denom ?? "";
+    return message;
+  },
+  fromAmino(object: QueryBalanceRequestAmino): QueryBalanceRequest {
+    return {
+      address: object.address,
+      denom: object.denom
+    };
+  },
+  toAmino(message: QueryBalanceRequest): QueryBalanceRequestAmino {
+    const obj: any = {};
+    obj.address = message.address;
+    obj.denom = message.denom;
+    return obj;
+  },
+  fromAminoMsg(object: QueryBalanceRequestAminoMsg): QueryBalanceRequest {
+    return QueryBalanceRequest.fromAmino(object.value);
+  },
+  fromProtoMsg(message: QueryBalanceRequestProtoMsg): QueryBalanceRequest {
+    return QueryBalanceRequest.decode(message.value);
+  },
+  toProto(message: QueryBalanceRequest): Uint8Array {
+    return QueryBalanceRequest.encode(message).finish();
+  },
+  toProtoMsg(message: QueryBalanceRequest): QueryBalanceRequestProtoMsg {
+    return {
+      typeUrl: "/elys.amm.QueryBalanceRequest",
+      value: QueryBalanceRequest.encode(message).finish()
+    };
+  }
+};
+function createBaseQueryBalanceResponse(): QueryBalanceResponse {
+  return {
+    balance: Coin.fromPartial({})
+  };
+}
+export const QueryBalanceResponse = {
+  typeUrl: "/elys.amm.QueryBalanceResponse",
+  encode(message: QueryBalanceResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.balance !== undefined) {
+      Coin.encode(message.balance, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryBalanceResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryBalanceResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.balance = Coin.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromPartial(object: Partial<QueryBalanceResponse>): QueryBalanceResponse {
+    const message = createBaseQueryBalanceResponse();
+    message.balance = object.balance !== undefined && object.balance !== null ? Coin.fromPartial(object.balance) : undefined;
+    return message;
+  },
+  fromAmino(object: QueryBalanceResponseAmino): QueryBalanceResponse {
+    return {
+      balance: object?.balance ? Coin.fromAmino(object.balance) : undefined
+    };
+  },
+  toAmino(message: QueryBalanceResponse): QueryBalanceResponseAmino {
+    const obj: any = {};
+    obj.balance = message.balance ? Coin.toAmino(message.balance) : undefined;
+    return obj;
+  },
+  fromAminoMsg(object: QueryBalanceResponseAminoMsg): QueryBalanceResponse {
+    return QueryBalanceResponse.fromAmino(object.value);
+  },
+  fromProtoMsg(message: QueryBalanceResponseProtoMsg): QueryBalanceResponse {
+    return QueryBalanceResponse.decode(message.value);
+  },
+  toProto(message: QueryBalanceResponse): Uint8Array {
+    return QueryBalanceResponse.encode(message).finish();
+  },
+  toProtoMsg(message: QueryBalanceResponse): QueryBalanceResponseProtoMsg {
+    return {
+      typeUrl: "/elys.amm.QueryBalanceResponse",
+      value: QueryBalanceResponse.encode(message).finish()
     };
   }
 };

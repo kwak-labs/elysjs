@@ -13,7 +13,7 @@ export interface GenesisStateProtoMsg {
 /** GenesisState defines the tvl module's genesis state. */
 export interface GenesisStateAmino {
   params?: ParamsAmino;
-  accountedPoolList: AccountedPoolAmino[];
+  accounted_pool_list: AccountedPoolAmino[];
 }
 export interface GenesisStateAminoMsg {
   type: "/elys.accountedpool.GenesisState";
@@ -22,7 +22,7 @@ export interface GenesisStateAminoMsg {
 /** GenesisState defines the tvl module's genesis state. */
 export interface GenesisStateSDKType {
   params: ParamsSDKType;
-  accountedPoolList: AccountedPoolSDKType[];
+  accounted_pool_list: AccountedPoolSDKType[];
 }
 function createBaseGenesisState(): GenesisState {
   return {
@@ -70,16 +70,16 @@ export const GenesisState = {
   fromAmino(object: GenesisStateAmino): GenesisState {
     return {
       params: object?.params ? Params.fromAmino(object.params) : undefined,
-      accountedPoolList: Array.isArray(object?.accountedPoolList) ? object.accountedPoolList.map((e: any) => AccountedPool.fromAmino(e)) : []
+      accountedPoolList: Array.isArray(object?.accounted_pool_list) ? object.accounted_pool_list.map((e: any) => AccountedPool.fromAmino(e)) : []
     };
   },
   toAmino(message: GenesisState): GenesisStateAmino {
     const obj: any = {};
     obj.params = message.params ? Params.toAmino(message.params) : undefined;
     if (message.accountedPoolList) {
-      obj.accountedPoolList = message.accountedPoolList.map(e => e ? AccountedPool.toAmino(e) : undefined);
+      obj.accounted_pool_list = message.accountedPoolList.map(e => e ? AccountedPool.toAmino(e) : undefined);
     } else {
-      obj.accountedPoolList = [];
+      obj.accounted_pool_list = [];
     }
     return obj;
   },

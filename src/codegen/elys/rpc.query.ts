@@ -78,7 +78,6 @@ export const createRPCQueryClient = async ({
       },
       incentive: (await import("./incentive/query.rpc.Query")).createRpcQueryExtension(client),
       leveragelp: (await import("./leveragelp/query.rpc.Query")).createRpcQueryExtension(client),
-      liquidityprovider: (await import("./liquidityprovider/query.rpc.Query")).createRpcQueryExtension(client),
       margin: (await import("./margin/query.rpc.Query")).createRpcQueryExtension(client),
       oracle: (await import("./oracle/query.rpc.Query")).createRpcQueryExtension(client),
       parameter: (await import("./parameter/query.rpc.Query")).createRpcQueryExtension(client),

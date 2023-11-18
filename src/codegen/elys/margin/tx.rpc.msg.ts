@@ -1,10 +1,12 @@
 import { Rpc } from "../../helpers";
 import { BinaryReader } from "../../binary";
-import { MsgOpen, MsgOpenResponse, MsgClose, MsgCloseResponse, MsgUpdateParams, MsgUpdateParamsResponse, MsgUpdatePools, MsgUpdatePoolsResponse, MsgWhitelist, MsgWhitelistResponse, MsgDewhitelist, MsgDewhitelistResponse } from "./tx";
+import { MsgOpen, MsgOpenResponse, MsgClose, MsgCloseResponse, MsgBrokerOpen, MsgBrokerOpenResponse, MsgBrokerClose, MsgBrokerCloseResponse, MsgUpdateParams, MsgUpdateParamsResponse, MsgUpdatePools, MsgUpdatePoolsResponse, MsgWhitelist, MsgWhitelistResponse, MsgDewhitelist, MsgDewhitelistResponse } from "./tx";
 /** Msg defines the Msg service. */
 export interface Msg {
   open(request: MsgOpen): Promise<MsgOpenResponse>;
   close(request: MsgClose): Promise<MsgCloseResponse>;
+  brokerOpen(request: MsgBrokerOpen): Promise<MsgBrokerOpenResponse>;
+  brokerClose(request: MsgBrokerClose): Promise<MsgBrokerCloseResponse>;
   updateParams(request: MsgUpdateParams): Promise<MsgUpdateParamsResponse>;
   updatePools(request: MsgUpdatePools): Promise<MsgUpdatePoolsResponse>;
   whitelist(request: MsgWhitelist): Promise<MsgWhitelistResponse>;
@@ -16,6 +18,8 @@ export class MsgClientImpl implements Msg {
     this.rpc = rpc;
     this.open = this.open.bind(this);
     this.close = this.close.bind(this);
+    this.brokerOpen = this.brokerOpen.bind(this);
+    this.brokerClose = this.brokerClose.bind(this);
     this.updateParams = this.updateParams.bind(this);
     this.updatePools = this.updatePools.bind(this);
     this.whitelist = this.whitelist.bind(this);
@@ -30,6 +34,16 @@ export class MsgClientImpl implements Msg {
     const data = MsgClose.encode(request).finish();
     const promise = this.rpc.request("elys.margin.Msg", "Close", data);
     return promise.then(data => MsgCloseResponse.decode(new BinaryReader(data)));
+  }
+  brokerOpen(request: MsgBrokerOpen): Promise<MsgBrokerOpenResponse> {
+    const data = MsgBrokerOpen.encode(request).finish();
+    const promise = this.rpc.request("elys.margin.Msg", "BrokerOpen", data);
+    return promise.then(data => MsgBrokerOpenResponse.decode(new BinaryReader(data)));
+  }
+  brokerClose(request: MsgBrokerClose): Promise<MsgBrokerCloseResponse> {
+    const data = MsgBrokerClose.encode(request).finish();
+    const promise = this.rpc.request("elys.margin.Msg", "BrokerClose", data);
+    return promise.then(data => MsgBrokerCloseResponse.decode(new BinaryReader(data)));
   }
   updateParams(request: MsgUpdateParams): Promise<MsgUpdateParamsResponse> {
     const data = MsgUpdateParams.encode(request).finish();

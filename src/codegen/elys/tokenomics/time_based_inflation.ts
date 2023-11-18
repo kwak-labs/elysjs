@@ -12,8 +12,8 @@ export interface TimeBasedInflationProtoMsg {
   value: Uint8Array;
 }
 export interface TimeBasedInflationAmino {
-  startBlockHeight: string;
-  endBlockHeight: string;
+  start_block_height: string;
+  end_block_height: string;
   description: string;
   inflation?: InflationEntryAmino;
   authority: string;
@@ -23,8 +23,8 @@ export interface TimeBasedInflationAminoMsg {
   value: TimeBasedInflationAmino;
 }
 export interface TimeBasedInflationSDKType {
-  startBlockHeight: bigint;
-  endBlockHeight: bigint;
+  start_block_height: bigint;
+  end_block_height: bigint;
   description: string;
   inflation?: InflationEntrySDKType;
   authority: string;
@@ -98,8 +98,8 @@ export const TimeBasedInflation = {
   },
   fromAmino(object: TimeBasedInflationAmino): TimeBasedInflation {
     return {
-      startBlockHeight: BigInt(object.startBlockHeight),
-      endBlockHeight: BigInt(object.endBlockHeight),
+      startBlockHeight: BigInt(object.start_block_height),
+      endBlockHeight: BigInt(object.end_block_height),
       description: object.description,
       inflation: object?.inflation ? InflationEntry.fromAmino(object.inflation) : undefined,
       authority: object.authority
@@ -107,8 +107,8 @@ export const TimeBasedInflation = {
   },
   toAmino(message: TimeBasedInflation): TimeBasedInflationAmino {
     const obj: any = {};
-    obj.startBlockHeight = message.startBlockHeight ? message.startBlockHeight.toString() : undefined;
-    obj.endBlockHeight = message.endBlockHeight ? message.endBlockHeight.toString() : undefined;
+    obj.start_block_height = message.startBlockHeight ? message.startBlockHeight.toString() : undefined;
+    obj.end_block_height = message.endBlockHeight ? message.endBlockHeight.toString() : undefined;
     obj.description = message.description;
     obj.inflation = message.inflation ? InflationEntry.toAmino(message.inflation) : undefined;
     obj.authority = message.authority;

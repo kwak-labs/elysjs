@@ -25,22 +25,22 @@ export interface EntryProtoMsg {
   value: Uint8Array;
 }
 export interface EntryAmino {
-  baseDenom: string;
+  base_denom: string;
   decimals: string;
   denom: string;
   path: string;
-  ibcChannelId: string;
-  ibcCounterpartyChannelId: string;
-  displayName: string;
-  displaySymbol: string;
+  ibc_channel_id: string;
+  ibc_counterparty_channel_id: string;
+  display_name: string;
+  display_symbol: string;
   network: string;
   address: string;
-  externalSymbol: string;
-  transferLimit: string;
+  external_symbol: string;
+  transfer_limit: string;
   permissions: string[];
-  unitDenom: string;
-  ibcCounterpartyDenom: string;
-  ibcCounterpartyChainId: string;
+  unit_denom: string;
+  ibc_counterparty_denom: string;
+  ibc_counterparty_chain_id: string;
   authority: string;
   commit_enabled: boolean;
   withdraw_enabled: boolean;
@@ -50,22 +50,22 @@ export interface EntryAminoMsg {
   value: EntryAmino;
 }
 export interface EntrySDKType {
-  baseDenom: string;
+  base_denom: string;
   decimals: bigint;
   denom: string;
   path: string;
-  ibcChannelId: string;
-  ibcCounterpartyChannelId: string;
-  displayName: string;
-  displaySymbol: string;
+  ibc_channel_id: string;
+  ibc_counterparty_channel_id: string;
+  display_name: string;
+  display_symbol: string;
   network: string;
   address: string;
-  externalSymbol: string;
-  transferLimit: string;
+  external_symbol: string;
+  transfer_limit: string;
   permissions: string[];
-  unitDenom: string;
-  ibcCounterpartyDenom: string;
-  ibcCounterpartyChainId: string;
+  unit_denom: string;
+  ibc_counterparty_denom: string;
+  ibc_counterparty_chain_id: string;
   authority: string;
   commit_enabled: boolean;
   withdraw_enabled: boolean;
@@ -251,22 +251,22 @@ export const Entry = {
   },
   fromAmino(object: EntryAmino): Entry {
     return {
-      baseDenom: object.baseDenom,
+      baseDenom: object.base_denom,
       decimals: BigInt(object.decimals),
       denom: object.denom,
       path: object.path,
-      ibcChannelId: object.ibcChannelId,
-      ibcCounterpartyChannelId: object.ibcCounterpartyChannelId,
-      displayName: object.displayName,
-      displaySymbol: object.displaySymbol,
+      ibcChannelId: object.ibc_channel_id,
+      ibcCounterpartyChannelId: object.ibc_counterparty_channel_id,
+      displayName: object.display_name,
+      displaySymbol: object.display_symbol,
       network: object.network,
       address: object.address,
-      externalSymbol: object.externalSymbol,
-      transferLimit: object.transferLimit,
+      externalSymbol: object.external_symbol,
+      transferLimit: object.transfer_limit,
       permissions: Array.isArray(object?.permissions) ? object.permissions.map((e: any) => e) : [],
-      unitDenom: object.unitDenom,
-      ibcCounterpartyDenom: object.ibcCounterpartyDenom,
-      ibcCounterpartyChainId: object.ibcCounterpartyChainId,
+      unitDenom: object.unit_denom,
+      ibcCounterpartyDenom: object.ibc_counterparty_denom,
+      ibcCounterpartyChainId: object.ibc_counterparty_chain_id,
       authority: object.authority,
       commitEnabled: object.commit_enabled,
       withdrawEnabled: object.withdraw_enabled
@@ -274,26 +274,26 @@ export const Entry = {
   },
   toAmino(message: Entry): EntryAmino {
     const obj: any = {};
-    obj.baseDenom = message.baseDenom;
+    obj.base_denom = message.baseDenom;
     obj.decimals = message.decimals ? message.decimals.toString() : undefined;
     obj.denom = message.denom;
     obj.path = message.path;
-    obj.ibcChannelId = message.ibcChannelId;
-    obj.ibcCounterpartyChannelId = message.ibcCounterpartyChannelId;
-    obj.displayName = message.displayName;
-    obj.displaySymbol = message.displaySymbol;
+    obj.ibc_channel_id = message.ibcChannelId;
+    obj.ibc_counterparty_channel_id = message.ibcCounterpartyChannelId;
+    obj.display_name = message.displayName;
+    obj.display_symbol = message.displaySymbol;
     obj.network = message.network;
     obj.address = message.address;
-    obj.externalSymbol = message.externalSymbol;
-    obj.transferLimit = message.transferLimit;
+    obj.external_symbol = message.externalSymbol;
+    obj.transfer_limit = message.transferLimit;
     if (message.permissions) {
       obj.permissions = message.permissions.map(e => e);
     } else {
       obj.permissions = [];
     }
-    obj.unitDenom = message.unitDenom;
-    obj.ibcCounterpartyDenom = message.ibcCounterpartyDenom;
-    obj.ibcCounterpartyChainId = message.ibcCounterpartyChainId;
+    obj.unit_denom = message.unitDenom;
+    obj.ibc_counterparty_denom = message.ibcCounterpartyDenom;
+    obj.ibc_counterparty_chain_id = message.ibcCounterpartyChainId;
     obj.authority = message.authority;
     obj.commit_enabled = message.commitEnabled;
     obj.withdraw_enabled = message.withdrawEnabled;

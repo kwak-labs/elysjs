@@ -112,8 +112,8 @@ export interface MsgUpdateGenesisInflationProtoMsg {
 export interface MsgUpdateGenesisInflationAmino {
   authority: string;
   inflation?: InflationEntryAmino;
-  seedVesting: string;
-  strategicSalesVesting: string;
+  seed_vesting: string;
+  strategic_sales_vesting: string;
 }
 export interface MsgUpdateGenesisInflationAminoMsg {
   type: "/elys.tokenomics.MsgUpdateGenesisInflation";
@@ -122,8 +122,8 @@ export interface MsgUpdateGenesisInflationAminoMsg {
 export interface MsgUpdateGenesisInflationSDKType {
   authority: string;
   inflation?: InflationEntrySDKType;
-  seedVesting: bigint;
-  strategicSalesVesting: bigint;
+  seed_vesting: bigint;
+  strategic_sales_vesting: bigint;
 }
 export interface MsgUpdateGenesisInflationResponse {}
 export interface MsgUpdateGenesisInflationResponseProtoMsg {
@@ -166,8 +166,8 @@ export interface MsgCreateTimeBasedInflationProtoMsg {
 }
 export interface MsgCreateTimeBasedInflationAmino {
   authority: string;
-  startBlockHeight: string;
-  endBlockHeight: string;
+  start_block_height: string;
+  end_block_height: string;
   description: string;
   inflation?: InflationEntryAmino;
 }
@@ -177,8 +177,8 @@ export interface MsgCreateTimeBasedInflationAminoMsg {
 }
 export interface MsgCreateTimeBasedInflationSDKType {
   authority: string;
-  startBlockHeight: bigint;
-  endBlockHeight: bigint;
+  start_block_height: bigint;
+  end_block_height: bigint;
   description: string;
   inflation?: InflationEntrySDKType;
 }
@@ -206,8 +206,8 @@ export interface MsgUpdateTimeBasedInflationProtoMsg {
 }
 export interface MsgUpdateTimeBasedInflationAmino {
   authority: string;
-  startBlockHeight: string;
-  endBlockHeight: string;
+  start_block_height: string;
+  end_block_height: string;
   description: string;
   inflation?: InflationEntryAmino;
 }
@@ -217,8 +217,8 @@ export interface MsgUpdateTimeBasedInflationAminoMsg {
 }
 export interface MsgUpdateTimeBasedInflationSDKType {
   authority: string;
-  startBlockHeight: bigint;
-  endBlockHeight: bigint;
+  start_block_height: bigint;
+  end_block_height: bigint;
   description: string;
   inflation?: InflationEntrySDKType;
 }
@@ -244,8 +244,8 @@ export interface MsgDeleteTimeBasedInflationProtoMsg {
 }
 export interface MsgDeleteTimeBasedInflationAmino {
   authority: string;
-  startBlockHeight: string;
-  endBlockHeight: string;
+  start_block_height: string;
+  end_block_height: string;
 }
 export interface MsgDeleteTimeBasedInflationAminoMsg {
   type: "/elys.tokenomics.MsgDeleteTimeBasedInflation";
@@ -253,8 +253,8 @@ export interface MsgDeleteTimeBasedInflationAminoMsg {
 }
 export interface MsgDeleteTimeBasedInflationSDKType {
   authority: string;
-  startBlockHeight: bigint;
-  endBlockHeight: bigint;
+  start_block_height: bigint;
+  end_block_height: bigint;
 }
 export interface MsgDeleteTimeBasedInflationResponse {}
 export interface MsgDeleteTimeBasedInflationResponseProtoMsg {
@@ -710,16 +710,16 @@ export const MsgUpdateGenesisInflation = {
     return {
       authority: object.authority,
       inflation: object?.inflation ? InflationEntry.fromAmino(object.inflation) : undefined,
-      seedVesting: BigInt(object.seedVesting),
-      strategicSalesVesting: BigInt(object.strategicSalesVesting)
+      seedVesting: BigInt(object.seed_vesting),
+      strategicSalesVesting: BigInt(object.strategic_sales_vesting)
     };
   },
   toAmino(message: MsgUpdateGenesisInflation): MsgUpdateGenesisInflationAmino {
     const obj: any = {};
     obj.authority = message.authority;
     obj.inflation = message.inflation ? InflationEntry.toAmino(message.inflation) : undefined;
-    obj.seedVesting = message.seedVesting ? message.seedVesting.toString() : undefined;
-    obj.strategicSalesVesting = message.strategicSalesVesting ? message.strategicSalesVesting.toString() : undefined;
+    obj.seed_vesting = message.seedVesting ? message.seedVesting.toString() : undefined;
+    obj.strategic_sales_vesting = message.strategicSalesVesting ? message.strategicSalesVesting.toString() : undefined;
     return obj;
   },
   fromAminoMsg(object: MsgUpdateGenesisInflationAminoMsg): MsgUpdateGenesisInflation {
@@ -918,8 +918,8 @@ export const MsgCreateTimeBasedInflation = {
   fromAmino(object: MsgCreateTimeBasedInflationAmino): MsgCreateTimeBasedInflation {
     return {
       authority: object.authority,
-      startBlockHeight: BigInt(object.startBlockHeight),
-      endBlockHeight: BigInt(object.endBlockHeight),
+      startBlockHeight: BigInt(object.start_block_height),
+      endBlockHeight: BigInt(object.end_block_height),
       description: object.description,
       inflation: object?.inflation ? InflationEntry.fromAmino(object.inflation) : undefined
     };
@@ -927,8 +927,8 @@ export const MsgCreateTimeBasedInflation = {
   toAmino(message: MsgCreateTimeBasedInflation): MsgCreateTimeBasedInflationAmino {
     const obj: any = {};
     obj.authority = message.authority;
-    obj.startBlockHeight = message.startBlockHeight ? message.startBlockHeight.toString() : undefined;
-    obj.endBlockHeight = message.endBlockHeight ? message.endBlockHeight.toString() : undefined;
+    obj.start_block_height = message.startBlockHeight ? message.startBlockHeight.toString() : undefined;
+    obj.end_block_height = message.endBlockHeight ? message.endBlockHeight.toString() : undefined;
     obj.description = message.description;
     obj.inflation = message.inflation ? InflationEntry.toAmino(message.inflation) : undefined;
     return obj;
@@ -1068,8 +1068,8 @@ export const MsgUpdateTimeBasedInflation = {
   fromAmino(object: MsgUpdateTimeBasedInflationAmino): MsgUpdateTimeBasedInflation {
     return {
       authority: object.authority,
-      startBlockHeight: BigInt(object.startBlockHeight),
-      endBlockHeight: BigInt(object.endBlockHeight),
+      startBlockHeight: BigInt(object.start_block_height),
+      endBlockHeight: BigInt(object.end_block_height),
       description: object.description,
       inflation: object?.inflation ? InflationEntry.fromAmino(object.inflation) : undefined
     };
@@ -1077,8 +1077,8 @@ export const MsgUpdateTimeBasedInflation = {
   toAmino(message: MsgUpdateTimeBasedInflation): MsgUpdateTimeBasedInflationAmino {
     const obj: any = {};
     obj.authority = message.authority;
-    obj.startBlockHeight = message.startBlockHeight ? message.startBlockHeight.toString() : undefined;
-    obj.endBlockHeight = message.endBlockHeight ? message.endBlockHeight.toString() : undefined;
+    obj.start_block_height = message.startBlockHeight ? message.startBlockHeight.toString() : undefined;
+    obj.end_block_height = message.endBlockHeight ? message.endBlockHeight.toString() : undefined;
     obj.description = message.description;
     obj.inflation = message.inflation ? InflationEntry.toAmino(message.inflation) : undefined;
     return obj;
@@ -1202,15 +1202,15 @@ export const MsgDeleteTimeBasedInflation = {
   fromAmino(object: MsgDeleteTimeBasedInflationAmino): MsgDeleteTimeBasedInflation {
     return {
       authority: object.authority,
-      startBlockHeight: BigInt(object.startBlockHeight),
-      endBlockHeight: BigInt(object.endBlockHeight)
+      startBlockHeight: BigInt(object.start_block_height),
+      endBlockHeight: BigInt(object.end_block_height)
     };
   },
   toAmino(message: MsgDeleteTimeBasedInflation): MsgDeleteTimeBasedInflationAmino {
     const obj: any = {};
     obj.authority = message.authority;
-    obj.startBlockHeight = message.startBlockHeight ? message.startBlockHeight.toString() : undefined;
-    obj.endBlockHeight = message.endBlockHeight ? message.endBlockHeight.toString() : undefined;
+    obj.start_block_height = message.startBlockHeight ? message.startBlockHeight.toString() : undefined;
+    obj.end_block_height = message.endBlockHeight ? message.endBlockHeight.toString() : undefined;
     return obj;
   },
   fromAminoMsg(object: MsgDeleteTimeBasedInflationAminoMsg): MsgDeleteTimeBasedInflation {

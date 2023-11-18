@@ -8,7 +8,7 @@ export interface MsgOpen {
   collateralAmount: string;
   ammPoolId: bigint;
   leverage: string;
-  takeProfitPrice: string;
+  stopLossPrice: string;
 }
 export interface MsgOpenProtoMsg {
   typeUrl: "/elys.leveragelp.MsgOpen";
@@ -16,11 +16,11 @@ export interface MsgOpenProtoMsg {
 }
 export interface MsgOpenAmino {
   creator: string;
-  collateralAsset: string;
-  collateralAmount: string;
-  ammPoolId: string;
+  collateral_asset: string;
+  collateral_amount: string;
+  amm_pool_id: string;
   leverage: string;
-  takeProfitPrice: string;
+  stop_loss_price: string;
 }
 export interface MsgOpenAminoMsg {
   type: "/elys.leveragelp.MsgOpen";
@@ -28,11 +28,11 @@ export interface MsgOpenAminoMsg {
 }
 export interface MsgOpenSDKType {
   creator: string;
-  collateralAsset: string;
-  collateralAmount: string;
-  ammPoolId: bigint;
+  collateral_asset: string;
+  collateral_amount: string;
+  amm_pool_id: bigint;
   leverage: string;
-  takeProfitPrice: string;
+  stop_loss_price: string;
 }
 export interface MsgOpenResponse {}
 export interface MsgOpenResponseProtoMsg {
@@ -158,7 +158,7 @@ export interface MsgWhitelistProtoMsg {
 }
 export interface MsgWhitelistAmino {
   authority: string;
-  whitelistedAddress: string;
+  whitelisted_address: string;
 }
 export interface MsgWhitelistAminoMsg {
   type: "/elys.leveragelp.MsgWhitelist";
@@ -166,7 +166,7 @@ export interface MsgWhitelistAminoMsg {
 }
 export interface MsgWhitelistSDKType {
   authority: string;
-  whitelistedAddress: string;
+  whitelisted_address: string;
 }
 export interface MsgWhitelistResponse {}
 export interface MsgWhitelistResponseProtoMsg {
@@ -189,7 +189,7 @@ export interface MsgDewhitelistProtoMsg {
 }
 export interface MsgDewhitelistAmino {
   authority: string;
-  whitelistedAddress: string;
+  whitelisted_address: string;
 }
 export interface MsgDewhitelistAminoMsg {
   type: "/elys.leveragelp.MsgDewhitelist";
@@ -197,7 +197,7 @@ export interface MsgDewhitelistAminoMsg {
 }
 export interface MsgDewhitelistSDKType {
   authority: string;
-  whitelistedAddress: string;
+  whitelisted_address: string;
 }
 export interface MsgDewhitelistResponse {}
 export interface MsgDewhitelistResponseProtoMsg {
@@ -217,7 +217,7 @@ function createBaseMsgOpen(): MsgOpen {
     collateralAmount: "",
     ammPoolId: BigInt(0),
     leverage: "",
-    takeProfitPrice: ""
+    stopLossPrice: ""
   };
 }
 export const MsgOpen = {
@@ -238,8 +238,8 @@ export const MsgOpen = {
     if (message.leverage !== "") {
       writer.uint32(42).string(Decimal.fromUserInput(message.leverage, 18).atomics);
     }
-    if (message.takeProfitPrice !== "") {
-      writer.uint32(50).string(Decimal.fromUserInput(message.takeProfitPrice, 18).atomics);
+    if (message.stopLossPrice !== "") {
+      writer.uint32(50).string(Decimal.fromUserInput(message.stopLossPrice, 18).atomics);
     }
     return writer;
   },
@@ -266,7 +266,7 @@ export const MsgOpen = {
           message.leverage = Decimal.fromAtomics(reader.string(), 18).toString();
           break;
         case 6:
-          message.takeProfitPrice = Decimal.fromAtomics(reader.string(), 18).toString();
+          message.stopLossPrice = Decimal.fromAtomics(reader.string(), 18).toString();
           break;
         default:
           reader.skipType(tag & 7);
@@ -282,27 +282,27 @@ export const MsgOpen = {
     message.collateralAmount = object.collateralAmount ?? "";
     message.ammPoolId = object.ammPoolId !== undefined && object.ammPoolId !== null ? BigInt(object.ammPoolId.toString()) : BigInt(0);
     message.leverage = object.leverage ?? "";
-    message.takeProfitPrice = object.takeProfitPrice ?? "";
+    message.stopLossPrice = object.stopLossPrice ?? "";
     return message;
   },
   fromAmino(object: MsgOpenAmino): MsgOpen {
     return {
       creator: object.creator,
-      collateralAsset: object.collateralAsset,
-      collateralAmount: object.collateralAmount,
-      ammPoolId: BigInt(object.ammPoolId),
+      collateralAsset: object.collateral_asset,
+      collateralAmount: object.collateral_amount,
+      ammPoolId: BigInt(object.amm_pool_id),
       leverage: object.leverage,
-      takeProfitPrice: object.takeProfitPrice
+      stopLossPrice: object.stop_loss_price
     };
   },
   toAmino(message: MsgOpen): MsgOpenAmino {
     const obj: any = {};
     obj.creator = message.creator;
-    obj.collateralAsset = message.collateralAsset;
-    obj.collateralAmount = message.collateralAmount;
-    obj.ammPoolId = message.ammPoolId ? message.ammPoolId.toString() : undefined;
+    obj.collateral_asset = message.collateralAsset;
+    obj.collateral_amount = message.collateralAmount;
+    obj.amm_pool_id = message.ammPoolId ? message.ammPoolId.toString() : undefined;
     obj.leverage = message.leverage;
-    obj.takeProfitPrice = message.takeProfitPrice;
+    obj.stop_loss_price = message.stopLossPrice;
     return obj;
   },
   fromAminoMsg(object: MsgOpenAminoMsg): MsgOpen {
@@ -780,13 +780,13 @@ export const MsgWhitelist = {
   fromAmino(object: MsgWhitelistAmino): MsgWhitelist {
     return {
       authority: object.authority,
-      whitelistedAddress: object.whitelistedAddress
+      whitelistedAddress: object.whitelisted_address
     };
   },
   toAmino(message: MsgWhitelist): MsgWhitelistAmino {
     const obj: any = {};
     obj.authority = message.authority;
-    obj.whitelistedAddress = message.whitelistedAddress;
+    obj.whitelisted_address = message.whitelistedAddress;
     return obj;
   },
   fromAminoMsg(object: MsgWhitelistAminoMsg): MsgWhitelist {
@@ -900,13 +900,13 @@ export const MsgDewhitelist = {
   fromAmino(object: MsgDewhitelistAmino): MsgDewhitelist {
     return {
       authority: object.authority,
-      whitelistedAddress: object.whitelistedAddress
+      whitelistedAddress: object.whitelisted_address
     };
   },
   toAmino(message: MsgDewhitelist): MsgDewhitelistAmino {
     const obj: any = {};
     obj.authority = message.authority;
-    obj.whitelistedAddress = message.whitelistedAddress;
+    obj.whitelisted_address = message.whitelistedAddress;
     return obj;
   },
   fromAminoMsg(object: MsgDewhitelistAminoMsg): MsgDewhitelist {

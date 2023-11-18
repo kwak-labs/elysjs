@@ -13,7 +13,7 @@ export interface GenesisStateProtoMsg {
 /** GenesisState defines the parameter module's genesis state. */
 export interface GenesisStateAmino {
   params?: ParamsAmino;
-  anteHandlerParam?: AnteHandlerParamAmino;
+  ante_handler_param?: AnteHandlerParamAmino;
 }
 export interface GenesisStateAminoMsg {
   type: "/elys.parameter.GenesisState";
@@ -22,7 +22,7 @@ export interface GenesisStateAminoMsg {
 /** GenesisState defines the parameter module's genesis state. */
 export interface GenesisStateSDKType {
   params: ParamsSDKType;
-  anteHandlerParam: AnteHandlerParamSDKType;
+  ante_handler_param: AnteHandlerParamSDKType;
 }
 function createBaseGenesisState(): GenesisState {
   return {
@@ -70,13 +70,13 @@ export const GenesisState = {
   fromAmino(object: GenesisStateAmino): GenesisState {
     return {
       params: object?.params ? Params.fromAmino(object.params) : undefined,
-      anteHandlerParam: object?.anteHandlerParam ? AnteHandlerParam.fromAmino(object.anteHandlerParam) : undefined
+      anteHandlerParam: object?.ante_handler_param ? AnteHandlerParam.fromAmino(object.ante_handler_param) : undefined
     };
   },
   toAmino(message: GenesisState): GenesisStateAmino {
     const obj: any = {};
     obj.params = message.params ? Params.toAmino(message.params) : undefined;
-    obj.anteHandlerParam = message.anteHandlerParam ? AnteHandlerParam.toAmino(message.anteHandlerParam) : undefined;
+    obj.ante_handler_param = message.anteHandlerParam ? AnteHandlerParam.toAmino(message.anteHandlerParam) : undefined;
     return obj;
   },
   fromAminoMsg(object: GenesisStateAminoMsg): GenesisState {

@@ -127,9 +127,6 @@ export const createLCDClient = async ({
       leveragelp: new (await import("./leveragelp/query.lcd")).LCDQueryClient({
         requestClient
       }),
-      liquidityprovider: new (await import("./liquidityprovider/query.lcd")).LCDQueryClient({
-        requestClient
-      }),
       margin: new (await import("./margin/query.lcd")).LCDQueryClient({
         requestClient
       }),

@@ -128,14 +128,14 @@ export interface QueryGetAssetInfoResponseProtoMsg {
   value: Uint8Array;
 }
 export interface QueryGetAssetInfoResponseAmino {
-  assetInfo?: AssetInfoAmino;
+  asset_info?: AssetInfoAmino;
 }
 export interface QueryGetAssetInfoResponseAminoMsg {
   type: "/elys.oracle.QueryGetAssetInfoResponse";
   value: QueryGetAssetInfoResponseAmino;
 }
 export interface QueryGetAssetInfoResponseSDKType {
-  assetInfo: AssetInfoSDKType;
+  asset_info: AssetInfoSDKType;
 }
 export interface QueryAllAssetInfoRequest {
   pagination?: PageRequest;
@@ -163,7 +163,7 @@ export interface QueryAllAssetInfoResponseProtoMsg {
   value: Uint8Array;
 }
 export interface QueryAllAssetInfoResponseAmino {
-  assetInfo: AssetInfoAmino[];
+  asset_info: AssetInfoAmino[];
   pagination?: PageResponseAmino;
 }
 export interface QueryAllAssetInfoResponseAminoMsg {
@@ -171,7 +171,7 @@ export interface QueryAllAssetInfoResponseAminoMsg {
   value: QueryAllAssetInfoResponseAmino;
 }
 export interface QueryAllAssetInfoResponseSDKType {
-  assetInfo: AssetInfoSDKType[];
+  asset_info: AssetInfoSDKType[];
   pagination?: PageResponseSDKType;
 }
 export interface QueryGetPriceRequest {
@@ -276,14 +276,14 @@ export interface QueryGetPriceFeederResponseProtoMsg {
   value: Uint8Array;
 }
 export interface QueryGetPriceFeederResponseAmino {
-  priceFeeder?: PriceFeederAmino;
+  price_feeder?: PriceFeederAmino;
 }
 export interface QueryGetPriceFeederResponseAminoMsg {
   type: "/elys.oracle.QueryGetPriceFeederResponse";
   value: QueryGetPriceFeederResponseAmino;
 }
 export interface QueryGetPriceFeederResponseSDKType {
-  priceFeeder: PriceFeederSDKType;
+  price_feeder: PriceFeederSDKType;
 }
 export interface QueryAllPriceFeederRequest {
   pagination?: PageRequest;
@@ -311,7 +311,7 @@ export interface QueryAllPriceFeederResponseProtoMsg {
   value: Uint8Array;
 }
 export interface QueryAllPriceFeederResponseAmino {
-  priceFeeder: PriceFeederAmino[];
+  price_feeder: PriceFeederAmino[];
   pagination?: PageResponseAmino;
 }
 export interface QueryAllPriceFeederResponseAminoMsg {
@@ -319,7 +319,7 @@ export interface QueryAllPriceFeederResponseAminoMsg {
   value: QueryAllPriceFeederResponseAmino;
 }
 export interface QueryAllPriceFeederResponseSDKType {
-  priceFeeder: PriceFeederSDKType[];
+  price_feeder: PriceFeederSDKType[];
   pagination?: PageResponseSDKType;
 }
 function createBaseQueryParamsRequest(): QueryParamsRequest {
@@ -762,12 +762,12 @@ export const QueryGetAssetInfoResponse = {
   },
   fromAmino(object: QueryGetAssetInfoResponseAmino): QueryGetAssetInfoResponse {
     return {
-      assetInfo: object?.assetInfo ? AssetInfo.fromAmino(object.assetInfo) : undefined
+      assetInfo: object?.asset_info ? AssetInfo.fromAmino(object.asset_info) : undefined
     };
   },
   toAmino(message: QueryGetAssetInfoResponse): QueryGetAssetInfoResponseAmino {
     const obj: any = {};
-    obj.assetInfo = message.assetInfo ? AssetInfo.toAmino(message.assetInfo) : undefined;
+    obj.asset_info = message.assetInfo ? AssetInfo.toAmino(message.assetInfo) : undefined;
     return obj;
   },
   fromAminoMsg(object: QueryGetAssetInfoResponseAminoMsg): QueryGetAssetInfoResponse {
@@ -892,16 +892,16 @@ export const QueryAllAssetInfoResponse = {
   },
   fromAmino(object: QueryAllAssetInfoResponseAmino): QueryAllAssetInfoResponse {
     return {
-      assetInfo: Array.isArray(object?.assetInfo) ? object.assetInfo.map((e: any) => AssetInfo.fromAmino(e)) : [],
+      assetInfo: Array.isArray(object?.asset_info) ? object.asset_info.map((e: any) => AssetInfo.fromAmino(e)) : [],
       pagination: object?.pagination ? PageResponse.fromAmino(object.pagination) : undefined
     };
   },
   toAmino(message: QueryAllAssetInfoResponse): QueryAllAssetInfoResponseAmino {
     const obj: any = {};
     if (message.assetInfo) {
-      obj.assetInfo = message.assetInfo.map(e => e ? AssetInfo.toAmino(e) : undefined);
+      obj.asset_info = message.assetInfo.map(e => e ? AssetInfo.toAmino(e) : undefined);
     } else {
-      obj.assetInfo = [];
+      obj.asset_info = [];
     }
     obj.pagination = message.pagination ? PageResponse.toAmino(message.pagination) : undefined;
     return obj;
@@ -1298,12 +1298,12 @@ export const QueryGetPriceFeederResponse = {
   },
   fromAmino(object: QueryGetPriceFeederResponseAmino): QueryGetPriceFeederResponse {
     return {
-      priceFeeder: object?.priceFeeder ? PriceFeeder.fromAmino(object.priceFeeder) : undefined
+      priceFeeder: object?.price_feeder ? PriceFeeder.fromAmino(object.price_feeder) : undefined
     };
   },
   toAmino(message: QueryGetPriceFeederResponse): QueryGetPriceFeederResponseAmino {
     const obj: any = {};
-    obj.priceFeeder = message.priceFeeder ? PriceFeeder.toAmino(message.priceFeeder) : undefined;
+    obj.price_feeder = message.priceFeeder ? PriceFeeder.toAmino(message.priceFeeder) : undefined;
     return obj;
   },
   fromAminoMsg(object: QueryGetPriceFeederResponseAminoMsg): QueryGetPriceFeederResponse {
@@ -1428,16 +1428,16 @@ export const QueryAllPriceFeederResponse = {
   },
   fromAmino(object: QueryAllPriceFeederResponseAmino): QueryAllPriceFeederResponse {
     return {
-      priceFeeder: Array.isArray(object?.priceFeeder) ? object.priceFeeder.map((e: any) => PriceFeeder.fromAmino(e)) : [],
+      priceFeeder: Array.isArray(object?.price_feeder) ? object.price_feeder.map((e: any) => PriceFeeder.fromAmino(e)) : [],
       pagination: object?.pagination ? PageResponse.fromAmino(object.pagination) : undefined
     };
   },
   toAmino(message: QueryAllPriceFeederResponse): QueryAllPriceFeederResponseAmino {
     const obj: any = {};
     if (message.priceFeeder) {
-      obj.priceFeeder = message.priceFeeder.map(e => e ? PriceFeeder.toAmino(e) : undefined);
+      obj.price_feeder = message.priceFeeder.map(e => e ? PriceFeeder.toAmino(e) : undefined);
     } else {
-      obj.priceFeeder = [];
+      obj.price_feeder = [];
     }
     obj.pagination = message.pagination ? PageResponse.toAmino(message.pagination) : undefined;
     return obj;

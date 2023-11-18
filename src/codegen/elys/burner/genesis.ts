@@ -13,7 +13,7 @@ export interface GenesisStateProtoMsg {
 /** GenesisState defines the burner module's genesis state. */
 export interface GenesisStateAmino {
   params?: ParamsAmino;
-  historyList: HistoryAmino[];
+  history_list: HistoryAmino[];
 }
 export interface GenesisStateAminoMsg {
   type: "/elys.burner.GenesisState";
@@ -22,7 +22,7 @@ export interface GenesisStateAminoMsg {
 /** GenesisState defines the burner module's genesis state. */
 export interface GenesisStateSDKType {
   params: ParamsSDKType;
-  historyList: HistorySDKType[];
+  history_list: HistorySDKType[];
 }
 function createBaseGenesisState(): GenesisState {
   return {
@@ -70,16 +70,16 @@ export const GenesisState = {
   fromAmino(object: GenesisStateAmino): GenesisState {
     return {
       params: object?.params ? Params.fromAmino(object.params) : undefined,
-      historyList: Array.isArray(object?.historyList) ? object.historyList.map((e: any) => History.fromAmino(e)) : []
+      historyList: Array.isArray(object?.history_list) ? object.history_list.map((e: any) => History.fromAmino(e)) : []
     };
   },
   toAmino(message: GenesisState): GenesisStateAmino {
     const obj: any = {};
     obj.params = message.params ? Params.toAmino(message.params) : undefined;
     if (message.historyList) {
-      obj.historyList = message.historyList.map(e => e ? History.toAmino(e) : undefined);
+      obj.history_list = message.historyList.map(e => e ? History.toAmino(e) : undefined);
     } else {
-      obj.historyList = [];
+      obj.history_list = [];
     }
     return obj;
   },

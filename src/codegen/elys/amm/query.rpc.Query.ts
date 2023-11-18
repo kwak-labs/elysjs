@@ -1,7 +1,7 @@
 import { Rpc } from "../../helpers";
 import { BinaryReader } from "../../binary";
 import { QueryClient, createProtobufRpcClient } from "@cosmjs/stargate";
-import { QueryParamsRequest, QueryParamsResponse, QueryGetPoolRequest, QueryGetPoolResponse, QueryAllPoolRequest, QueryAllPoolResponse, QueryGetDenomLiquidityRequest, QueryGetDenomLiquidityResponse, QueryAllDenomLiquidityRequest, QueryAllDenomLiquidityResponse, QuerySwapEstimationRequest, QuerySwapEstimationResponse, QuerySlippageTrackRequest, QuerySlippageTrackResponse, QuerySlippageTrackAllRequest, QuerySlippageTrackAllResponse } from "./query";
+import { QueryParamsRequest, QueryParamsResponse, QueryGetPoolRequest, QueryGetPoolResponse, QueryAllPoolRequest, QueryAllPoolResponse, QueryGetDenomLiquidityRequest, QueryGetDenomLiquidityResponse, QueryAllDenomLiquidityRequest, QueryAllDenomLiquidityResponse, QuerySwapEstimationRequest, QuerySwapEstimationResponse, QuerySlippageTrackRequest, QuerySlippageTrackResponse, QuerySlippageTrackAllRequest, QuerySlippageTrackAllResponse, QueryBalanceRequest, QueryBalanceResponse } from "./query";
 /** Query defines the gRPC querier service. */
 export interface Query {
   /** Parameters queries the parameters of the module. */
@@ -18,6 +18,8 @@ export interface Query {
   slippageTrack(request: QuerySlippageTrackRequest): Promise<QuerySlippageTrackResponse>;
   /** Queries all slippage tracks for a week. */
   slippageTrackAll(request?: QuerySlippageTrackAllRequest): Promise<QuerySlippageTrackAllResponse>;
+  /** Queries a list of Balance items. */
+  balance(request: QueryBalanceRequest): Promise<QueryBalanceResponse>;
 }
 export class QueryClientImpl implements Query {
   private readonly rpc: Rpc;
@@ -31,6 +33,7 @@ export class QueryClientImpl implements Query {
     this.swapEstimation = this.swapEstimation.bind(this);
     this.slippageTrack = this.slippageTrack.bind(this);
     this.slippageTrackAll = this.slippageTrackAll.bind(this);
+    this.balance = this.balance.bind(this);
   }
   params(request: QueryParamsRequest = {}): Promise<QueryParamsResponse> {
     const data = QueryParamsRequest.encode(request).finish();
@@ -76,6 +79,11 @@ export class QueryClientImpl implements Query {
     const promise = this.rpc.request("elys.amm.Query", "SlippageTrackAll", data);
     return promise.then(data => QuerySlippageTrackAllResponse.decode(new BinaryReader(data)));
   }
+  balance(request: QueryBalanceRequest): Promise<QueryBalanceResponse> {
+    const data = QueryBalanceRequest.encode(request).finish();
+    const promise = this.rpc.request("elys.amm.Query", "Balance", data);
+    return promise.then(data => QueryBalanceResponse.decode(new BinaryReader(data)));
+  }
 }
 export const createRpcQueryExtension = (base: QueryClient) => {
   const rpc = createProtobufRpcClient(base);
@@ -104,6 +112,9 @@ export const createRpcQueryExtension = (base: QueryClient) => {
     },
     slippageTrackAll(request?: QuerySlippageTrackAllRequest): Promise<QuerySlippageTrackAllResponse> {
       return queryService.slippageTrackAll(request);
+    },
+    balance(request: QueryBalanceRequest): Promise<QueryBalanceResponse> {
+      return queryService.balance(request);
     }
   };
 };

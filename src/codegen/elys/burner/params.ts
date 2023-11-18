@@ -9,7 +9,7 @@ export interface ParamsProtoMsg {
 }
 /** Params defines the parameters for the module. */
 export interface ParamsAmino {
-  epochIdentifier: string;
+  epoch_identifier: string;
 }
 export interface ParamsAminoMsg {
   type: "/elys.burner.Params";
@@ -17,7 +17,7 @@ export interface ParamsAminoMsg {
 }
 /** Params defines the parameters for the module. */
 export interface ParamsSDKType {
-  epochIdentifier: string;
+  epoch_identifier: string;
 }
 function createBaseParams(): Params {
   return {
@@ -56,12 +56,12 @@ export const Params = {
   },
   fromAmino(object: ParamsAmino): Params {
     return {
-      epochIdentifier: object.epochIdentifier
+      epochIdentifier: object.epoch_identifier
     };
   },
   toAmino(message: Params): ParamsAmino {
     const obj: any = {};
-    obj.epochIdentifier = message.epochIdentifier;
+    obj.epoch_identifier = message.epochIdentifier;
     return obj;
   },
   fromAminoMsg(object: ParamsAminoMsg): Params {

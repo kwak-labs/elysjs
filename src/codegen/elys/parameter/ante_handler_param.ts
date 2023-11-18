@@ -10,18 +10,18 @@ export interface AnteHandlerParamProtoMsg {
   value: Uint8Array;
 }
 export interface AnteHandlerParamAmino {
-  minCommissionRate: string;
-  maxVotingPower: string;
-  minSelfDelegation: string;
+  min_commission_rate: string;
+  max_voting_power: string;
+  min_self_delegation: string;
 }
 export interface AnteHandlerParamAminoMsg {
   type: "/elys.parameter.AnteHandlerParam";
   value: AnteHandlerParamAmino;
 }
 export interface AnteHandlerParamSDKType {
-  minCommissionRate: string;
-  maxVotingPower: string;
-  minSelfDelegation: string;
+  min_commission_rate: string;
+  max_voting_power: string;
+  min_self_delegation: string;
 }
 function createBaseAnteHandlerParam(): AnteHandlerParam {
   return {
@@ -76,16 +76,16 @@ export const AnteHandlerParam = {
   },
   fromAmino(object: AnteHandlerParamAmino): AnteHandlerParam {
     return {
-      minCommissionRate: object.minCommissionRate,
-      maxVotingPower: object.maxVotingPower,
-      minSelfDelegation: object.minSelfDelegation
+      minCommissionRate: object.min_commission_rate,
+      maxVotingPower: object.max_voting_power,
+      minSelfDelegation: object.min_self_delegation
     };
   },
   toAmino(message: AnteHandlerParam): AnteHandlerParamAmino {
     const obj: any = {};
-    obj.minCommissionRate = message.minCommissionRate;
-    obj.maxVotingPower = message.maxVotingPower;
-    obj.minSelfDelegation = message.minSelfDelegation;
+    obj.min_commission_rate = message.minCommissionRate;
+    obj.max_voting_power = message.maxVotingPower;
+    obj.min_self_delegation = message.minSelfDelegation;
     return obj;
   },
   fromAminoMsg(object: AnteHandlerParamAminoMsg): AnteHandlerParam {

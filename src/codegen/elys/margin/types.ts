@@ -44,9 +44,9 @@ export interface MTP {
   address: string;
   collaterals: Coin[];
   liabilities: string;
-  interestPaidCollaterals: Coin[];
-  interestPaidCustodies: Coin[];
-  interestUnpaidCollaterals: Coin[];
+  borrowInterestPaidCollaterals: Coin[];
+  borrowInterestPaidCustodies: Coin[];
+  borrowInterestUnpaidCollaterals: Coin[];
   custodies: Coin[];
   takeProfitLiabilities: string;
   takeProfitCustodies: Coin[];
@@ -67,9 +67,9 @@ export interface MTPAmino {
   address: string;
   collaterals: CoinAmino[];
   liabilities: string;
-  interest_paid_collaterals: CoinAmino[];
-  interest_paid_custodies: CoinAmino[];
-  interest_unpaid_collaterals: CoinAmino[];
+  borrow_interest_paid_collaterals: CoinAmino[];
+  borrow_interest_paid_custodies: CoinAmino[];
+  borrow_interest_unpaid_collaterals: CoinAmino[];
   custodies: CoinAmino[];
   take_profit_liabilities: string;
   take_profit_custodies: CoinAmino[];
@@ -90,9 +90,9 @@ export interface MTPSDKType {
   address: string;
   collaterals: CoinSDKType[];
   liabilities: string;
-  interest_paid_collaterals: CoinSDKType[];
-  interest_paid_custodies: CoinSDKType[];
-  interest_unpaid_collaterals: CoinSDKType[];
+  borrow_interest_paid_collaterals: CoinSDKType[];
+  borrow_interest_paid_custodies: CoinSDKType[];
+  borrow_interest_unpaid_collaterals: CoinSDKType[];
   custodies: CoinSDKType[];
   take_profit_liabilities: string;
   take_profit_custodies: CoinSDKType[];
@@ -127,9 +127,9 @@ function createBaseMTP(): MTP {
     address: "",
     collaterals: [],
     liabilities: "",
-    interestPaidCollaterals: [],
-    interestPaidCustodies: [],
-    interestUnpaidCollaterals: [],
+    borrowInterestPaidCollaterals: [],
+    borrowInterestPaidCustodies: [],
+    borrowInterestUnpaidCollaterals: [],
     custodies: [],
     takeProfitLiabilities: "",
     takeProfitCustodies: [],
@@ -155,13 +155,13 @@ export const MTP = {
     if (message.liabilities !== "") {
       writer.uint32(26).string(message.liabilities);
     }
-    for (const v of message.interestPaidCollaterals) {
+    for (const v of message.borrowInterestPaidCollaterals) {
       Coin.encode(v!, writer.uint32(34).fork()).ldelim();
     }
-    for (const v of message.interestPaidCustodies) {
+    for (const v of message.borrowInterestPaidCustodies) {
       Coin.encode(v!, writer.uint32(42).fork()).ldelim();
     }
-    for (const v of message.interestUnpaidCollaterals) {
+    for (const v of message.borrowInterestUnpaidCollaterals) {
       Coin.encode(v!, writer.uint32(50).fork()).ldelim();
     }
     for (const v of message.custodies) {
@@ -216,13 +216,13 @@ export const MTP = {
           message.liabilities = reader.string();
           break;
         case 4:
-          message.interestPaidCollaterals.push(Coin.decode(reader, reader.uint32()));
+          message.borrowInterestPaidCollaterals.push(Coin.decode(reader, reader.uint32()));
           break;
         case 5:
-          message.interestPaidCustodies.push(Coin.decode(reader, reader.uint32()));
+          message.borrowInterestPaidCustodies.push(Coin.decode(reader, reader.uint32()));
           break;
         case 6:
-          message.interestUnpaidCollaterals.push(Coin.decode(reader, reader.uint32()));
+          message.borrowInterestUnpaidCollaterals.push(Coin.decode(reader, reader.uint32()));
           break;
         case 7:
           message.custodies.push(Coin.decode(reader, reader.uint32()));
@@ -269,9 +269,9 @@ export const MTP = {
     message.address = object.address ?? "";
     message.collaterals = object.collaterals?.map(e => Coin.fromPartial(e)) || [];
     message.liabilities = object.liabilities ?? "";
-    message.interestPaidCollaterals = object.interestPaidCollaterals?.map(e => Coin.fromPartial(e)) || [];
-    message.interestPaidCustodies = object.interestPaidCustodies?.map(e => Coin.fromPartial(e)) || [];
-    message.interestUnpaidCollaterals = object.interestUnpaidCollaterals?.map(e => Coin.fromPartial(e)) || [];
+    message.borrowInterestPaidCollaterals = object.borrowInterestPaidCollaterals?.map(e => Coin.fromPartial(e)) || [];
+    message.borrowInterestPaidCustodies = object.borrowInterestPaidCustodies?.map(e => Coin.fromPartial(e)) || [];
+    message.borrowInterestUnpaidCollaterals = object.borrowInterestUnpaidCollaterals?.map(e => Coin.fromPartial(e)) || [];
     message.custodies = object.custodies?.map(e => Coin.fromPartial(e)) || [];
     message.takeProfitLiabilities = object.takeProfitLiabilities ?? "";
     message.takeProfitCustodies = object.takeProfitCustodies?.map(e => Coin.fromPartial(e)) || [];
@@ -290,9 +290,9 @@ export const MTP = {
       address: object.address,
       collaterals: Array.isArray(object?.collaterals) ? object.collaterals.map((e: any) => Coin.fromAmino(e)) : [],
       liabilities: object.liabilities,
-      interestPaidCollaterals: Array.isArray(object?.interest_paid_collaterals) ? object.interest_paid_collaterals.map((e: any) => Coin.fromAmino(e)) : [],
-      interestPaidCustodies: Array.isArray(object?.interest_paid_custodies) ? object.interest_paid_custodies.map((e: any) => Coin.fromAmino(e)) : [],
-      interestUnpaidCollaterals: Array.isArray(object?.interest_unpaid_collaterals) ? object.interest_unpaid_collaterals.map((e: any) => Coin.fromAmino(e)) : [],
+      borrowInterestPaidCollaterals: Array.isArray(object?.borrow_interest_paid_collaterals) ? object.borrow_interest_paid_collaterals.map((e: any) => Coin.fromAmino(e)) : [],
+      borrowInterestPaidCustodies: Array.isArray(object?.borrow_interest_paid_custodies) ? object.borrow_interest_paid_custodies.map((e: any) => Coin.fromAmino(e)) : [],
+      borrowInterestUnpaidCollaterals: Array.isArray(object?.borrow_interest_unpaid_collaterals) ? object.borrow_interest_unpaid_collaterals.map((e: any) => Coin.fromAmino(e)) : [],
       custodies: Array.isArray(object?.custodies) ? object.custodies.map((e: any) => Coin.fromAmino(e)) : [],
       takeProfitLiabilities: object.take_profit_liabilities,
       takeProfitCustodies: Array.isArray(object?.take_profit_custodies) ? object.take_profit_custodies.map((e: any) => Coin.fromAmino(e)) : [],
@@ -315,20 +315,20 @@ export const MTP = {
       obj.collaterals = [];
     }
     obj.liabilities = message.liabilities;
-    if (message.interestPaidCollaterals) {
-      obj.interest_paid_collaterals = message.interestPaidCollaterals.map(e => e ? Coin.toAmino(e) : undefined);
+    if (message.borrowInterestPaidCollaterals) {
+      obj.borrow_interest_paid_collaterals = message.borrowInterestPaidCollaterals.map(e => e ? Coin.toAmino(e) : undefined);
     } else {
-      obj.interest_paid_collaterals = [];
+      obj.borrow_interest_paid_collaterals = [];
     }
-    if (message.interestPaidCustodies) {
-      obj.interest_paid_custodies = message.interestPaidCustodies.map(e => e ? Coin.toAmino(e) : undefined);
+    if (message.borrowInterestPaidCustodies) {
+      obj.borrow_interest_paid_custodies = message.borrowInterestPaidCustodies.map(e => e ? Coin.toAmino(e) : undefined);
     } else {
-      obj.interest_paid_custodies = [];
+      obj.borrow_interest_paid_custodies = [];
     }
-    if (message.interestUnpaidCollaterals) {
-      obj.interest_unpaid_collaterals = message.interestUnpaidCollaterals.map(e => e ? Coin.toAmino(e) : undefined);
+    if (message.borrowInterestUnpaidCollaterals) {
+      obj.borrow_interest_unpaid_collaterals = message.borrowInterestUnpaidCollaterals.map(e => e ? Coin.toAmino(e) : undefined);
     } else {
-      obj.interest_unpaid_collaterals = [];
+      obj.borrow_interest_unpaid_collaterals = [];
     }
     if (message.custodies) {
       obj.custodies = message.custodies.map(e => e ? Coin.toAmino(e) : undefined);

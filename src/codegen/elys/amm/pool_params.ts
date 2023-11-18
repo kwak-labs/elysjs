@@ -18,33 +18,33 @@ export interface PoolParamsProtoMsg {
   value: Uint8Array;
 }
 export interface PoolParamsAmino {
-  swapFee: string;
-  exitFee: string;
-  useOracle: boolean;
-  weightBreakingFeeMultiplier: string;
-  externalLiquidityRatio: string;
-  lpFeePortion: string;
-  stakingFeePortion: string;
-  weightRecoveryFeePortion: string;
-  thresholdWeightDifference: string;
+  swap_fee: string;
+  exit_fee: string;
+  use_oracle: boolean;
+  weight_breaking_fee_multiplier: string;
+  external_liquidity_ratio: string;
+  lp_fee_portion: string;
+  staking_fee_portion: string;
+  weight_recovery_fee_portion: string;
+  threshold_weight_difference: string;
   /** denom for fee collection */
-  feeDenom: string;
+  fee_denom: string;
 }
 export interface PoolParamsAminoMsg {
   type: "/elys.amm.PoolParams";
   value: PoolParamsAmino;
 }
 export interface PoolParamsSDKType {
-  swapFee: string;
-  exitFee: string;
-  useOracle: boolean;
-  weightBreakingFeeMultiplier: string;
-  externalLiquidityRatio: string;
-  lpFeePortion: string;
-  stakingFeePortion: string;
-  weightRecoveryFeePortion: string;
-  thresholdWeightDifference: string;
-  feeDenom: string;
+  swap_fee: string;
+  exit_fee: string;
+  use_oracle: boolean;
+  weight_breaking_fee_multiplier: string;
+  external_liquidity_ratio: string;
+  lp_fee_portion: string;
+  staking_fee_portion: string;
+  weight_recovery_fee_portion: string;
+  threshold_weight_difference: string;
+  fee_denom: string;
 }
 function createBasePoolParams(): PoolParams {
   return {
@@ -155,30 +155,30 @@ export const PoolParams = {
   },
   fromAmino(object: PoolParamsAmino): PoolParams {
     return {
-      swapFee: object.swapFee,
-      exitFee: object.exitFee,
-      useOracle: object.useOracle,
-      weightBreakingFeeMultiplier: object.weightBreakingFeeMultiplier,
-      externalLiquidityRatio: object.externalLiquidityRatio,
-      lpFeePortion: object.lpFeePortion,
-      stakingFeePortion: object.stakingFeePortion,
-      weightRecoveryFeePortion: object.weightRecoveryFeePortion,
-      thresholdWeightDifference: object.thresholdWeightDifference,
-      feeDenom: object.feeDenom
+      swapFee: object.swap_fee,
+      exitFee: object.exit_fee,
+      useOracle: object.use_oracle,
+      weightBreakingFeeMultiplier: object.weight_breaking_fee_multiplier,
+      externalLiquidityRatio: object.external_liquidity_ratio,
+      lpFeePortion: object.lp_fee_portion,
+      stakingFeePortion: object.staking_fee_portion,
+      weightRecoveryFeePortion: object.weight_recovery_fee_portion,
+      thresholdWeightDifference: object.threshold_weight_difference,
+      feeDenom: object.fee_denom
     };
   },
   toAmino(message: PoolParams): PoolParamsAmino {
     const obj: any = {};
-    obj.swapFee = message.swapFee;
-    obj.exitFee = message.exitFee;
-    obj.useOracle = message.useOracle;
-    obj.weightBreakingFeeMultiplier = message.weightBreakingFeeMultiplier;
-    obj.externalLiquidityRatio = message.externalLiquidityRatio;
-    obj.lpFeePortion = message.lpFeePortion;
-    obj.stakingFeePortion = message.stakingFeePortion;
-    obj.weightRecoveryFeePortion = message.weightRecoveryFeePortion;
-    obj.thresholdWeightDifference = message.thresholdWeightDifference;
-    obj.feeDenom = message.feeDenom;
+    obj.swap_fee = message.swapFee;
+    obj.exit_fee = message.exitFee;
+    obj.use_oracle = message.useOracle;
+    obj.weight_breaking_fee_multiplier = message.weightBreakingFeeMultiplier;
+    obj.external_liquidity_ratio = message.externalLiquidityRatio;
+    obj.lp_fee_portion = message.lpFeePortion;
+    obj.staking_fee_portion = message.stakingFeePortion;
+    obj.weight_recovery_fee_portion = message.weightRecoveryFeePortion;
+    obj.threshold_weight_difference = message.thresholdWeightDifference;
+    obj.fee_denom = message.feeDenom;
     return obj;
   },
   fromAminoMsg(object: PoolParamsAminoMsg): PoolParams {

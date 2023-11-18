@@ -9,7 +9,7 @@ export interface PoolMultipliersProtoMsg {
   value: Uint8Array;
 }
 export interface PoolMultipliersAmino {
-  poolId: string;
+  pool_id: string;
   multiplier: string;
 }
 export interface PoolMultipliersAminoMsg {
@@ -17,7 +17,7 @@ export interface PoolMultipliersAminoMsg {
   value: PoolMultipliersAmino;
 }
 export interface PoolMultipliersSDKType {
-  poolId: bigint;
+  pool_id: bigint;
   multiplier: string;
 }
 export interface ProposalUpdatePoolMultipliers {
@@ -32,7 +32,7 @@ export interface ProposalUpdatePoolMultipliersProtoMsg {
 export interface ProposalUpdatePoolMultipliersAmino {
   title: string;
   description: string;
-  poolMultipliers: PoolMultipliersAmino[];
+  pool_multipliers: PoolMultipliersAmino[];
 }
 export interface ProposalUpdatePoolMultipliersAminoMsg {
   type: "/elys.incentive.ProposalUpdatePoolMultipliers";
@@ -41,7 +41,7 @@ export interface ProposalUpdatePoolMultipliersAminoMsg {
 export interface ProposalUpdatePoolMultipliersSDKType {
   title: string;
   description: string;
-  poolMultipliers: PoolMultipliersSDKType[];
+  pool_multipliers: PoolMultipliersSDKType[];
 }
 function createBasePoolMultipliers(): PoolMultipliers {
   return {
@@ -88,13 +88,13 @@ export const PoolMultipliers = {
   },
   fromAmino(object: PoolMultipliersAmino): PoolMultipliers {
     return {
-      poolId: BigInt(object.poolId),
+      poolId: BigInt(object.pool_id),
       multiplier: object.multiplier
     };
   },
   toAmino(message: PoolMultipliers): PoolMultipliersAmino {
     const obj: any = {};
-    obj.poolId = message.poolId ? message.poolId.toString() : undefined;
+    obj.pool_id = message.poolId ? message.poolId.toString() : undefined;
     obj.multiplier = message.multiplier;
     return obj;
   },
@@ -169,7 +169,7 @@ export const ProposalUpdatePoolMultipliers = {
     return {
       title: object.title,
       description: object.description,
-      poolMultipliers: Array.isArray(object?.poolMultipliers) ? object.poolMultipliers.map((e: any) => PoolMultipliers.fromAmino(e)) : []
+      poolMultipliers: Array.isArray(object?.pool_multipliers) ? object.pool_multipliers.map((e: any) => PoolMultipliers.fromAmino(e)) : []
     };
   },
   toAmino(message: ProposalUpdatePoolMultipliers): ProposalUpdatePoolMultipliersAmino {
@@ -177,9 +177,9 @@ export const ProposalUpdatePoolMultipliers = {
     obj.title = message.title;
     obj.description = message.description;
     if (message.poolMultipliers) {
-      obj.poolMultipliers = message.poolMultipliers.map(e => e ? PoolMultipliers.toAmino(e) : undefined);
+      obj.pool_multipliers = message.poolMultipliers.map(e => e ? PoolMultipliers.toAmino(e) : undefined);
     } else {
-      obj.poolMultipliers = [];
+      obj.pool_multipliers = [];
     }
     return obj;
   },

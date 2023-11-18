@@ -1,6 +1,6 @@
 import { GeneratedType, Registry } from "@cosmjs/proto-signing";
-import { MsgOpen, MsgClose, MsgUpdateParams, MsgUpdatePools, MsgWhitelist, MsgDewhitelist } from "./tx";
-export const registry: ReadonlyArray<[string, GeneratedType]> = [["/elys.margin.MsgOpen", MsgOpen], ["/elys.margin.MsgClose", MsgClose], ["/elys.margin.MsgUpdateParams", MsgUpdateParams], ["/elys.margin.MsgUpdatePools", MsgUpdatePools], ["/elys.margin.MsgWhitelist", MsgWhitelist], ["/elys.margin.MsgDewhitelist", MsgDewhitelist]];
+import { MsgOpen, MsgClose, MsgBrokerOpen, MsgBrokerClose, MsgUpdateParams, MsgUpdatePools, MsgWhitelist, MsgDewhitelist } from "./tx";
+export const registry: ReadonlyArray<[string, GeneratedType]> = [["/elys.margin.MsgOpen", MsgOpen], ["/elys.margin.MsgClose", MsgClose], ["/elys.margin.MsgBrokerOpen", MsgBrokerOpen], ["/elys.margin.MsgBrokerClose", MsgBrokerClose], ["/elys.margin.MsgUpdateParams", MsgUpdateParams], ["/elys.margin.MsgUpdatePools", MsgUpdatePools], ["/elys.margin.MsgWhitelist", MsgWhitelist], ["/elys.margin.MsgDewhitelist", MsgDewhitelist]];
 export const load = (protoRegistry: Registry) => {
   registry.forEach(([typeUrl, mod]) => {
     protoRegistry.register(typeUrl, mod);
@@ -18,6 +18,18 @@ export const MessageComposer = {
       return {
         typeUrl: "/elys.margin.MsgClose",
         value: MsgClose.encode(value).finish()
+      };
+    },
+    brokerOpen(value: MsgBrokerOpen) {
+      return {
+        typeUrl: "/elys.margin.MsgBrokerOpen",
+        value: MsgBrokerOpen.encode(value).finish()
+      };
+    },
+    brokerClose(value: MsgBrokerClose) {
+      return {
+        typeUrl: "/elys.margin.MsgBrokerClose",
+        value: MsgBrokerClose.encode(value).finish()
       };
     },
     updateParams(value: MsgUpdateParams) {
@@ -58,6 +70,18 @@ export const MessageComposer = {
         value
       };
     },
+    brokerOpen(value: MsgBrokerOpen) {
+      return {
+        typeUrl: "/elys.margin.MsgBrokerOpen",
+        value
+      };
+    },
+    brokerClose(value: MsgBrokerClose) {
+      return {
+        typeUrl: "/elys.margin.MsgBrokerClose",
+        value
+      };
+    },
     updateParams(value: MsgUpdateParams) {
       return {
         typeUrl: "/elys.margin.MsgUpdateParams",
@@ -94,6 +118,18 @@ export const MessageComposer = {
       return {
         typeUrl: "/elys.margin.MsgClose",
         value: MsgClose.fromPartial(value)
+      };
+    },
+    brokerOpen(value: MsgBrokerOpen) {
+      return {
+        typeUrl: "/elys.margin.MsgBrokerOpen",
+        value: MsgBrokerOpen.fromPartial(value)
+      };
+    },
+    brokerClose(value: MsgBrokerClose) {
+      return {
+        typeUrl: "/elys.margin.MsgBrokerClose",
+        value: MsgBrokerClose.fromPartial(value)
       };
     },
     updateParams(value: MsgUpdateParams) {

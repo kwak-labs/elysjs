@@ -12,20 +12,20 @@ export interface AccountedPoolProtoMsg {
   value: Uint8Array;
 }
 export interface AccountedPoolAmino {
-  poolId: string;
-  totalShares?: CoinAmino;
-  poolAssets: PoolAssetAmino[];
-  totalWeight: string;
+  pool_id: string;
+  total_shares?: CoinAmino;
+  pool_assets: PoolAssetAmino[];
+  total_weight: string;
 }
 export interface AccountedPoolAminoMsg {
   type: "/elys.accountedpool.AccountedPool";
   value: AccountedPoolAmino;
 }
 export interface AccountedPoolSDKType {
-  poolId: bigint;
-  totalShares: CoinSDKType;
-  poolAssets: PoolAssetSDKType[];
-  totalWeight: string;
+  pool_id: bigint;
+  total_shares: CoinSDKType;
+  pool_assets: PoolAssetSDKType[];
+  total_weight: string;
 }
 function createBaseAccountedPool(): AccountedPool {
   return {
@@ -88,22 +88,22 @@ export const AccountedPool = {
   },
   fromAmino(object: AccountedPoolAmino): AccountedPool {
     return {
-      poolId: BigInt(object.poolId),
-      totalShares: object?.totalShares ? Coin.fromAmino(object.totalShares) : undefined,
-      poolAssets: Array.isArray(object?.poolAssets) ? object.poolAssets.map((e: any) => PoolAsset.fromAmino(e)) : [],
-      totalWeight: object.totalWeight
+      poolId: BigInt(object.pool_id),
+      totalShares: object?.total_shares ? Coin.fromAmino(object.total_shares) : undefined,
+      poolAssets: Array.isArray(object?.pool_assets) ? object.pool_assets.map((e: any) => PoolAsset.fromAmino(e)) : [],
+      totalWeight: object.total_weight
     };
   },
   toAmino(message: AccountedPool): AccountedPoolAmino {
     const obj: any = {};
-    obj.poolId = message.poolId ? message.poolId.toString() : undefined;
-    obj.totalShares = message.totalShares ? Coin.toAmino(message.totalShares) : undefined;
+    obj.pool_id = message.poolId ? message.poolId.toString() : undefined;
+    obj.total_shares = message.totalShares ? Coin.toAmino(message.totalShares) : undefined;
     if (message.poolAssets) {
-      obj.poolAssets = message.poolAssets.map(e => e ? PoolAsset.toAmino(e) : undefined);
+      obj.pool_assets = message.poolAssets.map(e => e ? PoolAsset.toAmino(e) : undefined);
     } else {
-      obj.poolAssets = [];
+      obj.pool_assets = [];
     }
-    obj.totalWeight = message.totalWeight;
+    obj.total_weight = message.totalWeight;
     return obj;
   },
   fromAminoMsg(object: AccountedPoolAminoMsg): AccountedPool {

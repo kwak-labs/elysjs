@@ -11,7 +11,7 @@ export interface Position {
   positionHealth: string;
   id: bigint;
   ammPoolId: bigint;
-  takeProfitPrice: string;
+  stopLossPrice: string;
 }
 export interface PositionProtoMsg {
   typeUrl: "/elys.leveragelp.Position";
@@ -27,7 +27,7 @@ export interface PositionAmino {
   position_health: string;
   id: string;
   amm_pool_id: string;
-  take_profit_price: string;
+  stop_loss_price: string;
 }
 export interface PositionAminoMsg {
   type: "/elys.leveragelp.Position";
@@ -43,7 +43,7 @@ export interface PositionSDKType {
   position_health: string;
   id: bigint;
   amm_pool_id: bigint;
-  take_profit_price: string;
+  stop_loss_price: string;
 }
 export interface WhiteList {
   validatorList: string[];
@@ -73,7 +73,7 @@ function createBasePosition(): Position {
     positionHealth: "",
     id: BigInt(0),
     ammPoolId: BigInt(0),
-    takeProfitPrice: ""
+    stopLossPrice: ""
   };
 }
 export const Position = {
@@ -106,8 +106,8 @@ export const Position = {
     if (message.ammPoolId !== BigInt(0)) {
       writer.uint32(72).uint64(message.ammPoolId);
     }
-    if (message.takeProfitPrice !== "") {
-      writer.uint32(82).string(Decimal.fromUserInput(message.takeProfitPrice, 18).atomics);
+    if (message.stopLossPrice !== "") {
+      writer.uint32(82).string(Decimal.fromUserInput(message.stopLossPrice, 18).atomics);
     }
     return writer;
   },
@@ -146,7 +146,7 @@ export const Position = {
           message.ammPoolId = reader.uint64();
           break;
         case 10:
-          message.takeProfitPrice = Decimal.fromAtomics(reader.string(), 18).toString();
+          message.stopLossPrice = Decimal.fromAtomics(reader.string(), 18).toString();
           break;
         default:
           reader.skipType(tag & 7);
@@ -166,7 +166,7 @@ export const Position = {
     message.positionHealth = object.positionHealth ?? "";
     message.id = object.id !== undefined && object.id !== null ? BigInt(object.id.toString()) : BigInt(0);
     message.ammPoolId = object.ammPoolId !== undefined && object.ammPoolId !== null ? BigInt(object.ammPoolId.toString()) : BigInt(0);
-    message.takeProfitPrice = object.takeProfitPrice ?? "";
+    message.stopLossPrice = object.stopLossPrice ?? "";
     return message;
   },
   fromAmino(object: PositionAmino): Position {
@@ -180,7 +180,7 @@ export const Position = {
       positionHealth: object.position_health,
       id: BigInt(object.id),
       ammPoolId: BigInt(object.amm_pool_id),
-      takeProfitPrice: object.take_profit_price
+      stopLossPrice: object.stop_loss_price
     };
   },
   toAmino(message: Position): PositionAmino {
@@ -194,7 +194,7 @@ export const Position = {
     obj.position_health = message.positionHealth;
     obj.id = message.id ? message.id.toString() : undefined;
     obj.amm_pool_id = message.ammPoolId ? message.ammPoolId.toString() : undefined;
-    obj.take_profit_price = message.takeProfitPrice;
+    obj.stop_loss_price = message.stopLossPrice;
     return obj;
   },
   fromAminoMsg(object: PositionAminoMsg): Position {

@@ -8,23 +8,44 @@ option go_package = "github.com/elys-network/elys/x/commitment/types";
 
 // Msg defines the Msg service.
 service Msg {
-  rpc CommitTokens       (MsgCommitTokens      ) returns (MsgCommitTokensResponse      );
-  rpc UncommitTokens     (MsgUncommitTokens    ) returns (MsgUncommitTokensResponse    );
-  rpc WithdrawTokens     (MsgWithdrawTokens    ) returns (MsgWithdrawTokensResponse    );
+  
+  // CommitLiquidTokens commit the tokens from user's balance
   rpc CommitLiquidTokens (MsgCommitLiquidTokens) returns (MsgCommitLiquidTokensResponse);
-  rpc Vest               (MsgVest              ) returns (MsgVestResponse              );
-  rpc CancelVest         (MsgCancelVest        ) returns (MsgCancelVestResponse        );
-  rpc VestNow            (MsgVestNow           ) returns (MsgVestNowResponse           );
-  rpc UpdateVestingInfo  (MsgUpdateVestingInfo ) returns (MsgUpdateVestingInfoResponse );
-  rpc VestLiquid         (MsgVestLiquid        ) returns (MsgVestLiquidResponse        );
+  
+  // CommitClaimedRewards commit the tokens on claimed store to committed
+  rpc CommitClaimedRewards (MsgCommitClaimedRewards) returns (MsgCommitClaimedRewardsResponse);
+
+  // UncommitTokens uncommits the tokens from committed store and make it liquid immediately
+  rpc UncommitTokens (MsgUncommitTokens) returns (MsgUncommitTokensResponse);
+  
+  // Vest converts user's commitment to vesting - start with unclaimed rewards and if it's not enough deduct from committed bucket
+  // mainly utilized for Eden
+  rpc Vest (MsgVest) returns (MsgVestResponse);
+  
+  // VestNow provides functionality to get the token immediately but lower amount than original
+  // e.g. user can burn 1000 ueden and get 800 uelys when the ratio is 80%
+  rpc VestNow (MsgVestNow) returns (MsgVestNowResponse);
+  
+  // VestLiquid converts user's balance to vesting to be utilized for normal tokens vesting like ATOM vesting
+  rpc VestLiquid (MsgVestLiquid) returns (MsgVestLiquidResponse);
+  
+  // CancelVest cancel the user's vesting and the user reject to get vested tokens
+  rpc CancelVest (MsgCancelVest) returns (MsgCancelVestResponse);
+  
+  // UpdateVestingInfo add/update specific vesting info by denom on Params
+  rpc UpdateVestingInfo (MsgUpdateVestingInfo) returns (MsgUpdateVestingInfoResponse);
+ 
+  rpc Stake             (MsgStake            ) returns (MsgStakeResponse            );
+  rpc Unstake           (MsgUnstake          ) returns (MsgUnstakeResponse          );
 }
-message MsgCommitTokens {
+
+message MsgCommitClaimedRewards {
   string creator = 1;
   string amount  = 2 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int", (gogoproto.nullable) = false];
   string denom   = 3;
 }
 
-message MsgCommitTokensResponse {}
+message MsgCommitClaimedRewardsResponse {}
 
 message MsgUncommitTokens {
   string creator = 1;
@@ -34,18 +55,19 @@ message MsgUncommitTokens {
 
 message MsgUncommitTokensResponse {}
 
-message MsgWithdrawTokens {
+message MsgClaimReward {
   string creator = 1;
   string amount  = 2 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int", (gogoproto.nullable) = false];
   string denom   = 3;
 }
 
-message MsgWithdrawTokensResponse {}
+message MsgClaimRewardResponse {}
 
 message MsgCommitLiquidTokens {
   string creator = 1;
   string amount  = 2 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int", (gogoproto.nullable) = false];
   string denom   = 3;
+  uint64 min_lock = 4; // minimum lock duration to wait until it is claimable
 }
 
 message MsgCommitLiquidTokensResponse {}
@@ -76,12 +98,12 @@ message MsgVestNowResponse {}
 
 message MsgUpdateVestingInfo {
   string authority       = 1;
-  string baseDenom       = 2;
-  string vestingDenom    = 3;
-  string epochIdentifier = 4;
-  int64  numEpochs       = 5;
-  int64  vestNowFactor   = 6;
-  int64  numMaxVestings  = 7;
+  string base_denom       = 2;
+  string vesting_denom    = 3;
+  string epoch_identifier = 4;
+  int64  num_epochs       = 5;
+  int64  vest_now_factor   = 6;
+  int64  num_max_vestings  = 7;
 }
 
 message MsgUpdateVestingInfoResponse {}
@@ -93,4 +115,34 @@ message MsgVestLiquid {
 }
 
 message MsgVestLiquidResponse {}
+
+message MsgClaimRewards {
+  string creator = 1;
+}
+
+message MsgClaimRewardsResponse {}
+
+message MsgStake {
+  string creator          = 1;
+  string amount           = 2 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int", (gogoproto.nullable) = false];
+  string asset            = 3;
+  string validator_address = 4;
+}
+
+message MsgStakeResponse {
+  uint64 code   = 1;
+  string result = 2;
+}
+
+message MsgUnstake {
+  string creator          = 1;
+  string amount           = 2 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int", (gogoproto.nullable) = false];
+  string asset            = 3;
+  string validator_address = 4;
+}
+
+message MsgUnstakeResponse {
+  uint64 code   = 1;
+  string result = 2;
+}
 

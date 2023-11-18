@@ -3,10 +3,10 @@ import { Decimal } from "@cosmjs/math";
 /** Params defines the parameters for the module. */
 export interface Params {
   leverageMax: string;
-  interestRateMax: string;
-  interestRateMin: string;
-  interestRateIncrease: string;
-  interestRateDecrease: string;
+  borrowInterestRateMax: string;
+  borrowInterestRateMin: string;
+  borrowInterestRateIncrease: string;
+  borrowInterestRateDecrease: string;
   healthGainFactor: string;
   epochLength: bigint;
   removalQueueThreshold: string;
@@ -14,13 +14,14 @@ export interface Params {
   poolOpenThreshold: string;
   forceCloseFundPercentage: string;
   forceCloseFundAddress: string;
-  incrementalInterestPaymentFundPercentage: string;
-  incrementalInterestPaymentFundAddress: string;
+  incrementalBorrowInterestPaymentFundPercentage: string;
+  incrementalBorrowInterestPaymentFundAddress: string;
   sqModifier: string;
   safetyFactor: string;
-  incrementalInterestPaymentEnabled: boolean;
+  incrementalBorrowInterestPaymentEnabled: boolean;
   whitelistingEnabled: boolean;
   invariantCheckEpoch: string;
+  brokerAddress: string;
 }
 export interface ParamsProtoMsg {
   typeUrl: "/elys.margin.Params";
@@ -29,10 +30,10 @@ export interface ParamsProtoMsg {
 /** Params defines the parameters for the module. */
 export interface ParamsAmino {
   leverage_max: string;
-  interest_rate_max: string;
-  interest_rate_min: string;
-  interest_rate_increase: string;
-  interest_rate_decrease: string;
+  borrow_interest_rate_max: string;
+  borrow_interest_rate_min: string;
+  borrow_interest_rate_increase: string;
+  borrow_interest_rate_decrease: string;
   health_gain_factor: string;
   epoch_length: string;
   removal_queue_threshold: string;
@@ -40,13 +41,14 @@ export interface ParamsAmino {
   pool_open_threshold: string;
   force_close_fund_percentage: string;
   force_close_fund_address: string;
-  incremental_interest_payment_fund_percentage: string;
-  incremental_interest_payment_fund_address: string;
+  incremental_borrow_interest_payment_fund_percentage: string;
+  incremental_borrow_interest_payment_fund_address: string;
   sq_modifier: string;
   safety_factor: string;
-  incremental_interest_payment_enabled: boolean;
+  incremental_borrow_interest_payment_enabled: boolean;
   whitelisting_enabled: boolean;
   invariant_check_epoch: string;
+  broker_address: string;
 }
 export interface ParamsAminoMsg {
   type: "/elys.margin.Params";
@@ -55,10 +57,10 @@ export interface ParamsAminoMsg {
 /** Params defines the parameters for the module. */
 export interface ParamsSDKType {
   leverage_max: string;
-  interest_rate_max: string;
-  interest_rate_min: string;
-  interest_rate_increase: string;
-  interest_rate_decrease: string;
+  borrow_interest_rate_max: string;
+  borrow_interest_rate_min: string;
+  borrow_interest_rate_increase: string;
+  borrow_interest_rate_decrease: string;
   health_gain_factor: string;
   epoch_length: bigint;
   removal_queue_threshold: string;
@@ -66,21 +68,22 @@ export interface ParamsSDKType {
   pool_open_threshold: string;
   force_close_fund_percentage: string;
   force_close_fund_address: string;
-  incremental_interest_payment_fund_percentage: string;
-  incremental_interest_payment_fund_address: string;
+  incremental_borrow_interest_payment_fund_percentage: string;
+  incremental_borrow_interest_payment_fund_address: string;
   sq_modifier: string;
   safety_factor: string;
-  incremental_interest_payment_enabled: boolean;
+  incremental_borrow_interest_payment_enabled: boolean;
   whitelisting_enabled: boolean;
   invariant_check_epoch: string;
+  broker_address: string;
 }
 function createBaseParams(): Params {
   return {
     leverageMax: "",
-    interestRateMax: "",
-    interestRateMin: "",
-    interestRateIncrease: "",
-    interestRateDecrease: "",
+    borrowInterestRateMax: "",
+    borrowInterestRateMin: "",
+    borrowInterestRateIncrease: "",
+    borrowInterestRateDecrease: "",
     healthGainFactor: "",
     epochLength: BigInt(0),
     removalQueueThreshold: "",
@@ -88,13 +91,14 @@ function createBaseParams(): Params {
     poolOpenThreshold: "",
     forceCloseFundPercentage: "",
     forceCloseFundAddress: "",
-    incrementalInterestPaymentFundPercentage: "",
-    incrementalInterestPaymentFundAddress: "",
+    incrementalBorrowInterestPaymentFundPercentage: "",
+    incrementalBorrowInterestPaymentFundAddress: "",
     sqModifier: "",
     safetyFactor: "",
-    incrementalInterestPaymentEnabled: false,
+    incrementalBorrowInterestPaymentEnabled: false,
     whitelistingEnabled: false,
-    invariantCheckEpoch: ""
+    invariantCheckEpoch: "",
+    brokerAddress: ""
   };
 }
 export const Params = {
@@ -103,17 +107,17 @@ export const Params = {
     if (message.leverageMax !== "") {
       writer.uint32(10).string(Decimal.fromUserInput(message.leverageMax, 18).atomics);
     }
-    if (message.interestRateMax !== "") {
-      writer.uint32(18).string(Decimal.fromUserInput(message.interestRateMax, 18).atomics);
+    if (message.borrowInterestRateMax !== "") {
+      writer.uint32(18).string(Decimal.fromUserInput(message.borrowInterestRateMax, 18).atomics);
     }
-    if (message.interestRateMin !== "") {
-      writer.uint32(26).string(Decimal.fromUserInput(message.interestRateMin, 18).atomics);
+    if (message.borrowInterestRateMin !== "") {
+      writer.uint32(26).string(Decimal.fromUserInput(message.borrowInterestRateMin, 18).atomics);
     }
-    if (message.interestRateIncrease !== "") {
-      writer.uint32(34).string(Decimal.fromUserInput(message.interestRateIncrease, 18).atomics);
+    if (message.borrowInterestRateIncrease !== "") {
+      writer.uint32(34).string(Decimal.fromUserInput(message.borrowInterestRateIncrease, 18).atomics);
     }
-    if (message.interestRateDecrease !== "") {
-      writer.uint32(42).string(Decimal.fromUserInput(message.interestRateDecrease, 18).atomics);
+    if (message.borrowInterestRateDecrease !== "") {
+      writer.uint32(42).string(Decimal.fromUserInput(message.borrowInterestRateDecrease, 18).atomics);
     }
     if (message.healthGainFactor !== "") {
       writer.uint32(50).string(Decimal.fromUserInput(message.healthGainFactor, 18).atomics);
@@ -136,11 +140,11 @@ export const Params = {
     if (message.forceCloseFundAddress !== "") {
       writer.uint32(98).string(message.forceCloseFundAddress);
     }
-    if (message.incrementalInterestPaymentFundPercentage !== "") {
-      writer.uint32(106).string(Decimal.fromUserInput(message.incrementalInterestPaymentFundPercentage, 18).atomics);
+    if (message.incrementalBorrowInterestPaymentFundPercentage !== "") {
+      writer.uint32(106).string(Decimal.fromUserInput(message.incrementalBorrowInterestPaymentFundPercentage, 18).atomics);
     }
-    if (message.incrementalInterestPaymentFundAddress !== "") {
-      writer.uint32(114).string(message.incrementalInterestPaymentFundAddress);
+    if (message.incrementalBorrowInterestPaymentFundAddress !== "") {
+      writer.uint32(114).string(message.incrementalBorrowInterestPaymentFundAddress);
     }
     if (message.sqModifier !== "") {
       writer.uint32(122).string(Decimal.fromUserInput(message.sqModifier, 18).atomics);
@@ -148,14 +152,17 @@ export const Params = {
     if (message.safetyFactor !== "") {
       writer.uint32(130).string(Decimal.fromUserInput(message.safetyFactor, 18).atomics);
     }
-    if (message.incrementalInterestPaymentEnabled === true) {
-      writer.uint32(136).bool(message.incrementalInterestPaymentEnabled);
+    if (message.incrementalBorrowInterestPaymentEnabled === true) {
+      writer.uint32(136).bool(message.incrementalBorrowInterestPaymentEnabled);
     }
     if (message.whitelistingEnabled === true) {
       writer.uint32(144).bool(message.whitelistingEnabled);
     }
     if (message.invariantCheckEpoch !== "") {
       writer.uint32(154).string(message.invariantCheckEpoch);
+    }
+    if (message.brokerAddress !== "") {
+      writer.uint32(162).string(message.brokerAddress);
     }
     return writer;
   },
@@ -170,16 +177,16 @@ export const Params = {
           message.leverageMax = Decimal.fromAtomics(reader.string(), 18).toString();
           break;
         case 2:
-          message.interestRateMax = Decimal.fromAtomics(reader.string(), 18).toString();
+          message.borrowInterestRateMax = Decimal.fromAtomics(reader.string(), 18).toString();
           break;
         case 3:
-          message.interestRateMin = Decimal.fromAtomics(reader.string(), 18).toString();
+          message.borrowInterestRateMin = Decimal.fromAtomics(reader.string(), 18).toString();
           break;
         case 4:
-          message.interestRateIncrease = Decimal.fromAtomics(reader.string(), 18).toString();
+          message.borrowInterestRateIncrease = Decimal.fromAtomics(reader.string(), 18).toString();
           break;
         case 5:
-          message.interestRateDecrease = Decimal.fromAtomics(reader.string(), 18).toString();
+          message.borrowInterestRateDecrease = Decimal.fromAtomics(reader.string(), 18).toString();
           break;
         case 6:
           message.healthGainFactor = Decimal.fromAtomics(reader.string(), 18).toString();
@@ -203,10 +210,10 @@ export const Params = {
           message.forceCloseFundAddress = reader.string();
           break;
         case 13:
-          message.incrementalInterestPaymentFundPercentage = Decimal.fromAtomics(reader.string(), 18).toString();
+          message.incrementalBorrowInterestPaymentFundPercentage = Decimal.fromAtomics(reader.string(), 18).toString();
           break;
         case 14:
-          message.incrementalInterestPaymentFundAddress = reader.string();
+          message.incrementalBorrowInterestPaymentFundAddress = reader.string();
           break;
         case 15:
           message.sqModifier = Decimal.fromAtomics(reader.string(), 18).toString();
@@ -215,13 +222,16 @@ export const Params = {
           message.safetyFactor = Decimal.fromAtomics(reader.string(), 18).toString();
           break;
         case 17:
-          message.incrementalInterestPaymentEnabled = reader.bool();
+          message.incrementalBorrowInterestPaymentEnabled = reader.bool();
           break;
         case 18:
           message.whitelistingEnabled = reader.bool();
           break;
         case 19:
           message.invariantCheckEpoch = reader.string();
+          break;
+        case 20:
+          message.brokerAddress = reader.string();
           break;
         default:
           reader.skipType(tag & 7);
@@ -233,10 +243,10 @@ export const Params = {
   fromPartial(object: Partial<Params>): Params {
     const message = createBaseParams();
     message.leverageMax = object.leverageMax ?? "";
-    message.interestRateMax = object.interestRateMax ?? "";
-    message.interestRateMin = object.interestRateMin ?? "";
-    message.interestRateIncrease = object.interestRateIncrease ?? "";
-    message.interestRateDecrease = object.interestRateDecrease ?? "";
+    message.borrowInterestRateMax = object.borrowInterestRateMax ?? "";
+    message.borrowInterestRateMin = object.borrowInterestRateMin ?? "";
+    message.borrowInterestRateIncrease = object.borrowInterestRateIncrease ?? "";
+    message.borrowInterestRateDecrease = object.borrowInterestRateDecrease ?? "";
     message.healthGainFactor = object.healthGainFactor ?? "";
     message.epochLength = object.epochLength !== undefined && object.epochLength !== null ? BigInt(object.epochLength.toString()) : BigInt(0);
     message.removalQueueThreshold = object.removalQueueThreshold ?? "";
@@ -244,22 +254,23 @@ export const Params = {
     message.poolOpenThreshold = object.poolOpenThreshold ?? "";
     message.forceCloseFundPercentage = object.forceCloseFundPercentage ?? "";
     message.forceCloseFundAddress = object.forceCloseFundAddress ?? "";
-    message.incrementalInterestPaymentFundPercentage = object.incrementalInterestPaymentFundPercentage ?? "";
-    message.incrementalInterestPaymentFundAddress = object.incrementalInterestPaymentFundAddress ?? "";
+    message.incrementalBorrowInterestPaymentFundPercentage = object.incrementalBorrowInterestPaymentFundPercentage ?? "";
+    message.incrementalBorrowInterestPaymentFundAddress = object.incrementalBorrowInterestPaymentFundAddress ?? "";
     message.sqModifier = object.sqModifier ?? "";
     message.safetyFactor = object.safetyFactor ?? "";
-    message.incrementalInterestPaymentEnabled = object.incrementalInterestPaymentEnabled ?? false;
+    message.incrementalBorrowInterestPaymentEnabled = object.incrementalBorrowInterestPaymentEnabled ?? false;
     message.whitelistingEnabled = object.whitelistingEnabled ?? false;
     message.invariantCheckEpoch = object.invariantCheckEpoch ?? "";
+    message.brokerAddress = object.brokerAddress ?? "";
     return message;
   },
   fromAmino(object: ParamsAmino): Params {
     return {
       leverageMax: object.leverage_max,
-      interestRateMax: object.interest_rate_max,
-      interestRateMin: object.interest_rate_min,
-      interestRateIncrease: object.interest_rate_increase,
-      interestRateDecrease: object.interest_rate_decrease,
+      borrowInterestRateMax: object.borrow_interest_rate_max,
+      borrowInterestRateMin: object.borrow_interest_rate_min,
+      borrowInterestRateIncrease: object.borrow_interest_rate_increase,
+      borrowInterestRateDecrease: object.borrow_interest_rate_decrease,
       healthGainFactor: object.health_gain_factor,
       epochLength: BigInt(object.epoch_length),
       removalQueueThreshold: object.removal_queue_threshold,
@@ -267,22 +278,23 @@ export const Params = {
       poolOpenThreshold: object.pool_open_threshold,
       forceCloseFundPercentage: object.force_close_fund_percentage,
       forceCloseFundAddress: object.force_close_fund_address,
-      incrementalInterestPaymentFundPercentage: object.incremental_interest_payment_fund_percentage,
-      incrementalInterestPaymentFundAddress: object.incremental_interest_payment_fund_address,
+      incrementalBorrowInterestPaymentFundPercentage: object.incremental_borrow_interest_payment_fund_percentage,
+      incrementalBorrowInterestPaymentFundAddress: object.incremental_borrow_interest_payment_fund_address,
       sqModifier: object.sq_modifier,
       safetyFactor: object.safety_factor,
-      incrementalInterestPaymentEnabled: object.incremental_interest_payment_enabled,
+      incrementalBorrowInterestPaymentEnabled: object.incremental_borrow_interest_payment_enabled,
       whitelistingEnabled: object.whitelisting_enabled,
-      invariantCheckEpoch: object.invariant_check_epoch
+      invariantCheckEpoch: object.invariant_check_epoch,
+      brokerAddress: object.broker_address
     };
   },
   toAmino(message: Params): ParamsAmino {
     const obj: any = {};
     obj.leverage_max = message.leverageMax;
-    obj.interest_rate_max = message.interestRateMax;
-    obj.interest_rate_min = message.interestRateMin;
-    obj.interest_rate_increase = message.interestRateIncrease;
-    obj.interest_rate_decrease = message.interestRateDecrease;
+    obj.borrow_interest_rate_max = message.borrowInterestRateMax;
+    obj.borrow_interest_rate_min = message.borrowInterestRateMin;
+    obj.borrow_interest_rate_increase = message.borrowInterestRateIncrease;
+    obj.borrow_interest_rate_decrease = message.borrowInterestRateDecrease;
     obj.health_gain_factor = message.healthGainFactor;
     obj.epoch_length = message.epochLength ? message.epochLength.toString() : undefined;
     obj.removal_queue_threshold = message.removalQueueThreshold;
@@ -290,13 +302,14 @@ export const Params = {
     obj.pool_open_threshold = message.poolOpenThreshold;
     obj.force_close_fund_percentage = message.forceCloseFundPercentage;
     obj.force_close_fund_address = message.forceCloseFundAddress;
-    obj.incremental_interest_payment_fund_percentage = message.incrementalInterestPaymentFundPercentage;
-    obj.incremental_interest_payment_fund_address = message.incrementalInterestPaymentFundAddress;
+    obj.incremental_borrow_interest_payment_fund_percentage = message.incrementalBorrowInterestPaymentFundPercentage;
+    obj.incremental_borrow_interest_payment_fund_address = message.incrementalBorrowInterestPaymentFundAddress;
     obj.sq_modifier = message.sqModifier;
     obj.safety_factor = message.safetyFactor;
-    obj.incremental_interest_payment_enabled = message.incrementalInterestPaymentEnabled;
+    obj.incremental_borrow_interest_payment_enabled = message.incrementalBorrowInterestPaymentEnabled;
     obj.whitelisting_enabled = message.whitelistingEnabled;
     obj.invariant_check_epoch = message.invariantCheckEpoch;
+    obj.broker_address = message.brokerAddress;
     return obj;
   },
   fromAminoMsg(object: ParamsAminoMsg): Params {

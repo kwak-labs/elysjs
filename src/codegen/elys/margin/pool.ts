@@ -6,7 +6,7 @@ export interface PoolAsset {
   takeProfitLiabilities: string;
   takeProfitCustody: string;
   assetBalance: string;
-  blockInterest: string;
+  blockBorrowInterest: string;
   assetDenom: string;
 }
 export interface PoolAssetProtoMsg {
@@ -19,7 +19,7 @@ export interface PoolAssetAmino {
   take_profit_liabilities: string;
   take_profit_custody: string;
   asset_balance: string;
-  block_interest: string;
+  block_borrow_interest: string;
   asset_denom: string;
 }
 export interface PoolAssetAminoMsg {
@@ -32,7 +32,7 @@ export interface PoolAssetSDKType {
   take_profit_liabilities: string;
   take_profit_custody: string;
   asset_balance: string;
-  block_interest: string;
+  block_borrow_interest: string;
   asset_denom: string;
 }
 export interface Pool {
@@ -40,35 +40,38 @@ export interface Pool {
   health: string;
   enabled: boolean;
   closed: boolean;
-  interestRate: string;
-  poolAssets: PoolAsset[];
-  lastHeightInterestRateComputed: bigint;
+  borrowInterestRate: string;
+  poolAssetsLong: PoolAsset[];
+  poolAssetsShort: PoolAsset[];
+  lastHeightBorrowInterestRateComputed: bigint;
 }
 export interface PoolProtoMsg {
   typeUrl: "/elys.margin.Pool";
   value: Uint8Array;
 }
 export interface PoolAmino {
-  ammPoolId: string;
+  amm_pool_id: string;
   health: string;
   enabled: boolean;
   closed: boolean;
-  interest_rate: string;
-  poolAssets: PoolAssetAmino[];
-  lastHeightInterestRateComputed: string;
+  borrow_interest_rate: string;
+  pool_assets_long: PoolAssetAmino[];
+  pool_assets_short: PoolAssetAmino[];
+  last_height_borrow_interest_rate_computed: string;
 }
 export interface PoolAminoMsg {
   type: "/elys.margin.Pool";
   value: PoolAmino;
 }
 export interface PoolSDKType {
-  ammPoolId: bigint;
+  amm_pool_id: bigint;
   health: string;
   enabled: boolean;
   closed: boolean;
-  interest_rate: string;
-  poolAssets: PoolAssetSDKType[];
-  lastHeightInterestRateComputed: bigint;
+  borrow_interest_rate: string;
+  pool_assets_long: PoolAssetSDKType[];
+  pool_assets_short: PoolAssetSDKType[];
+  last_height_borrow_interest_rate_computed: bigint;
 }
 function createBasePoolAsset(): PoolAsset {
   return {
@@ -77,7 +80,7 @@ function createBasePoolAsset(): PoolAsset {
     takeProfitLiabilities: "",
     takeProfitCustody: "",
     assetBalance: "",
-    blockInterest: "",
+    blockBorrowInterest: "",
     assetDenom: ""
   };
 }
@@ -99,8 +102,8 @@ export const PoolAsset = {
     if (message.assetBalance !== "") {
       writer.uint32(42).string(message.assetBalance);
     }
-    if (message.blockInterest !== "") {
-      writer.uint32(50).string(message.blockInterest);
+    if (message.blockBorrowInterest !== "") {
+      writer.uint32(50).string(message.blockBorrowInterest);
     }
     if (message.assetDenom !== "") {
       writer.uint32(58).string(message.assetDenom);
@@ -130,7 +133,7 @@ export const PoolAsset = {
           message.assetBalance = reader.string();
           break;
         case 6:
-          message.blockInterest = reader.string();
+          message.blockBorrowInterest = reader.string();
           break;
         case 7:
           message.assetDenom = reader.string();
@@ -149,7 +152,7 @@ export const PoolAsset = {
     message.takeProfitLiabilities = object.takeProfitLiabilities ?? "";
     message.takeProfitCustody = object.takeProfitCustody ?? "";
     message.assetBalance = object.assetBalance ?? "";
-    message.blockInterest = object.blockInterest ?? "";
+    message.blockBorrowInterest = object.blockBorrowInterest ?? "";
     message.assetDenom = object.assetDenom ?? "";
     return message;
   },
@@ -160,7 +163,7 @@ export const PoolAsset = {
       takeProfitLiabilities: object.take_profit_liabilities,
       takeProfitCustody: object.take_profit_custody,
       assetBalance: object.asset_balance,
-      blockInterest: object.block_interest,
+      blockBorrowInterest: object.block_borrow_interest,
       assetDenom: object.asset_denom
     };
   },
@@ -171,7 +174,7 @@ export const PoolAsset = {
     obj.take_profit_liabilities = message.takeProfitLiabilities;
     obj.take_profit_custody = message.takeProfitCustody;
     obj.asset_balance = message.assetBalance;
-    obj.block_interest = message.blockInterest;
+    obj.block_borrow_interest = message.blockBorrowInterest;
     obj.asset_denom = message.assetDenom;
     return obj;
   },
@@ -197,9 +200,10 @@ function createBasePool(): Pool {
     health: "",
     enabled: false,
     closed: false,
-    interestRate: "",
-    poolAssets: [],
-    lastHeightInterestRateComputed: BigInt(0)
+    borrowInterestRate: "",
+    poolAssetsLong: [],
+    poolAssetsShort: [],
+    lastHeightBorrowInterestRateComputed: BigInt(0)
   };
 }
 export const Pool = {
@@ -217,14 +221,17 @@ export const Pool = {
     if (message.closed === true) {
       writer.uint32(32).bool(message.closed);
     }
-    if (message.interestRate !== "") {
-      writer.uint32(42).string(Decimal.fromUserInput(message.interestRate, 18).atomics);
+    if (message.borrowInterestRate !== "") {
+      writer.uint32(42).string(Decimal.fromUserInput(message.borrowInterestRate, 18).atomics);
     }
-    for (const v of message.poolAssets) {
+    for (const v of message.poolAssetsLong) {
       PoolAsset.encode(v!, writer.uint32(50).fork()).ldelim();
     }
-    if (message.lastHeightInterestRateComputed !== BigInt(0)) {
-      writer.uint32(56).int64(message.lastHeightInterestRateComputed);
+    for (const v of message.poolAssetsShort) {
+      PoolAsset.encode(v!, writer.uint32(58).fork()).ldelim();
+    }
+    if (message.lastHeightBorrowInterestRateComputed !== BigInt(0)) {
+      writer.uint32(64).int64(message.lastHeightBorrowInterestRateComputed);
     }
     return writer;
   },
@@ -248,13 +255,16 @@ export const Pool = {
           message.closed = reader.bool();
           break;
         case 5:
-          message.interestRate = Decimal.fromAtomics(reader.string(), 18).toString();
+          message.borrowInterestRate = Decimal.fromAtomics(reader.string(), 18).toString();
           break;
         case 6:
-          message.poolAssets.push(PoolAsset.decode(reader, reader.uint32()));
+          message.poolAssetsLong.push(PoolAsset.decode(reader, reader.uint32()));
           break;
         case 7:
-          message.lastHeightInterestRateComputed = reader.int64();
+          message.poolAssetsShort.push(PoolAsset.decode(reader, reader.uint32()));
+          break;
+        case 8:
+          message.lastHeightBorrowInterestRateComputed = reader.int64();
           break;
         default:
           reader.skipType(tag & 7);
@@ -269,35 +279,42 @@ export const Pool = {
     message.health = object.health ?? "";
     message.enabled = object.enabled ?? false;
     message.closed = object.closed ?? false;
-    message.interestRate = object.interestRate ?? "";
-    message.poolAssets = object.poolAssets?.map(e => PoolAsset.fromPartial(e)) || [];
-    message.lastHeightInterestRateComputed = object.lastHeightInterestRateComputed !== undefined && object.lastHeightInterestRateComputed !== null ? BigInt(object.lastHeightInterestRateComputed.toString()) : BigInt(0);
+    message.borrowInterestRate = object.borrowInterestRate ?? "";
+    message.poolAssetsLong = object.poolAssetsLong?.map(e => PoolAsset.fromPartial(e)) || [];
+    message.poolAssetsShort = object.poolAssetsShort?.map(e => PoolAsset.fromPartial(e)) || [];
+    message.lastHeightBorrowInterestRateComputed = object.lastHeightBorrowInterestRateComputed !== undefined && object.lastHeightBorrowInterestRateComputed !== null ? BigInt(object.lastHeightBorrowInterestRateComputed.toString()) : BigInt(0);
     return message;
   },
   fromAmino(object: PoolAmino): Pool {
     return {
-      ammPoolId: BigInt(object.ammPoolId),
+      ammPoolId: BigInt(object.amm_pool_id),
       health: object.health,
       enabled: object.enabled,
       closed: object.closed,
-      interestRate: object.interest_rate,
-      poolAssets: Array.isArray(object?.poolAssets) ? object.poolAssets.map((e: any) => PoolAsset.fromAmino(e)) : [],
-      lastHeightInterestRateComputed: BigInt(object.lastHeightInterestRateComputed)
+      borrowInterestRate: object.borrow_interest_rate,
+      poolAssetsLong: Array.isArray(object?.pool_assets_long) ? object.pool_assets_long.map((e: any) => PoolAsset.fromAmino(e)) : [],
+      poolAssetsShort: Array.isArray(object?.pool_assets_short) ? object.pool_assets_short.map((e: any) => PoolAsset.fromAmino(e)) : [],
+      lastHeightBorrowInterestRateComputed: BigInt(object.last_height_borrow_interest_rate_computed)
     };
   },
   toAmino(message: Pool): PoolAmino {
     const obj: any = {};
-    obj.ammPoolId = message.ammPoolId ? message.ammPoolId.toString() : undefined;
+    obj.amm_pool_id = message.ammPoolId ? message.ammPoolId.toString() : undefined;
     obj.health = message.health;
     obj.enabled = message.enabled;
     obj.closed = message.closed;
-    obj.interest_rate = message.interestRate;
-    if (message.poolAssets) {
-      obj.poolAssets = message.poolAssets.map(e => e ? PoolAsset.toAmino(e) : undefined);
+    obj.borrow_interest_rate = message.borrowInterestRate;
+    if (message.poolAssetsLong) {
+      obj.pool_assets_long = message.poolAssetsLong.map(e => e ? PoolAsset.toAmino(e) : undefined);
     } else {
-      obj.poolAssets = [];
+      obj.pool_assets_long = [];
     }
-    obj.lastHeightInterestRateComputed = message.lastHeightInterestRateComputed ? message.lastHeightInterestRateComputed.toString() : undefined;
+    if (message.poolAssetsShort) {
+      obj.pool_assets_short = message.poolAssetsShort.map(e => e ? PoolAsset.toAmino(e) : undefined);
+    } else {
+      obj.pool_assets_short = [];
+    }
+    obj.last_height_borrow_interest_rate_computed = message.lastHeightBorrowInterestRateComputed ? message.lastHeightBorrowInterestRateComputed.toString() : undefined;
     return obj;
   },
   fromAminoMsg(object: PoolAminoMsg): Pool {

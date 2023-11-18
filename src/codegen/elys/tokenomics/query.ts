@@ -123,21 +123,21 @@ export interface QueryGetGenesisInflationRequestAminoMsg {
 }
 export interface QueryGetGenesisInflationRequestSDKType {}
 export interface QueryGetGenesisInflationResponse {
-  GenesisInflation: GenesisInflation;
+  genesisInflation: GenesisInflation;
 }
 export interface QueryGetGenesisInflationResponseProtoMsg {
   typeUrl: "/elys.tokenomics.QueryGetGenesisInflationResponse";
   value: Uint8Array;
 }
 export interface QueryGetGenesisInflationResponseAmino {
-  GenesisInflation?: GenesisInflationAmino;
+  genesis_inflation?: GenesisInflationAmino;
 }
 export interface QueryGetGenesisInflationResponseAminoMsg {
   type: "/elys.tokenomics.QueryGetGenesisInflationResponse";
   value: QueryGetGenesisInflationResponseAmino;
 }
 export interface QueryGetGenesisInflationResponseSDKType {
-  GenesisInflation: GenesisInflationSDKType;
+  genesis_inflation: GenesisInflationSDKType;
 }
 export interface QueryGetTimeBasedInflationRequest {
   startBlockHeight: bigint;
@@ -148,16 +148,16 @@ export interface QueryGetTimeBasedInflationRequestProtoMsg {
   value: Uint8Array;
 }
 export interface QueryGetTimeBasedInflationRequestAmino {
-  startBlockHeight: string;
-  endBlockHeight: string;
+  start_block_height: string;
+  end_block_height: string;
 }
 export interface QueryGetTimeBasedInflationRequestAminoMsg {
   type: "/elys.tokenomics.QueryGetTimeBasedInflationRequest";
   value: QueryGetTimeBasedInflationRequestAmino;
 }
 export interface QueryGetTimeBasedInflationRequestSDKType {
-  startBlockHeight: bigint;
-  endBlockHeight: bigint;
+  start_block_height: bigint;
+  end_block_height: bigint;
 }
 export interface QueryGetTimeBasedInflationResponse {
   timeBasedInflation: TimeBasedInflation;
@@ -167,14 +167,14 @@ export interface QueryGetTimeBasedInflationResponseProtoMsg {
   value: Uint8Array;
 }
 export interface QueryGetTimeBasedInflationResponseAmino {
-  timeBasedInflation?: TimeBasedInflationAmino;
+  time_based_inflation?: TimeBasedInflationAmino;
 }
 export interface QueryGetTimeBasedInflationResponseAminoMsg {
   type: "/elys.tokenomics.QueryGetTimeBasedInflationResponse";
   value: QueryGetTimeBasedInflationResponseAmino;
 }
 export interface QueryGetTimeBasedInflationResponseSDKType {
-  timeBasedInflation: TimeBasedInflationSDKType;
+  time_based_inflation: TimeBasedInflationSDKType;
 }
 export interface QueryAllTimeBasedInflationRequest {
   pagination?: PageRequest;
@@ -202,7 +202,7 @@ export interface QueryAllTimeBasedInflationResponseProtoMsg {
   value: Uint8Array;
 }
 export interface QueryAllTimeBasedInflationResponseAmino {
-  timeBasedInflation: TimeBasedInflationAmino[];
+  time_based_inflation: TimeBasedInflationAmino[];
   pagination?: PageResponseAmino;
 }
 export interface QueryAllTimeBasedInflationResponseAminoMsg {
@@ -210,7 +210,7 @@ export interface QueryAllTimeBasedInflationResponseAminoMsg {
   value: QueryAllTimeBasedInflationResponseAmino;
 }
 export interface QueryAllTimeBasedInflationResponseSDKType {
-  timeBasedInflation: TimeBasedInflationSDKType[];
+  time_based_inflation: TimeBasedInflationSDKType[];
   pagination?: PageResponseSDKType;
 }
 function createBaseQueryParamsRequest(): QueryParamsRequest {
@@ -632,14 +632,14 @@ export const QueryGetGenesisInflationRequest = {
 };
 function createBaseQueryGetGenesisInflationResponse(): QueryGetGenesisInflationResponse {
   return {
-    GenesisInflation: GenesisInflation.fromPartial({})
+    genesisInflation: GenesisInflation.fromPartial({})
   };
 }
 export const QueryGetGenesisInflationResponse = {
   typeUrl: "/elys.tokenomics.QueryGetGenesisInflationResponse",
   encode(message: QueryGetGenesisInflationResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
-    if (message.GenesisInflation !== undefined) {
-      GenesisInflation.encode(message.GenesisInflation, writer.uint32(10).fork()).ldelim();
+    if (message.genesisInflation !== undefined) {
+      GenesisInflation.encode(message.genesisInflation, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
@@ -651,7 +651,7 @@ export const QueryGetGenesisInflationResponse = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.GenesisInflation = GenesisInflation.decode(reader, reader.uint32());
+          message.genesisInflation = GenesisInflation.decode(reader, reader.uint32());
           break;
         default:
           reader.skipType(tag & 7);
@@ -662,17 +662,17 @@ export const QueryGetGenesisInflationResponse = {
   },
   fromPartial(object: Partial<QueryGetGenesisInflationResponse>): QueryGetGenesisInflationResponse {
     const message = createBaseQueryGetGenesisInflationResponse();
-    message.GenesisInflation = object.GenesisInflation !== undefined && object.GenesisInflation !== null ? GenesisInflation.fromPartial(object.GenesisInflation) : undefined;
+    message.genesisInflation = object.genesisInflation !== undefined && object.genesisInflation !== null ? GenesisInflation.fromPartial(object.genesisInflation) : undefined;
     return message;
   },
   fromAmino(object: QueryGetGenesisInflationResponseAmino): QueryGetGenesisInflationResponse {
     return {
-      GenesisInflation: object?.GenesisInflation ? GenesisInflation.fromAmino(object.GenesisInflation) : undefined
+      genesisInflation: object?.genesis_inflation ? GenesisInflation.fromAmino(object.genesis_inflation) : undefined
     };
   },
   toAmino(message: QueryGetGenesisInflationResponse): QueryGetGenesisInflationResponseAmino {
     const obj: any = {};
-    obj.GenesisInflation = message.GenesisInflation ? GenesisInflation.toAmino(message.GenesisInflation) : undefined;
+    obj.genesis_inflation = message.genesisInflation ? GenesisInflation.toAmino(message.genesisInflation) : undefined;
     return obj;
   },
   fromAminoMsg(object: QueryGetGenesisInflationResponseAminoMsg): QueryGetGenesisInflationResponse {
@@ -736,14 +736,14 @@ export const QueryGetTimeBasedInflationRequest = {
   },
   fromAmino(object: QueryGetTimeBasedInflationRequestAmino): QueryGetTimeBasedInflationRequest {
     return {
-      startBlockHeight: BigInt(object.startBlockHeight),
-      endBlockHeight: BigInt(object.endBlockHeight)
+      startBlockHeight: BigInt(object.start_block_height),
+      endBlockHeight: BigInt(object.end_block_height)
     };
   },
   toAmino(message: QueryGetTimeBasedInflationRequest): QueryGetTimeBasedInflationRequestAmino {
     const obj: any = {};
-    obj.startBlockHeight = message.startBlockHeight ? message.startBlockHeight.toString() : undefined;
-    obj.endBlockHeight = message.endBlockHeight ? message.endBlockHeight.toString() : undefined;
+    obj.start_block_height = message.startBlockHeight ? message.startBlockHeight.toString() : undefined;
+    obj.end_block_height = message.endBlockHeight ? message.endBlockHeight.toString() : undefined;
     return obj;
   },
   fromAminoMsg(object: QueryGetTimeBasedInflationRequestAminoMsg): QueryGetTimeBasedInflationRequest {
@@ -799,12 +799,12 @@ export const QueryGetTimeBasedInflationResponse = {
   },
   fromAmino(object: QueryGetTimeBasedInflationResponseAmino): QueryGetTimeBasedInflationResponse {
     return {
-      timeBasedInflation: object?.timeBasedInflation ? TimeBasedInflation.fromAmino(object.timeBasedInflation) : undefined
+      timeBasedInflation: object?.time_based_inflation ? TimeBasedInflation.fromAmino(object.time_based_inflation) : undefined
     };
   },
   toAmino(message: QueryGetTimeBasedInflationResponse): QueryGetTimeBasedInflationResponseAmino {
     const obj: any = {};
-    obj.timeBasedInflation = message.timeBasedInflation ? TimeBasedInflation.toAmino(message.timeBasedInflation) : undefined;
+    obj.time_based_inflation = message.timeBasedInflation ? TimeBasedInflation.toAmino(message.timeBasedInflation) : undefined;
     return obj;
   },
   fromAminoMsg(object: QueryGetTimeBasedInflationResponseAminoMsg): QueryGetTimeBasedInflationResponse {
@@ -929,16 +929,16 @@ export const QueryAllTimeBasedInflationResponse = {
   },
   fromAmino(object: QueryAllTimeBasedInflationResponseAmino): QueryAllTimeBasedInflationResponse {
     return {
-      timeBasedInflation: Array.isArray(object?.timeBasedInflation) ? object.timeBasedInflation.map((e: any) => TimeBasedInflation.fromAmino(e)) : [],
+      timeBasedInflation: Array.isArray(object?.time_based_inflation) ? object.time_based_inflation.map((e: any) => TimeBasedInflation.fromAmino(e)) : [],
       pagination: object?.pagination ? PageResponse.fromAmino(object.pagination) : undefined
     };
   },
   toAmino(message: QueryAllTimeBasedInflationResponse): QueryAllTimeBasedInflationResponseAmino {
     const obj: any = {};
     if (message.timeBasedInflation) {
-      obj.timeBasedInflation = message.timeBasedInflation.map(e => e ? TimeBasedInflation.toAmino(e) : undefined);
+      obj.time_based_inflation = message.timeBasedInflation.map(e => e ? TimeBasedInflation.toAmino(e) : undefined);
     } else {
-      obj.timeBasedInflation = [];
+      obj.time_based_inflation = [];
     }
     obj.pagination = message.pagination ? PageResponse.toAmino(message.pagination) : undefined;
     return obj;

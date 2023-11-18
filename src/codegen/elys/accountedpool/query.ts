@@ -46,14 +46,14 @@ export interface QueryGetAccountedPoolRequestProtoMsg {
   value: Uint8Array;
 }
 export interface QueryGetAccountedPoolRequestAmino {
-  poolId: string;
+  pool_id: string;
 }
 export interface QueryGetAccountedPoolRequestAminoMsg {
   type: "/elys.accountedpool.QueryGetAccountedPoolRequest";
   value: QueryGetAccountedPoolRequestAmino;
 }
 export interface QueryGetAccountedPoolRequestSDKType {
-  poolId: bigint;
+  pool_id: bigint;
 }
 export interface QueryGetAccountedPoolResponse {
   accountedPool: AccountedPool;
@@ -63,14 +63,14 @@ export interface QueryGetAccountedPoolResponseProtoMsg {
   value: Uint8Array;
 }
 export interface QueryGetAccountedPoolResponseAmino {
-  accountedPool?: AccountedPoolAmino;
+  accounted_pool?: AccountedPoolAmino;
 }
 export interface QueryGetAccountedPoolResponseAminoMsg {
   type: "/elys.accountedpool.QueryGetAccountedPoolResponse";
   value: QueryGetAccountedPoolResponseAmino;
 }
 export interface QueryGetAccountedPoolResponseSDKType {
-  accountedPool: AccountedPoolSDKType;
+  accounted_pool: AccountedPoolSDKType;
 }
 export interface QueryAllAccountedPoolRequest {
   pagination?: PageRequest;
@@ -98,7 +98,7 @@ export interface QueryAllAccountedPoolResponseProtoMsg {
   value: Uint8Array;
 }
 export interface QueryAllAccountedPoolResponseAmino {
-  accountedPool: AccountedPoolAmino[];
+  accounted_pool: AccountedPoolAmino[];
   pagination?: PageResponseAmino;
 }
 export interface QueryAllAccountedPoolResponseAminoMsg {
@@ -106,7 +106,7 @@ export interface QueryAllAccountedPoolResponseAminoMsg {
   value: QueryAllAccountedPoolResponseAmino;
 }
 export interface QueryAllAccountedPoolResponseSDKType {
-  accountedPool: AccountedPoolSDKType[];
+  accounted_pool: AccountedPoolSDKType[];
   pagination?: PageResponseSDKType;
 }
 function createBaseQueryParamsRequest(): QueryParamsRequest {
@@ -256,12 +256,12 @@ export const QueryGetAccountedPoolRequest = {
   },
   fromAmino(object: QueryGetAccountedPoolRequestAmino): QueryGetAccountedPoolRequest {
     return {
-      poolId: BigInt(object.poolId)
+      poolId: BigInt(object.pool_id)
     };
   },
   toAmino(message: QueryGetAccountedPoolRequest): QueryGetAccountedPoolRequestAmino {
     const obj: any = {};
-    obj.poolId = message.poolId ? message.poolId.toString() : undefined;
+    obj.pool_id = message.poolId ? message.poolId.toString() : undefined;
     return obj;
   },
   fromAminoMsg(object: QueryGetAccountedPoolRequestAminoMsg): QueryGetAccountedPoolRequest {
@@ -317,12 +317,12 @@ export const QueryGetAccountedPoolResponse = {
   },
   fromAmino(object: QueryGetAccountedPoolResponseAmino): QueryGetAccountedPoolResponse {
     return {
-      accountedPool: object?.accountedPool ? AccountedPool.fromAmino(object.accountedPool) : undefined
+      accountedPool: object?.accounted_pool ? AccountedPool.fromAmino(object.accounted_pool) : undefined
     };
   },
   toAmino(message: QueryGetAccountedPoolResponse): QueryGetAccountedPoolResponseAmino {
     const obj: any = {};
-    obj.accountedPool = message.accountedPool ? AccountedPool.toAmino(message.accountedPool) : undefined;
+    obj.accounted_pool = message.accountedPool ? AccountedPool.toAmino(message.accountedPool) : undefined;
     return obj;
   },
   fromAminoMsg(object: QueryGetAccountedPoolResponseAminoMsg): QueryGetAccountedPoolResponse {
@@ -447,16 +447,16 @@ export const QueryAllAccountedPoolResponse = {
   },
   fromAmino(object: QueryAllAccountedPoolResponseAmino): QueryAllAccountedPoolResponse {
     return {
-      accountedPool: Array.isArray(object?.accountedPool) ? object.accountedPool.map((e: any) => AccountedPool.fromAmino(e)) : [],
+      accountedPool: Array.isArray(object?.accounted_pool) ? object.accounted_pool.map((e: any) => AccountedPool.fromAmino(e)) : [],
       pagination: object?.pagination ? PageResponse.fromAmino(object.pagination) : undefined
     };
   },
   toAmino(message: QueryAllAccountedPoolResponse): QueryAllAccountedPoolResponseAmino {
     const obj: any = {};
     if (message.accountedPool) {
-      obj.accountedPool = message.accountedPool.map(e => e ? AccountedPool.toAmino(e) : undefined);
+      obj.accounted_pool = message.accountedPool.map(e => e ? AccountedPool.toAmino(e) : undefined);
     } else {
-      obj.accountedPool = [];
+      obj.accounted_pool = [];
     }
     obj.pagination = message.pagination ? PageResponse.toAmino(message.pagination) : undefined;
     return obj;

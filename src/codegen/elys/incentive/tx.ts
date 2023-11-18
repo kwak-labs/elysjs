@@ -1,4 +1,6 @@
+import { EarnType, earnTypeFromJSON } from "../commitment/params";
 import { BinaryReader, BinaryWriter } from "../../binary";
+import { isSet } from "../../helpers";
 /**
  * MsgWithdrawDelegatorReward represents delegation withdrawal to a delegator
  * from a single validator.
@@ -6,6 +8,7 @@ import { BinaryReader, BinaryWriter } from "../../binary";
 export interface MsgWithdrawRewards {
   delegatorAddress: string;
   denom: string;
+  withdrawType: EarnType;
 }
 export interface MsgWithdrawRewardsProtoMsg {
   typeUrl: "/elys.incentive.MsgWithdrawRewards";
@@ -18,6 +21,7 @@ export interface MsgWithdrawRewardsProtoMsg {
 export interface MsgWithdrawRewardsAmino {
   delegator_address: string;
   denom: string;
+  withdraw_type: EarnType;
 }
 export interface MsgWithdrawRewardsAminoMsg {
   type: "/elys.incentive.MsgWithdrawRewards";
@@ -30,6 +34,7 @@ export interface MsgWithdrawRewardsAminoMsg {
 export interface MsgWithdrawRewardsSDKType {
   delegator_address: string;
   denom: string;
+  withdraw_type: EarnType;
 }
 /** MsgWithdrawDelegatorRewardResponse defines the Msg/WithdrawDelegatorReward response type. */
 export interface MsgWithdrawRewardsResponse {}
@@ -97,7 +102,8 @@ export interface MsgWithdrawValidatorCommissionResponseSDKType {}
 function createBaseMsgWithdrawRewards(): MsgWithdrawRewards {
   return {
     delegatorAddress: "",
-    denom: ""
+    denom: "",
+    withdrawType: 0
   };
 }
 export const MsgWithdrawRewards = {
@@ -108,6 +114,9 @@ export const MsgWithdrawRewards = {
     }
     if (message.denom !== "") {
       writer.uint32(18).string(message.denom);
+    }
+    if (message.withdrawType !== 0) {
+      writer.uint32(24).int32(message.withdrawType);
     }
     return writer;
   },
@@ -124,6 +133,9 @@ export const MsgWithdrawRewards = {
         case 2:
           message.denom = reader.string();
           break;
+        case 3:
+          message.withdrawType = (reader.int32() as any);
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -135,18 +147,21 @@ export const MsgWithdrawRewards = {
     const message = createBaseMsgWithdrawRewards();
     message.delegatorAddress = object.delegatorAddress ?? "";
     message.denom = object.denom ?? "";
+    message.withdrawType = object.withdrawType ?? 0;
     return message;
   },
   fromAmino(object: MsgWithdrawRewardsAmino): MsgWithdrawRewards {
     return {
       delegatorAddress: object.delegator_address,
-      denom: object.denom
+      denom: object.denom,
+      withdrawType: isSet(object.withdraw_type) ? earnTypeFromJSON(object.withdraw_type) : -1
     };
   },
   toAmino(message: MsgWithdrawRewards): MsgWithdrawRewardsAmino {
     const obj: any = {};
     obj.delegator_address = message.delegatorAddress;
     obj.denom = message.denom;
+    obj.withdraw_type = message.withdrawType;
     return obj;
   },
   fromAminoMsg(object: MsgWithdrawRewardsAminoMsg): MsgWithdrawRewards {

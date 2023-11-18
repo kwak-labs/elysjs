@@ -11,7 +11,7 @@ export interface ProposalUpdateMinCommissionProtoMsg {
 export interface ProposalUpdateMinCommissionAmino {
   title: string;
   description: string;
-  minCommission: string;
+  min_commission: string;
 }
 export interface ProposalUpdateMinCommissionAminoMsg {
   type: "/elys.parameter.ProposalUpdateMinCommission";
@@ -20,7 +20,7 @@ export interface ProposalUpdateMinCommissionAminoMsg {
 export interface ProposalUpdateMinCommissionSDKType {
   title: string;
   description: string;
-  minCommission: string;
+  min_commission: string;
 }
 export interface ProposalUpdateMaxVotingPower {
   title: string;
@@ -34,7 +34,7 @@ export interface ProposalUpdateMaxVotingPowerProtoMsg {
 export interface ProposalUpdateMaxVotingPowerAmino {
   title: string;
   description: string;
-  maxVotingPower: string;
+  max_voting_power: string;
 }
 export interface ProposalUpdateMaxVotingPowerAminoMsg {
   type: "/elys.parameter.ProposalUpdateMaxVotingPower";
@@ -43,7 +43,7 @@ export interface ProposalUpdateMaxVotingPowerAminoMsg {
 export interface ProposalUpdateMaxVotingPowerSDKType {
   title: string;
   description: string;
-  maxVotingPower: string;
+  max_voting_power: string;
 }
 export interface ProposalUpdateMinSelfDelegation {
   title: string;
@@ -57,7 +57,7 @@ export interface ProposalUpdateMinSelfDelegationProtoMsg {
 export interface ProposalUpdateMinSelfDelegationAmino {
   title: string;
   description: string;
-  minSelfDelegation: string;
+  min_self_delegation: string;
 }
 export interface ProposalUpdateMinSelfDelegationAminoMsg {
   type: "/elys.parameter.ProposalUpdateMinSelfDelegation";
@@ -66,7 +66,7 @@ export interface ProposalUpdateMinSelfDelegationAminoMsg {
 export interface ProposalUpdateMinSelfDelegationSDKType {
   title: string;
   description: string;
-  minSelfDelegation: string;
+  min_self_delegation: string;
 }
 function createBaseProposalUpdateMinCommission(): ProposalUpdateMinCommission {
   return {
@@ -123,14 +123,14 @@ export const ProposalUpdateMinCommission = {
     return {
       title: object.title,
       description: object.description,
-      minCommission: object.minCommission
+      minCommission: object.min_commission
     };
   },
   toAmino(message: ProposalUpdateMinCommission): ProposalUpdateMinCommissionAmino {
     const obj: any = {};
     obj.title = message.title;
     obj.description = message.description;
-    obj.minCommission = message.minCommission;
+    obj.min_commission = message.minCommission;
     return obj;
   },
   fromAminoMsg(object: ProposalUpdateMinCommissionAminoMsg): ProposalUpdateMinCommission {
@@ -204,14 +204,14 @@ export const ProposalUpdateMaxVotingPower = {
     return {
       title: object.title,
       description: object.description,
-      maxVotingPower: object.maxVotingPower
+      maxVotingPower: object.max_voting_power
     };
   },
   toAmino(message: ProposalUpdateMaxVotingPower): ProposalUpdateMaxVotingPowerAmino {
     const obj: any = {};
     obj.title = message.title;
     obj.description = message.description;
-    obj.maxVotingPower = message.maxVotingPower;
+    obj.max_voting_power = message.maxVotingPower;
     return obj;
   },
   fromAminoMsg(object: ProposalUpdateMaxVotingPowerAminoMsg): ProposalUpdateMaxVotingPower {
@@ -285,14 +285,14 @@ export const ProposalUpdateMinSelfDelegation = {
     return {
       title: object.title,
       description: object.description,
-      minSelfDelegation: object.minSelfDelegation
+      minSelfDelegation: object.min_self_delegation
     };
   },
   toAmino(message: ProposalUpdateMinSelfDelegation): ProposalUpdateMinSelfDelegationAmino {
     const obj: any = {};
     obj.title = message.title;
     obj.description = message.description;
-    obj.minSelfDelegation = message.minSelfDelegation;
+    obj.min_self_delegation = message.minSelfDelegation;
     return obj;
   },
   fromAminoMsg(object: ProposalUpdateMinSelfDelegationAminoMsg): ProposalUpdateMinSelfDelegation {

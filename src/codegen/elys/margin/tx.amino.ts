@@ -1,4 +1,4 @@
-import { MsgOpen, MsgClose, MsgUpdateParams, MsgUpdatePools, MsgWhitelist, MsgDewhitelist } from "./tx";
+import { MsgOpen, MsgClose, MsgBrokerOpen, MsgBrokerClose, MsgUpdateParams, MsgUpdatePools, MsgWhitelist, MsgDewhitelist } from "./tx";
 export const AminoConverter = {
   "/elys.margin.MsgOpen": {
     aminoType: "/elys.margin.MsgOpen",
@@ -9,6 +9,16 @@ export const AminoConverter = {
     aminoType: "/elys.margin.MsgClose",
     toAmino: MsgClose.toAmino,
     fromAmino: MsgClose.fromAmino
+  },
+  "/elys.margin.MsgBrokerOpen": {
+    aminoType: "/elys.margin.MsgBrokerOpen",
+    toAmino: MsgBrokerOpen.toAmino,
+    fromAmino: MsgBrokerOpen.fromAmino
+  },
+  "/elys.margin.MsgBrokerClose": {
+    aminoType: "/elys.margin.MsgBrokerClose",
+    toAmino: MsgBrokerClose.toAmino,
+    fromAmino: MsgBrokerClose.fromAmino
   },
   "/elys.margin.MsgUpdateParams": {
     aminoType: "/elys.margin.MsgUpdateParams",

@@ -1,4 +1,54 @@
 import { BinaryReader, BinaryWriter } from "../../binary";
+export enum EarnType {
+  ALL_PROGRAM = 0,
+  USDC_PROGRAM = 1,
+  ELYS_PROGRAM = 2,
+  EDEN_PROGRAM = 3,
+  EDENB_PROGRAM = 4,
+  UNRECOGNIZED = -1,
+}
+export const EarnTypeSDKType = EarnType;
+export const EarnTypeAmino = EarnType;
+export function earnTypeFromJSON(object: any): EarnType {
+  switch (object) {
+    case 0:
+    case "ALL_PROGRAM":
+      return EarnType.ALL_PROGRAM;
+    case 1:
+    case "USDC_PROGRAM":
+      return EarnType.USDC_PROGRAM;
+    case 2:
+    case "ELYS_PROGRAM":
+      return EarnType.ELYS_PROGRAM;
+    case 3:
+    case "EDEN_PROGRAM":
+      return EarnType.EDEN_PROGRAM;
+    case 4:
+    case "EDENB_PROGRAM":
+      return EarnType.EDENB_PROGRAM;
+    case -1:
+    case "UNRECOGNIZED":
+    default:
+      return EarnType.UNRECOGNIZED;
+  }
+}
+export function earnTypeToJSON(object: EarnType): string {
+  switch (object) {
+    case EarnType.ALL_PROGRAM:
+      return "ALL_PROGRAM";
+    case EarnType.USDC_PROGRAM:
+      return "USDC_PROGRAM";
+    case EarnType.ELYS_PROGRAM:
+      return "ELYS_PROGRAM";
+    case EarnType.EDEN_PROGRAM:
+      return "EDEN_PROGRAM";
+    case EarnType.EDENB_PROGRAM:
+      return "EDENB_PROGRAM";
+    case EarnType.UNRECOGNIZED:
+    default:
+      return "UNRECOGNIZED";
+  }
+}
 /** Params defines the parameters for the module. */
 export interface Params {
   vestingInfos: VestingInfo[];

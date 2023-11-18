@@ -17,9 +17,9 @@ export interface GenesisStateProtoMsg {
 /** GenesisState defines the tokenomics module's genesis state. */
 export interface GenesisStateAmino {
   params?: ParamsAmino;
-  airdropList: AirdropAmino[];
-  genesisInflation?: GenesisInflationAmino;
-  timeBasedInflationList: TimeBasedInflationAmino[];
+  airdrop_list: AirdropAmino[];
+  genesis_inflation?: GenesisInflationAmino;
+  time_based_inflation_list: TimeBasedInflationAmino[];
 }
 export interface GenesisStateAminoMsg {
   type: "/elys.tokenomics.GenesisState";
@@ -28,9 +28,9 @@ export interface GenesisStateAminoMsg {
 /** GenesisState defines the tokenomics module's genesis state. */
 export interface GenesisStateSDKType {
   params: ParamsSDKType;
-  airdropList: AirdropSDKType[];
-  genesisInflation?: GenesisInflationSDKType;
-  timeBasedInflationList: TimeBasedInflationSDKType[];
+  airdrop_list: AirdropSDKType[];
+  genesis_inflation?: GenesisInflationSDKType;
+  time_based_inflation_list: TimeBasedInflationSDKType[];
 }
 function createBaseGenesisState(): GenesisState {
   return {
@@ -94,24 +94,24 @@ export const GenesisState = {
   fromAmino(object: GenesisStateAmino): GenesisState {
     return {
       params: object?.params ? Params.fromAmino(object.params) : undefined,
-      airdropList: Array.isArray(object?.airdropList) ? object.airdropList.map((e: any) => Airdrop.fromAmino(e)) : [],
-      genesisInflation: object?.genesisInflation ? GenesisInflation.fromAmino(object.genesisInflation) : undefined,
-      timeBasedInflationList: Array.isArray(object?.timeBasedInflationList) ? object.timeBasedInflationList.map((e: any) => TimeBasedInflation.fromAmino(e)) : []
+      airdropList: Array.isArray(object?.airdrop_list) ? object.airdrop_list.map((e: any) => Airdrop.fromAmino(e)) : [],
+      genesisInflation: object?.genesis_inflation ? GenesisInflation.fromAmino(object.genesis_inflation) : undefined,
+      timeBasedInflationList: Array.isArray(object?.time_based_inflation_list) ? object.time_based_inflation_list.map((e: any) => TimeBasedInflation.fromAmino(e)) : []
     };
   },
   toAmino(message: GenesisState): GenesisStateAmino {
     const obj: any = {};
     obj.params = message.params ? Params.toAmino(message.params) : undefined;
     if (message.airdropList) {
-      obj.airdropList = message.airdropList.map(e => e ? Airdrop.toAmino(e) : undefined);
+      obj.airdrop_list = message.airdropList.map(e => e ? Airdrop.toAmino(e) : undefined);
     } else {
-      obj.airdropList = [];
+      obj.airdrop_list = [];
     }
-    obj.genesisInflation = message.genesisInflation ? GenesisInflation.toAmino(message.genesisInflation) : undefined;
+    obj.genesis_inflation = message.genesisInflation ? GenesisInflation.toAmino(message.genesisInflation) : undefined;
     if (message.timeBasedInflationList) {
-      obj.timeBasedInflationList = message.timeBasedInflationList.map(e => e ? TimeBasedInflation.toAmino(e) : undefined);
+      obj.time_based_inflation_list = message.timeBasedInflationList.map(e => e ? TimeBasedInflation.toAmino(e) : undefined);
     } else {
-      obj.timeBasedInflationList = [];
+      obj.time_based_inflation_list = [];
     }
     return obj;
   },

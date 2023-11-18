@@ -13,7 +13,7 @@ export interface GenesisStateProtoMsg {
 /** GenesisState defines the assetprofile module's genesis state. */
 export interface GenesisStateAmino {
   params?: ParamsAmino;
-  entryList: EntryAmino[];
+  entry_list: EntryAmino[];
 }
 export interface GenesisStateAminoMsg {
   type: "/elys.assetprofile.GenesisState";
@@ -22,7 +22,7 @@ export interface GenesisStateAminoMsg {
 /** GenesisState defines the assetprofile module's genesis state. */
 export interface GenesisStateSDKType {
   params: ParamsSDKType;
-  entryList: EntrySDKType[];
+  entry_list: EntrySDKType[];
 }
 function createBaseGenesisState(): GenesisState {
   return {
@@ -70,16 +70,16 @@ export const GenesisState = {
   fromAmino(object: GenesisStateAmino): GenesisState {
     return {
       params: object?.params ? Params.fromAmino(object.params) : undefined,
-      entryList: Array.isArray(object?.entryList) ? object.entryList.map((e: any) => Entry.fromAmino(e)) : []
+      entryList: Array.isArray(object?.entry_list) ? object.entry_list.map((e: any) => Entry.fromAmino(e)) : []
     };
   },
   toAmino(message: GenesisState): GenesisStateAmino {
     const obj: any = {};
     obj.params = message.params ? Params.toAmino(message.params) : undefined;
     if (message.entryList) {
-      obj.entryList = message.entryList.map(e => e ? Entry.toAmino(e) : undefined);
+      obj.entry_list = message.entryList.map(e => e ? Entry.toAmino(e) : undefined);
     } else {
-      obj.entryList = [];
+      obj.entry_list = [];
     }
     return obj;
   },

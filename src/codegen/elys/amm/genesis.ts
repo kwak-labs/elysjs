@@ -16,9 +16,9 @@ export interface GenesisStateProtoMsg {
 /** GenesisState defines the amm module's genesis state. */
 export interface GenesisStateAmino {
   params?: ParamsAmino;
-  poolList: PoolAmino[];
-  denomLiquidityList: DenomLiquidityAmino[];
-  slippageTracks: OraclePoolSlippageTrackAmino[];
+  pool_list: PoolAmino[];
+  denom_liquidity_list: DenomLiquidityAmino[];
+  slippage_tracks: OraclePoolSlippageTrackAmino[];
 }
 export interface GenesisStateAminoMsg {
   type: "/elys.amm.GenesisState";
@@ -27,9 +27,9 @@ export interface GenesisStateAminoMsg {
 /** GenesisState defines the amm module's genesis state. */
 export interface GenesisStateSDKType {
   params: ParamsSDKType;
-  poolList: PoolSDKType[];
-  denomLiquidityList: DenomLiquiditySDKType[];
-  slippageTracks: OraclePoolSlippageTrackSDKType[];
+  pool_list: PoolSDKType[];
+  denom_liquidity_list: DenomLiquiditySDKType[];
+  slippage_tracks: OraclePoolSlippageTrackSDKType[];
 }
 function createBaseGenesisState(): GenesisState {
   return {
@@ -93,28 +93,28 @@ export const GenesisState = {
   fromAmino(object: GenesisStateAmino): GenesisState {
     return {
       params: object?.params ? Params.fromAmino(object.params) : undefined,
-      poolList: Array.isArray(object?.poolList) ? object.poolList.map((e: any) => Pool.fromAmino(e)) : [],
-      denomLiquidityList: Array.isArray(object?.denomLiquidityList) ? object.denomLiquidityList.map((e: any) => DenomLiquidity.fromAmino(e)) : [],
-      slippageTracks: Array.isArray(object?.slippageTracks) ? object.slippageTracks.map((e: any) => OraclePoolSlippageTrack.fromAmino(e)) : []
+      poolList: Array.isArray(object?.pool_list) ? object.pool_list.map((e: any) => Pool.fromAmino(e)) : [],
+      denomLiquidityList: Array.isArray(object?.denom_liquidity_list) ? object.denom_liquidity_list.map((e: any) => DenomLiquidity.fromAmino(e)) : [],
+      slippageTracks: Array.isArray(object?.slippage_tracks) ? object.slippage_tracks.map((e: any) => OraclePoolSlippageTrack.fromAmino(e)) : []
     };
   },
   toAmino(message: GenesisState): GenesisStateAmino {
     const obj: any = {};
     obj.params = message.params ? Params.toAmino(message.params) : undefined;
     if (message.poolList) {
-      obj.poolList = message.poolList.map(e => e ? Pool.toAmino(e) : undefined);
+      obj.pool_list = message.poolList.map(e => e ? Pool.toAmino(e) : undefined);
     } else {
-      obj.poolList = [];
+      obj.pool_list = [];
     }
     if (message.denomLiquidityList) {
-      obj.denomLiquidityList = message.denomLiquidityList.map(e => e ? DenomLiquidity.toAmino(e) : undefined);
+      obj.denom_liquidity_list = message.denomLiquidityList.map(e => e ? DenomLiquidity.toAmino(e) : undefined);
     } else {
-      obj.denomLiquidityList = [];
+      obj.denom_liquidity_list = [];
     }
     if (message.slippageTracks) {
-      obj.slippageTracks = message.slippageTracks.map(e => e ? OraclePoolSlippageTrack.toAmino(e) : undefined);
+      obj.slippage_tracks = message.slippageTracks.map(e => e ? OraclePoolSlippageTrack.toAmino(e) : undefined);
     } else {
-      obj.slippageTracks = [];
+      obj.slippage_tracks = [];
     }
     return obj;
   },

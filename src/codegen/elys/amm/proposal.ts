@@ -14,8 +14,8 @@ export interface ProposalCreateBalancerPoolProtoMsg {
 export interface ProposalCreateBalancerPoolAmino {
   title: string;
   description: string;
-  poolParams?: PoolParamsAmino;
-  poolAssets: PoolAssetAmino[];
+  pool_params?: PoolParamsAmino;
+  pool_assets: PoolAssetAmino[];
 }
 export interface ProposalCreateBalancerPoolAminoMsg {
   type: "/elys.amm.ProposalCreateBalancerPool";
@@ -24,8 +24,8 @@ export interface ProposalCreateBalancerPoolAminoMsg {
 export interface ProposalCreateBalancerPoolSDKType {
   title: string;
   description: string;
-  poolParams?: PoolParamsSDKType;
-  poolAssets: PoolAssetSDKType[];
+  pool_params?: PoolParamsSDKType;
+  pool_assets: PoolAssetSDKType[];
 }
 export interface ProposalUpdatePoolParams {
   title: string;
@@ -40,8 +40,8 @@ export interface ProposalUpdatePoolParamsProtoMsg {
 export interface ProposalUpdatePoolParamsAmino {
   title: string;
   description: string;
-  poolId: string;
-  poolParams?: PoolParamsAmino;
+  pool_id: string;
+  pool_params?: PoolParamsAmino;
 }
 export interface ProposalUpdatePoolParamsAminoMsg {
   type: "/elys.amm.ProposalUpdatePoolParams";
@@ -50,8 +50,8 @@ export interface ProposalUpdatePoolParamsAminoMsg {
 export interface ProposalUpdatePoolParamsSDKType {
   title: string;
   description: string;
-  poolId: bigint;
-  poolParams: PoolParamsSDKType;
+  pool_id: bigint;
+  pool_params: PoolParamsSDKType;
 }
 function createBaseProposalCreateBalancerPool(): ProposalCreateBalancerPool {
   return {
@@ -116,19 +116,19 @@ export const ProposalCreateBalancerPool = {
     return {
       title: object.title,
       description: object.description,
-      poolParams: object?.poolParams ? PoolParams.fromAmino(object.poolParams) : undefined,
-      poolAssets: Array.isArray(object?.poolAssets) ? object.poolAssets.map((e: any) => PoolAsset.fromAmino(e)) : []
+      poolParams: object?.pool_params ? PoolParams.fromAmino(object.pool_params) : undefined,
+      poolAssets: Array.isArray(object?.pool_assets) ? object.pool_assets.map((e: any) => PoolAsset.fromAmino(e)) : []
     };
   },
   toAmino(message: ProposalCreateBalancerPool): ProposalCreateBalancerPoolAmino {
     const obj: any = {};
     obj.title = message.title;
     obj.description = message.description;
-    obj.poolParams = message.poolParams ? PoolParams.toAmino(message.poolParams) : undefined;
+    obj.pool_params = message.poolParams ? PoolParams.toAmino(message.poolParams) : undefined;
     if (message.poolAssets) {
-      obj.poolAssets = message.poolAssets.map(e => e ? PoolAsset.toAmino(e) : undefined);
+      obj.pool_assets = message.poolAssets.map(e => e ? PoolAsset.toAmino(e) : undefined);
     } else {
-      obj.poolAssets = [];
+      obj.pool_assets = [];
     }
     return obj;
   },
@@ -211,16 +211,16 @@ export const ProposalUpdatePoolParams = {
     return {
       title: object.title,
       description: object.description,
-      poolId: BigInt(object.poolId),
-      poolParams: object?.poolParams ? PoolParams.fromAmino(object.poolParams) : undefined
+      poolId: BigInt(object.pool_id),
+      poolParams: object?.pool_params ? PoolParams.fromAmino(object.pool_params) : undefined
     };
   },
   toAmino(message: ProposalUpdatePoolParams): ProposalUpdatePoolParamsAmino {
     const obj: any = {};
     obj.title = message.title;
     obj.description = message.description;
-    obj.poolId = message.poolId ? message.poolId.toString() : undefined;
-    obj.poolParams = message.poolParams ? PoolParams.toAmino(message.poolParams) : undefined;
+    obj.pool_id = message.poolId ? message.poolId.toString() : undefined;
+    obj.pool_params = message.poolParams ? PoolParams.toAmino(message.poolParams) : undefined;
     return obj;
   },
   fromAminoMsg(object: ProposalUpdatePoolParamsAminoMsg): ProposalUpdatePoolParams {
