@@ -1,7 +1,7 @@
 import { Rpc } from "../../helpers";
 import { BinaryReader } from "../../binary";
 import { QueryClient, createProtobufRpcClient } from "@cosmjs/stargate";
-import { QueryParamsRequest, QueryParamsResponse, QueryGetPoolRequest, QueryGetPoolResponse, QueryAllPoolRequest, QueryAllPoolResponse, QueryGetDenomLiquidityRequest, QueryGetDenomLiquidityResponse, QueryAllDenomLiquidityRequest, QueryAllDenomLiquidityResponse, QuerySwapEstimationRequest, QuerySwapEstimationResponse, QuerySlippageTrackRequest, QuerySlippageTrackResponse, QuerySlippageTrackAllRequest, QuerySlippageTrackAllResponse, QueryBalanceRequest, QueryBalanceResponse } from "./query";
+import { QueryParamsRequest, QueryParamsResponse, QueryGetPoolRequest, QueryGetPoolResponse, QueryAllPoolRequest, QueryAllPoolResponse, QueryGetDenomLiquidityRequest, QueryGetDenomLiquidityResponse, QueryAllDenomLiquidityRequest, QueryAllDenomLiquidityResponse, QuerySwapEstimationRequest, QuerySwapEstimationResponse, QuerySlippageTrackRequest, QuerySlippageTrackResponse, QuerySlippageTrackAllRequest, QuerySlippageTrackAllResponse, QueryBalanceRequest, QueryBalanceResponse, QueryInRouteByDenomRequest, QueryInRouteByDenomResponse, QueryOutRouteByDenomRequest, QueryOutRouteByDenomResponse, QuerySwapEstimationByDenomRequest, QuerySwapEstimationByDenomResponse } from "./query";
 /** Query defines the gRPC querier service. */
 export interface Query {
   /** Parameters queries the parameters of the module. */
@@ -20,6 +20,12 @@ export interface Query {
   slippageTrackAll(request?: QuerySlippageTrackAllRequest): Promise<QuerySlippageTrackAllResponse>;
   /** Queries a list of Balance items. */
   balance(request: QueryBalanceRequest): Promise<QueryBalanceResponse>;
+  /** Queries a list of InRouteByDenom items. */
+  inRouteByDenom(request: QueryInRouteByDenomRequest): Promise<QueryInRouteByDenomResponse>;
+  /** Queries a list of OutRouteByDenom items. */
+  outRouteByDenom(request: QueryOutRouteByDenomRequest): Promise<QueryOutRouteByDenomResponse>;
+  /** Queries a list of SwapEstimationByDenom items. */
+  swapEstimationByDenom(request: QuerySwapEstimationByDenomRequest): Promise<QuerySwapEstimationByDenomResponse>;
 }
 export class QueryClientImpl implements Query {
   private readonly rpc: Rpc;
@@ -34,6 +40,9 @@ export class QueryClientImpl implements Query {
     this.slippageTrack = this.slippageTrack.bind(this);
     this.slippageTrackAll = this.slippageTrackAll.bind(this);
     this.balance = this.balance.bind(this);
+    this.inRouteByDenom = this.inRouteByDenom.bind(this);
+    this.outRouteByDenom = this.outRouteByDenom.bind(this);
+    this.swapEstimationByDenom = this.swapEstimationByDenom.bind(this);
   }
   params(request: QueryParamsRequest = {}): Promise<QueryParamsResponse> {
     const data = QueryParamsRequest.encode(request).finish();
@@ -84,6 +93,21 @@ export class QueryClientImpl implements Query {
     const promise = this.rpc.request("elys.amm.Query", "Balance", data);
     return promise.then(data => QueryBalanceResponse.decode(new BinaryReader(data)));
   }
+  inRouteByDenom(request: QueryInRouteByDenomRequest): Promise<QueryInRouteByDenomResponse> {
+    const data = QueryInRouteByDenomRequest.encode(request).finish();
+    const promise = this.rpc.request("elys.amm.Query", "InRouteByDenom", data);
+    return promise.then(data => QueryInRouteByDenomResponse.decode(new BinaryReader(data)));
+  }
+  outRouteByDenom(request: QueryOutRouteByDenomRequest): Promise<QueryOutRouteByDenomResponse> {
+    const data = QueryOutRouteByDenomRequest.encode(request).finish();
+    const promise = this.rpc.request("elys.amm.Query", "OutRouteByDenom", data);
+    return promise.then(data => QueryOutRouteByDenomResponse.decode(new BinaryReader(data)));
+  }
+  swapEstimationByDenom(request: QuerySwapEstimationByDenomRequest): Promise<QuerySwapEstimationByDenomResponse> {
+    const data = QuerySwapEstimationByDenomRequest.encode(request).finish();
+    const promise = this.rpc.request("elys.amm.Query", "SwapEstimationByDenom", data);
+    return promise.then(data => QuerySwapEstimationByDenomResponse.decode(new BinaryReader(data)));
+  }
 }
 export const createRpcQueryExtension = (base: QueryClient) => {
   const rpc = createProtobufRpcClient(base);
@@ -115,6 +139,15 @@ export const createRpcQueryExtension = (base: QueryClient) => {
     },
     balance(request: QueryBalanceRequest): Promise<QueryBalanceResponse> {
       return queryService.balance(request);
+    },
+    inRouteByDenom(request: QueryInRouteByDenomRequest): Promise<QueryInRouteByDenomResponse> {
+      return queryService.inRouteByDenom(request);
+    },
+    outRouteByDenom(request: QueryOutRouteByDenomRequest): Promise<QueryOutRouteByDenomResponse> {
+      return queryService.outRouteByDenom(request);
+    },
+    swapEstimationByDenom(request: QuerySwapEstimationByDenomRequest): Promise<QuerySwapEstimationByDenomResponse> {
+      return queryService.swapEstimationByDenom(request);
     }
   };
 };

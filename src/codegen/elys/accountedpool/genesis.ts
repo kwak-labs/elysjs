@@ -1,9 +1,7 @@
-import { Params, ParamsAmino, ParamsSDKType } from "./params";
 import { AccountedPool, AccountedPoolAmino, AccountedPoolSDKType } from "./accounted_pool";
 import { BinaryReader, BinaryWriter } from "../../binary";
 /** GenesisState defines the tvl module's genesis state. */
 export interface GenesisState {
-  params: Params;
   accountedPoolList: AccountedPool[];
 }
 export interface GenesisStateProtoMsg {
@@ -12,7 +10,6 @@ export interface GenesisStateProtoMsg {
 }
 /** GenesisState defines the tvl module's genesis state. */
 export interface GenesisStateAmino {
-  params?: ParamsAmino;
   accounted_pool_list: AccountedPoolAmino[];
 }
 export interface GenesisStateAminoMsg {
@@ -21,23 +18,18 @@ export interface GenesisStateAminoMsg {
 }
 /** GenesisState defines the tvl module's genesis state. */
 export interface GenesisStateSDKType {
-  params: ParamsSDKType;
   accounted_pool_list: AccountedPoolSDKType[];
 }
 function createBaseGenesisState(): GenesisState {
   return {
-    params: Params.fromPartial({}),
     accountedPoolList: []
   };
 }
 export const GenesisState = {
   typeUrl: "/elys.accountedpool.GenesisState",
   encode(message: GenesisState, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
-    if (message.params !== undefined) {
-      Params.encode(message.params, writer.uint32(10).fork()).ldelim();
-    }
     for (const v of message.accountedPoolList) {
-      AccountedPool.encode(v!, writer.uint32(18).fork()).ldelim();
+      AccountedPool.encode(v!, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
@@ -49,9 +41,6 @@ export const GenesisState = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.params = Params.decode(reader, reader.uint32());
-          break;
-        case 2:
           message.accountedPoolList.push(AccountedPool.decode(reader, reader.uint32()));
           break;
         default:
@@ -63,19 +52,16 @@ export const GenesisState = {
   },
   fromPartial(object: Partial<GenesisState>): GenesisState {
     const message = createBaseGenesisState();
-    message.params = object.params !== undefined && object.params !== null ? Params.fromPartial(object.params) : undefined;
     message.accountedPoolList = object.accountedPoolList?.map(e => AccountedPool.fromPartial(e)) || [];
     return message;
   },
   fromAmino(object: GenesisStateAmino): GenesisState {
     return {
-      params: object?.params ? Params.fromAmino(object.params) : undefined,
       accountedPoolList: Array.isArray(object?.accounted_pool_list) ? object.accounted_pool_list.map((e: any) => AccountedPool.fromAmino(e)) : []
     };
   },
   toAmino(message: GenesisState): GenesisStateAmino {
     const obj: any = {};
-    obj.params = message.params ? Params.toAmino(message.params) : undefined;
     if (message.accountedPoolList) {
       obj.accounted_pool_list = message.accountedPoolList.map(e => e ? AccountedPool.toAmino(e) : undefined);
     } else {

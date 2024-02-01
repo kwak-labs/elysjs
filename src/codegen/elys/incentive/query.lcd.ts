@@ -1,5 +1,5 @@
 import { LCDClient } from "@cosmology/lcd";
-import { QueryParamsRequest, QueryParamsResponseSDKType, QueryCommunityPoolRequest, QueryCommunityPoolResponseSDKType } from "./query";
+import { QueryParamsRequest, QueryParamsResponseSDKType, QueryCommunityPoolRequest, QueryCommunityPoolResponseSDKType, QueryAprRequest, QueryAprResponseSDKType } from "./query";
 export class LCDQueryClient {
   req: LCDClient;
   constructor({
@@ -10,6 +10,7 @@ export class LCDQueryClient {
     this.req = requestClient;
     this.params = this.params.bind(this);
     this.communityPool = this.communityPool.bind(this);
+    this.apr = this.apr.bind(this);
   }
   /* Parameters queries the parameters of the module. */
   async params(_params: QueryParamsRequest = {}): Promise<QueryParamsResponseSDKType> {
@@ -20,5 +21,10 @@ export class LCDQueryClient {
   async communityPool(_params: QueryCommunityPoolRequest = {}): Promise<QueryCommunityPoolResponseSDKType> {
     const endpoint = `elys-network/elys/incentive/community_pool`;
     return await this.req.get<QueryCommunityPoolResponseSDKType>(endpoint);
+  }
+  /* Calculate APR */
+  async apr(params: QueryAprRequest): Promise<QueryAprResponseSDKType> {
+    const endpoint = `elys-network/elys/incentive/apr/${params.withdrawType}/${params.denom}`;
+    return await this.req.get<QueryAprResponseSDKType>(endpoint);
   }
 }

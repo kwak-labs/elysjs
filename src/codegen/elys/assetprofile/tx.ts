@@ -17,6 +17,8 @@ export interface MsgCreateEntry {
   unitDenom: string;
   ibcCounterpartyDenom: string;
   ibcCounterpartyChainId: string;
+  commitEnabled: boolean;
+  withdrawEnabled: boolean;
 }
 export interface MsgCreateEntryProtoMsg {
   typeUrl: "/elys.assetprofile.MsgCreateEntry";
@@ -40,6 +42,8 @@ export interface MsgCreateEntryAmino {
   unit_denom: string;
   ibc_counterparty_denom: string;
   ibc_counterparty_chain_id: string;
+  commit_enabled: boolean;
+  withdraw_enabled: boolean;
 }
 export interface MsgCreateEntryAminoMsg {
   type: "/elys.assetprofile.MsgCreateEntry";
@@ -63,6 +67,8 @@ export interface MsgCreateEntrySDKType {
   unit_denom: string;
   ibc_counterparty_denom: string;
   ibc_counterparty_chain_id: string;
+  commit_enabled: boolean;
+  withdraw_enabled: boolean;
 }
 export interface MsgCreateEntryResponse {}
 export interface MsgCreateEntryResponseProtoMsg {
@@ -93,6 +99,8 @@ export interface MsgUpdateEntry {
   unitDenom: string;
   ibcCounterpartyDenom: string;
   ibcCounterpartyChainId: string;
+  commitEnabled: boolean;
+  withdrawEnabled: boolean;
 }
 export interface MsgUpdateEntryProtoMsg {
   typeUrl: "/elys.assetprofile.MsgUpdateEntry";
@@ -116,6 +124,8 @@ export interface MsgUpdateEntryAmino {
   unit_denom: string;
   ibc_counterparty_denom: string;
   ibc_counterparty_chain_id: string;
+  commit_enabled: boolean;
+  withdraw_enabled: boolean;
 }
 export interface MsgUpdateEntryAminoMsg {
   type: "/elys.assetprofile.MsgUpdateEntry";
@@ -139,6 +149,8 @@ export interface MsgUpdateEntrySDKType {
   unit_denom: string;
   ibc_counterparty_denom: string;
   ibc_counterparty_chain_id: string;
+  commit_enabled: boolean;
+  withdraw_enabled: boolean;
 }
 export interface MsgUpdateEntryResponse {}
 export interface MsgUpdateEntryResponseProtoMsg {
@@ -200,7 +212,9 @@ function createBaseMsgCreateEntry(): MsgCreateEntry {
     permissions: [],
     unitDenom: "",
     ibcCounterpartyDenom: "",
-    ibcCounterpartyChainId: ""
+    ibcCounterpartyChainId: "",
+    commitEnabled: false,
+    withdrawEnabled: false
   };
 }
 export const MsgCreateEntry = {
@@ -256,6 +270,12 @@ export const MsgCreateEntry = {
     }
     if (message.ibcCounterpartyChainId !== "") {
       writer.uint32(138).string(message.ibcCounterpartyChainId);
+    }
+    if (message.commitEnabled === true) {
+      writer.uint32(144).bool(message.commitEnabled);
+    }
+    if (message.withdrawEnabled === true) {
+      writer.uint32(152).bool(message.withdrawEnabled);
     }
     return writer;
   },
@@ -317,6 +337,12 @@ export const MsgCreateEntry = {
         case 17:
           message.ibcCounterpartyChainId = reader.string();
           break;
+        case 18:
+          message.commitEnabled = reader.bool();
+          break;
+        case 19:
+          message.withdrawEnabled = reader.bool();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -343,6 +369,8 @@ export const MsgCreateEntry = {
     message.unitDenom = object.unitDenom ?? "";
     message.ibcCounterpartyDenom = object.ibcCounterpartyDenom ?? "";
     message.ibcCounterpartyChainId = object.ibcCounterpartyChainId ?? "";
+    message.commitEnabled = object.commitEnabled ?? false;
+    message.withdrawEnabled = object.withdrawEnabled ?? false;
     return message;
   },
   fromAmino(object: MsgCreateEntryAmino): MsgCreateEntry {
@@ -363,7 +391,9 @@ export const MsgCreateEntry = {
       permissions: Array.isArray(object?.permissions) ? object.permissions.map((e: any) => e) : [],
       unitDenom: object.unit_denom,
       ibcCounterpartyDenom: object.ibc_counterparty_denom,
-      ibcCounterpartyChainId: object.ibc_counterparty_chain_id
+      ibcCounterpartyChainId: object.ibc_counterparty_chain_id,
+      commitEnabled: object.commit_enabled,
+      withdrawEnabled: object.withdraw_enabled
     };
   },
   toAmino(message: MsgCreateEntry): MsgCreateEntryAmino {
@@ -389,6 +419,8 @@ export const MsgCreateEntry = {
     obj.unit_denom = message.unitDenom;
     obj.ibc_counterparty_denom = message.ibcCounterpartyDenom;
     obj.ibc_counterparty_chain_id = message.ibcCounterpartyChainId;
+    obj.commit_enabled = message.commitEnabled;
+    obj.withdraw_enabled = message.withdrawEnabled;
     return obj;
   },
   fromAminoMsg(object: MsgCreateEntryAminoMsg): MsgCreateEntry {
@@ -474,7 +506,9 @@ function createBaseMsgUpdateEntry(): MsgUpdateEntry {
     permissions: [],
     unitDenom: "",
     ibcCounterpartyDenom: "",
-    ibcCounterpartyChainId: ""
+    ibcCounterpartyChainId: "",
+    commitEnabled: false,
+    withdrawEnabled: false
   };
 }
 export const MsgUpdateEntry = {
@@ -530,6 +564,12 @@ export const MsgUpdateEntry = {
     }
     if (message.ibcCounterpartyChainId !== "") {
       writer.uint32(138).string(message.ibcCounterpartyChainId);
+    }
+    if (message.commitEnabled === true) {
+      writer.uint32(144).bool(message.commitEnabled);
+    }
+    if (message.withdrawEnabled === true) {
+      writer.uint32(152).bool(message.withdrawEnabled);
     }
     return writer;
   },
@@ -591,6 +631,12 @@ export const MsgUpdateEntry = {
         case 17:
           message.ibcCounterpartyChainId = reader.string();
           break;
+        case 18:
+          message.commitEnabled = reader.bool();
+          break;
+        case 19:
+          message.withdrawEnabled = reader.bool();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -617,6 +663,8 @@ export const MsgUpdateEntry = {
     message.unitDenom = object.unitDenom ?? "";
     message.ibcCounterpartyDenom = object.ibcCounterpartyDenom ?? "";
     message.ibcCounterpartyChainId = object.ibcCounterpartyChainId ?? "";
+    message.commitEnabled = object.commitEnabled ?? false;
+    message.withdrawEnabled = object.withdrawEnabled ?? false;
     return message;
   },
   fromAmino(object: MsgUpdateEntryAmino): MsgUpdateEntry {
@@ -637,7 +685,9 @@ export const MsgUpdateEntry = {
       permissions: Array.isArray(object?.permissions) ? object.permissions.map((e: any) => e) : [],
       unitDenom: object.unit_denom,
       ibcCounterpartyDenom: object.ibc_counterparty_denom,
-      ibcCounterpartyChainId: object.ibc_counterparty_chain_id
+      ibcCounterpartyChainId: object.ibc_counterparty_chain_id,
+      commitEnabled: object.commit_enabled,
+      withdrawEnabled: object.withdraw_enabled
     };
   },
   toAmino(message: MsgUpdateEntry): MsgUpdateEntryAmino {
@@ -663,6 +713,8 @@ export const MsgUpdateEntry = {
     obj.unit_denom = message.unitDenom;
     obj.ibc_counterparty_denom = message.ibcCounterpartyDenom;
     obj.ibc_counterparty_chain_id = message.ibcCounterpartyChainId;
+    obj.commit_enabled = message.commitEnabled;
+    obj.withdraw_enabled = message.withdrawEnabled;
     return obj;
   },
   fromAminoMsg(object: MsgUpdateEntryAminoMsg): MsgUpdateEntry {

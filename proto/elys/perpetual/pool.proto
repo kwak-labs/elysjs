@@ -1,9 +1,9 @@
 syntax = "proto3";
-package elys.margin;
+package elys.perpetual;
 
 import "gogoproto/gogo.proto";
 
-option go_package = "github.com/elys-network/elys/x/margin/types";
+option go_package = "github.com/elys-network/elys/x/perpetual/types";
 
 message PoolAsset {
   string liabilities = 1 [
@@ -48,5 +48,10 @@ message Pool {
   repeated PoolAsset pool_assets_long = 6 [(gogoproto.nullable) = false]; 
   repeated PoolAsset pool_assets_short = 7 [(gogoproto.nullable) = false]; 
   int64 last_height_borrow_interest_rate_computed = 8;
+  // funding rate, if positive longs pay shorts, if negative shorts pay longs
+  string funding_rate = 9 [
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
 }
 

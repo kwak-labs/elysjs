@@ -1,6 +1,6 @@
 import { GeneratedType, Registry } from "@cosmjs/proto-signing";
-import { MsgCreatePool, MsgJoinPool, MsgExitPool, MsgSwapExactAmountIn, MsgSwapExactAmountOut, MsgFeedMultipleExternalLiquidity } from "./tx";
-export const registry: ReadonlyArray<[string, GeneratedType]> = [["/elys.amm.MsgCreatePool", MsgCreatePool], ["/elys.amm.MsgJoinPool", MsgJoinPool], ["/elys.amm.MsgExitPool", MsgExitPool], ["/elys.amm.MsgSwapExactAmountIn", MsgSwapExactAmountIn], ["/elys.amm.MsgSwapExactAmountOut", MsgSwapExactAmountOut], ["/elys.amm.MsgFeedMultipleExternalLiquidity", MsgFeedMultipleExternalLiquidity]];
+import { MsgCreatePool, MsgJoinPool, MsgExitPool, MsgSwapExactAmountIn, MsgSwapExactAmountOut, MsgSwapByDenom, MsgFeedMultipleExternalLiquidity, MsgUpdatePoolParams } from "./tx";
+export const registry: ReadonlyArray<[string, GeneratedType]> = [["/elys.amm.MsgCreatePool", MsgCreatePool], ["/elys.amm.MsgJoinPool", MsgJoinPool], ["/elys.amm.MsgExitPool", MsgExitPool], ["/elys.amm.MsgSwapExactAmountIn", MsgSwapExactAmountIn], ["/elys.amm.MsgSwapExactAmountOut", MsgSwapExactAmountOut], ["/elys.amm.MsgSwapByDenom", MsgSwapByDenom], ["/elys.amm.MsgFeedMultipleExternalLiquidity", MsgFeedMultipleExternalLiquidity], ["/elys.amm.MsgUpdatePoolParams", MsgUpdatePoolParams]];
 export const load = (protoRegistry: Registry) => {
   registry.forEach(([typeUrl, mod]) => {
     protoRegistry.register(typeUrl, mod);
@@ -38,10 +38,22 @@ export const MessageComposer = {
         value: MsgSwapExactAmountOut.encode(value).finish()
       };
     },
+    swapByDenom(value: MsgSwapByDenom) {
+      return {
+        typeUrl: "/elys.amm.MsgSwapByDenom",
+        value: MsgSwapByDenom.encode(value).finish()
+      };
+    },
     feedMultipleExternalLiquidity(value: MsgFeedMultipleExternalLiquidity) {
       return {
         typeUrl: "/elys.amm.MsgFeedMultipleExternalLiquidity",
         value: MsgFeedMultipleExternalLiquidity.encode(value).finish()
+      };
+    },
+    updatePoolParams(value: MsgUpdatePoolParams) {
+      return {
+        typeUrl: "/elys.amm.MsgUpdatePoolParams",
+        value: MsgUpdatePoolParams.encode(value).finish()
       };
     }
   },
@@ -76,9 +88,21 @@ export const MessageComposer = {
         value
       };
     },
+    swapByDenom(value: MsgSwapByDenom) {
+      return {
+        typeUrl: "/elys.amm.MsgSwapByDenom",
+        value
+      };
+    },
     feedMultipleExternalLiquidity(value: MsgFeedMultipleExternalLiquidity) {
       return {
         typeUrl: "/elys.amm.MsgFeedMultipleExternalLiquidity",
+        value
+      };
+    },
+    updatePoolParams(value: MsgUpdatePoolParams) {
+      return {
+        typeUrl: "/elys.amm.MsgUpdatePoolParams",
         value
       };
     }
@@ -114,10 +138,22 @@ export const MessageComposer = {
         value: MsgSwapExactAmountOut.fromPartial(value)
       };
     },
+    swapByDenom(value: MsgSwapByDenom) {
+      return {
+        typeUrl: "/elys.amm.MsgSwapByDenom",
+        value: MsgSwapByDenom.fromPartial(value)
+      };
+    },
     feedMultipleExternalLiquidity(value: MsgFeedMultipleExternalLiquidity) {
       return {
         typeUrl: "/elys.amm.MsgFeedMultipleExternalLiquidity",
         value: MsgFeedMultipleExternalLiquidity.fromPartial(value)
+      };
+    },
+    updatePoolParams(value: MsgUpdatePoolParams) {
+      return {
+        typeUrl: "/elys.amm.MsgUpdatePoolParams",
+        value: MsgUpdatePoolParams.fromPartial(value)
       };
     }
   }

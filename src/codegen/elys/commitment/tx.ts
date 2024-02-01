@@ -105,8 +105,8 @@ export interface MsgCommitLiquidTokens {
   creator: string;
   amount: string;
   denom: string;
-  /** minimum lock duration to wait until it is claimable */
-  minLock: bigint;
+  /** timestamp to lock until the time */
+  lockUntil: bigint;
 }
 export interface MsgCommitLiquidTokensProtoMsg {
   typeUrl: "/elys.commitment.MsgCommitLiquidTokens";
@@ -116,8 +116,8 @@ export interface MsgCommitLiquidTokensAmino {
   creator: string;
   amount: string;
   denom: string;
-  /** minimum lock duration to wait until it is claimable */
-  min_lock: string;
+  /** timestamp to lock until the time */
+  lock_until: string;
 }
 export interface MsgCommitLiquidTokensAminoMsg {
   type: "/elys.commitment.MsgCommitLiquidTokens";
@@ -127,7 +127,7 @@ export interface MsgCommitLiquidTokensSDKType {
   creator: string;
   amount: string;
   denom: string;
-  min_lock: bigint;
+  lock_until: bigint;
 }
 export interface MsgCommitLiquidTokensResponse {}
 export interface MsgCommitLiquidTokensResponseProtoMsg {
@@ -837,7 +837,7 @@ function createBaseMsgCommitLiquidTokens(): MsgCommitLiquidTokens {
     creator: "",
     amount: "",
     denom: "",
-    minLock: BigInt(0)
+    lockUntil: BigInt(0)
   };
 }
 export const MsgCommitLiquidTokens = {
@@ -852,8 +852,8 @@ export const MsgCommitLiquidTokens = {
     if (message.denom !== "") {
       writer.uint32(26).string(message.denom);
     }
-    if (message.minLock !== BigInt(0)) {
-      writer.uint32(32).uint64(message.minLock);
+    if (message.lockUntil !== BigInt(0)) {
+      writer.uint32(32).uint64(message.lockUntil);
     }
     return writer;
   },
@@ -874,7 +874,7 @@ export const MsgCommitLiquidTokens = {
           message.denom = reader.string();
           break;
         case 4:
-          message.minLock = reader.uint64();
+          message.lockUntil = reader.uint64();
           break;
         default:
           reader.skipType(tag & 7);
@@ -888,7 +888,7 @@ export const MsgCommitLiquidTokens = {
     message.creator = object.creator ?? "";
     message.amount = object.amount ?? "";
     message.denom = object.denom ?? "";
-    message.minLock = object.minLock !== undefined && object.minLock !== null ? BigInt(object.minLock.toString()) : BigInt(0);
+    message.lockUntil = object.lockUntil !== undefined && object.lockUntil !== null ? BigInt(object.lockUntil.toString()) : BigInt(0);
     return message;
   },
   fromAmino(object: MsgCommitLiquidTokensAmino): MsgCommitLiquidTokens {
@@ -896,7 +896,7 @@ export const MsgCommitLiquidTokens = {
       creator: object.creator,
       amount: object.amount,
       denom: object.denom,
-      minLock: BigInt(object.min_lock)
+      lockUntil: BigInt(object.lock_until)
     };
   },
   toAmino(message: MsgCommitLiquidTokens): MsgCommitLiquidTokensAmino {
@@ -904,7 +904,7 @@ export const MsgCommitLiquidTokens = {
     obj.creator = message.creator;
     obj.amount = message.amount;
     obj.denom = message.denom;
-    obj.min_lock = message.minLock ? message.minLock.toString() : undefined;
+    obj.lock_until = message.lockUntil ? message.lockUntil.toString() : undefined;
     return obj;
   },
   fromAminoMsg(object: MsgCommitLiquidTokensAminoMsg): MsgCommitLiquidTokens {

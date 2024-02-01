@@ -1,13 +1,14 @@
 import { Rpc } from "../../helpers";
 import { BinaryReader } from "../../binary";
 import { QueryClient, createProtobufRpcClient } from "@cosmjs/stargate";
-import { QueryParamsRequest, QueryParamsResponse, QueryGetEntryRequest, QueryGetEntryResponse, QueryAllEntryRequest, QueryAllEntryResponse } from "./query";
+import { QueryParamsRequest, QueryParamsResponse, QueryGetEntryRequest, QueryGetEntryResponse, QueryGetEntryByDenomRequest, QueryGetEntryByDenomResponse, QueryAllEntryRequest, QueryAllEntryResponse } from "./query";
 /** Query defines the gRPC querier service. */
 export interface Query {
   /** Parameters queries the parameters of the module. */
   params(request?: QueryParamsRequest): Promise<QueryParamsResponse>;
   /** Queries a list of Entry items. */
   entry(request: QueryGetEntryRequest): Promise<QueryGetEntryResponse>;
+  entryByDenom(request: QueryGetEntryByDenomRequest): Promise<QueryGetEntryByDenomResponse>;
   entryAll(request?: QueryAllEntryRequest): Promise<QueryAllEntryResponse>;
 }
 export class QueryClientImpl implements Query {
@@ -16,6 +17,7 @@ export class QueryClientImpl implements Query {
     this.rpc = rpc;
     this.params = this.params.bind(this);
     this.entry = this.entry.bind(this);
+    this.entryByDenom = this.entryByDenom.bind(this);
     this.entryAll = this.entryAll.bind(this);
   }
   params(request: QueryParamsRequest = {}): Promise<QueryParamsResponse> {
@@ -27,6 +29,11 @@ export class QueryClientImpl implements Query {
     const data = QueryGetEntryRequest.encode(request).finish();
     const promise = this.rpc.request("elys.assetprofile.Query", "Entry", data);
     return promise.then(data => QueryGetEntryResponse.decode(new BinaryReader(data)));
+  }
+  entryByDenom(request: QueryGetEntryByDenomRequest): Promise<QueryGetEntryByDenomResponse> {
+    const data = QueryGetEntryByDenomRequest.encode(request).finish();
+    const promise = this.rpc.request("elys.assetprofile.Query", "EntryByDenom", data);
+    return promise.then(data => QueryGetEntryByDenomResponse.decode(new BinaryReader(data)));
   }
   entryAll(request: QueryAllEntryRequest = {
     pagination: undefined
@@ -45,6 +52,9 @@ export const createRpcQueryExtension = (base: QueryClient) => {
     },
     entry(request: QueryGetEntryRequest): Promise<QueryGetEntryResponse> {
       return queryService.entry(request);
+    },
+    entryByDenom(request: QueryGetEntryByDenomRequest): Promise<QueryGetEntryByDenomResponse> {
+      return queryService.entryByDenom(request);
     },
     entryAll(request?: QueryAllEntryRequest): Promise<QueryAllEntryResponse> {
       return queryService.entryAll(request);

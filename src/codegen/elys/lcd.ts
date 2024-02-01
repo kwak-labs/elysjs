@@ -127,13 +127,13 @@ export const createLCDClient = async ({
       leveragelp: new (await import("./leveragelp/query.lcd")).LCDQueryClient({
         requestClient
       }),
-      margin: new (await import("./margin/query.lcd")).LCDQueryClient({
-        requestClient
-      }),
       oracle: new (await import("./oracle/query.lcd")).LCDQueryClient({
         requestClient
       }),
       parameter: new (await import("./parameter/query.lcd")).LCDQueryClient({
+        requestClient
+      }),
+      perpetual: new (await import("./perpetual/query.lcd")).LCDQueryClient({
         requestClient
       }),
       stablestake: new (await import("./stablestake/query.lcd")).LCDQueryClient({

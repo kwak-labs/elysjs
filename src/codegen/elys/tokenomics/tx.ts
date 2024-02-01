@@ -4,6 +4,7 @@ export interface MsgCreateAirdrop {
   authority: string;
   intent: string;
   amount: bigint;
+  expiry: bigint;
 }
 export interface MsgCreateAirdropProtoMsg {
   typeUrl: "/elys.tokenomics.MsgCreateAirdrop";
@@ -13,6 +14,7 @@ export interface MsgCreateAirdropAmino {
   authority: string;
   intent: string;
   amount: string;
+  expiry: string;
 }
 export interface MsgCreateAirdropAminoMsg {
   type: "/elys.tokenomics.MsgCreateAirdrop";
@@ -22,6 +24,7 @@ export interface MsgCreateAirdropSDKType {
   authority: string;
   intent: string;
   amount: bigint;
+  expiry: bigint;
 }
 export interface MsgCreateAirdropResponse {}
 export interface MsgCreateAirdropResponseProtoMsg {
@@ -38,6 +41,7 @@ export interface MsgUpdateAirdrop {
   authority: string;
   intent: string;
   amount: bigint;
+  expiry: bigint;
 }
 export interface MsgUpdateAirdropProtoMsg {
   typeUrl: "/elys.tokenomics.MsgUpdateAirdrop";
@@ -47,6 +51,7 @@ export interface MsgUpdateAirdropAmino {
   authority: string;
   intent: string;
   amount: string;
+  expiry: string;
 }
 export interface MsgUpdateAirdropAminoMsg {
   type: "/elys.tokenomics.MsgUpdateAirdrop";
@@ -56,6 +61,7 @@ export interface MsgUpdateAirdropSDKType {
   authority: string;
   intent: string;
   amount: bigint;
+  expiry: bigint;
 }
 export interface MsgUpdateAirdropResponse {}
 export interface MsgUpdateAirdropResponseProtoMsg {
@@ -99,6 +105,34 @@ export interface MsgDeleteAirdropResponseAminoMsg {
   value: MsgDeleteAirdropResponseAmino;
 }
 export interface MsgDeleteAirdropResponseSDKType {}
+export interface MsgClaimAirdrop {
+  sender: string;
+}
+export interface MsgClaimAirdropProtoMsg {
+  typeUrl: "/elys.tokenomics.MsgClaimAirdrop";
+  value: Uint8Array;
+}
+export interface MsgClaimAirdropAmino {
+  sender: string;
+}
+export interface MsgClaimAirdropAminoMsg {
+  type: "/elys.tokenomics.MsgClaimAirdrop";
+  value: MsgClaimAirdropAmino;
+}
+export interface MsgClaimAirdropSDKType {
+  sender: string;
+}
+export interface MsgClaimAirdropResponse {}
+export interface MsgClaimAirdropResponseProtoMsg {
+  typeUrl: "/elys.tokenomics.MsgClaimAirdropResponse";
+  value: Uint8Array;
+}
+export interface MsgClaimAirdropResponseAmino {}
+export interface MsgClaimAirdropResponseAminoMsg {
+  type: "/elys.tokenomics.MsgClaimAirdropResponse";
+  value: MsgClaimAirdropResponseAmino;
+}
+export interface MsgClaimAirdropResponseSDKType {}
 export interface MsgUpdateGenesisInflation {
   authority: string;
   inflation?: InflationEntry;
@@ -271,7 +305,8 @@ function createBaseMsgCreateAirdrop(): MsgCreateAirdrop {
   return {
     authority: "",
     intent: "",
-    amount: BigInt(0)
+    amount: BigInt(0),
+    expiry: BigInt(0)
   };
 }
 export const MsgCreateAirdrop = {
@@ -285,6 +320,9 @@ export const MsgCreateAirdrop = {
     }
     if (message.amount !== BigInt(0)) {
       writer.uint32(24).uint64(message.amount);
+    }
+    if (message.expiry !== BigInt(0)) {
+      writer.uint32(32).uint64(message.expiry);
     }
     return writer;
   },
@@ -304,6 +342,9 @@ export const MsgCreateAirdrop = {
         case 3:
           message.amount = reader.uint64();
           break;
+        case 4:
+          message.expiry = reader.uint64();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -316,13 +357,15 @@ export const MsgCreateAirdrop = {
     message.authority = object.authority ?? "";
     message.intent = object.intent ?? "";
     message.amount = object.amount !== undefined && object.amount !== null ? BigInt(object.amount.toString()) : BigInt(0);
+    message.expiry = object.expiry !== undefined && object.expiry !== null ? BigInt(object.expiry.toString()) : BigInt(0);
     return message;
   },
   fromAmino(object: MsgCreateAirdropAmino): MsgCreateAirdrop {
     return {
       authority: object.authority,
       intent: object.intent,
-      amount: BigInt(object.amount)
+      amount: BigInt(object.amount),
+      expiry: BigInt(object.expiry)
     };
   },
   toAmino(message: MsgCreateAirdrop): MsgCreateAirdropAmino {
@@ -330,6 +373,7 @@ export const MsgCreateAirdrop = {
     obj.authority = message.authority;
     obj.intent = message.intent;
     obj.amount = message.amount ? message.amount.toString() : undefined;
+    obj.expiry = message.expiry ? message.expiry.toString() : undefined;
     return obj;
   },
   fromAminoMsg(object: MsgCreateAirdropAminoMsg): MsgCreateAirdrop {
@@ -401,7 +445,8 @@ function createBaseMsgUpdateAirdrop(): MsgUpdateAirdrop {
   return {
     authority: "",
     intent: "",
-    amount: BigInt(0)
+    amount: BigInt(0),
+    expiry: BigInt(0)
   };
 }
 export const MsgUpdateAirdrop = {
@@ -415,6 +460,9 @@ export const MsgUpdateAirdrop = {
     }
     if (message.amount !== BigInt(0)) {
       writer.uint32(24).uint64(message.amount);
+    }
+    if (message.expiry !== BigInt(0)) {
+      writer.uint32(32).uint64(message.expiry);
     }
     return writer;
   },
@@ -434,6 +482,9 @@ export const MsgUpdateAirdrop = {
         case 3:
           message.amount = reader.uint64();
           break;
+        case 4:
+          message.expiry = reader.uint64();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -446,13 +497,15 @@ export const MsgUpdateAirdrop = {
     message.authority = object.authority ?? "";
     message.intent = object.intent ?? "";
     message.amount = object.amount !== undefined && object.amount !== null ? BigInt(object.amount.toString()) : BigInt(0);
+    message.expiry = object.expiry !== undefined && object.expiry !== null ? BigInt(object.expiry.toString()) : BigInt(0);
     return message;
   },
   fromAmino(object: MsgUpdateAirdropAmino): MsgUpdateAirdrop {
     return {
       authority: object.authority,
       intent: object.intent,
-      amount: BigInt(object.amount)
+      amount: BigInt(object.amount),
+      expiry: BigInt(object.expiry)
     };
   },
   toAmino(message: MsgUpdateAirdrop): MsgUpdateAirdropAmino {
@@ -460,6 +513,7 @@ export const MsgUpdateAirdrop = {
     obj.authority = message.authority;
     obj.intent = message.intent;
     obj.amount = message.amount ? message.amount.toString() : undefined;
+    obj.expiry = message.expiry ? message.expiry.toString() : undefined;
     return obj;
   },
   fromAminoMsg(object: MsgUpdateAirdropAminoMsg): MsgUpdateAirdrop {
@@ -644,6 +698,116 @@ export const MsgDeleteAirdropResponse = {
     return {
       typeUrl: "/elys.tokenomics.MsgDeleteAirdropResponse",
       value: MsgDeleteAirdropResponse.encode(message).finish()
+    };
+  }
+};
+function createBaseMsgClaimAirdrop(): MsgClaimAirdrop {
+  return {
+    sender: ""
+  };
+}
+export const MsgClaimAirdrop = {
+  typeUrl: "/elys.tokenomics.MsgClaimAirdrop",
+  encode(message: MsgClaimAirdrop, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.sender !== "") {
+      writer.uint32(10).string(message.sender);
+    }
+    return writer;
+  },
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgClaimAirdrop {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMsgClaimAirdrop();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.sender = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromPartial(object: Partial<MsgClaimAirdrop>): MsgClaimAirdrop {
+    const message = createBaseMsgClaimAirdrop();
+    message.sender = object.sender ?? "";
+    return message;
+  },
+  fromAmino(object: MsgClaimAirdropAmino): MsgClaimAirdrop {
+    return {
+      sender: object.sender
+    };
+  },
+  toAmino(message: MsgClaimAirdrop): MsgClaimAirdropAmino {
+    const obj: any = {};
+    obj.sender = message.sender;
+    return obj;
+  },
+  fromAminoMsg(object: MsgClaimAirdropAminoMsg): MsgClaimAirdrop {
+    return MsgClaimAirdrop.fromAmino(object.value);
+  },
+  fromProtoMsg(message: MsgClaimAirdropProtoMsg): MsgClaimAirdrop {
+    return MsgClaimAirdrop.decode(message.value);
+  },
+  toProto(message: MsgClaimAirdrop): Uint8Array {
+    return MsgClaimAirdrop.encode(message).finish();
+  },
+  toProtoMsg(message: MsgClaimAirdrop): MsgClaimAirdropProtoMsg {
+    return {
+      typeUrl: "/elys.tokenomics.MsgClaimAirdrop",
+      value: MsgClaimAirdrop.encode(message).finish()
+    };
+  }
+};
+function createBaseMsgClaimAirdropResponse(): MsgClaimAirdropResponse {
+  return {};
+}
+export const MsgClaimAirdropResponse = {
+  typeUrl: "/elys.tokenomics.MsgClaimAirdropResponse",
+  encode(_: MsgClaimAirdropResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    return writer;
+  },
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgClaimAirdropResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMsgClaimAirdropResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromPartial(_: Partial<MsgClaimAirdropResponse>): MsgClaimAirdropResponse {
+    const message = createBaseMsgClaimAirdropResponse();
+    return message;
+  },
+  fromAmino(_: MsgClaimAirdropResponseAmino): MsgClaimAirdropResponse {
+    return {};
+  },
+  toAmino(_: MsgClaimAirdropResponse): MsgClaimAirdropResponseAmino {
+    const obj: any = {};
+    return obj;
+  },
+  fromAminoMsg(object: MsgClaimAirdropResponseAminoMsg): MsgClaimAirdropResponse {
+    return MsgClaimAirdropResponse.fromAmino(object.value);
+  },
+  fromProtoMsg(message: MsgClaimAirdropResponseProtoMsg): MsgClaimAirdropResponse {
+    return MsgClaimAirdropResponse.decode(message.value);
+  },
+  toProto(message: MsgClaimAirdropResponse): Uint8Array {
+    return MsgClaimAirdropResponse.encode(message).finish();
+  },
+  toProtoMsg(message: MsgClaimAirdropResponse): MsgClaimAirdropResponseProtoMsg {
+    return {
+      typeUrl: "/elys.tokenomics.MsgClaimAirdropResponse",
+      value: MsgClaimAirdropResponse.encode(message).finish()
     };
   }
 };

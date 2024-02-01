@@ -1,6 +1,6 @@
 import { setPaginationParams } from "../../helpers";
 import { LCDClient } from "@cosmology/lcd";
-import { QueryParamsRequest, QueryParamsResponseSDKType, QueryGetPoolRequest, QueryGetPoolResponseSDKType, QueryAllPoolRequest, QueryAllPoolResponseSDKType, QueryGetDenomLiquidityRequest, QueryGetDenomLiquidityResponseSDKType, QueryAllDenomLiquidityRequest, QueryAllDenomLiquidityResponseSDKType, QuerySwapEstimationRequest, QuerySwapEstimationResponseSDKType, QuerySlippageTrackRequest, QuerySlippageTrackResponseSDKType, QuerySlippageTrackAllRequest, QuerySlippageTrackAllResponseSDKType, QueryBalanceRequest, QueryBalanceResponseSDKType } from "./query";
+import { QueryParamsRequest, QueryParamsResponseSDKType, QueryGetPoolRequest, QueryGetPoolResponseSDKType, QueryAllPoolRequest, QueryAllPoolResponseSDKType, QueryGetDenomLiquidityRequest, QueryGetDenomLiquidityResponseSDKType, QueryAllDenomLiquidityRequest, QueryAllDenomLiquidityResponseSDKType, QuerySwapEstimationRequest, QuerySwapEstimationResponseSDKType, QuerySlippageTrackRequest, QuerySlippageTrackResponseSDKType, QuerySlippageTrackAllRequest, QuerySlippageTrackAllResponseSDKType, QueryBalanceRequest, QueryBalanceResponseSDKType, QueryInRouteByDenomRequest, QueryInRouteByDenomResponseSDKType, QueryOutRouteByDenomRequest, QueryOutRouteByDenomResponseSDKType, QuerySwapEstimationByDenomRequest, QuerySwapEstimationByDenomResponseSDKType } from "./query";
 export class LCDQueryClient {
   req: LCDClient;
   constructor({
@@ -18,6 +18,9 @@ export class LCDQueryClient {
     this.slippageTrack = this.slippageTrack.bind(this);
     this.slippageTrackAll = this.slippageTrackAll.bind(this);
     this.balance = this.balance.bind(this);
+    this.inRouteByDenom = this.inRouteByDenom.bind(this);
+    this.outRouteByDenom = this.outRouteByDenom.bind(this);
+    this.swapEstimationByDenom = this.swapEstimationByDenom.bind(this);
   }
   /* Parameters queries the parameters of the module. */
   async params(_params: QueryParamsRequest = {}): Promise<QueryParamsResponseSDKType> {
@@ -71,6 +74,9 @@ export class LCDQueryClient {
     if (typeof params?.tokenIn !== "undefined") {
       options.params.token_in = params.tokenIn;
     }
+    if (typeof params?.discount !== "undefined") {
+      options.params.discount = params.discount;
+    }
     const endpoint = `elys-network/elys/amm/swap_estimation`;
     return await this.req.get<QuerySwapEstimationResponseSDKType>(endpoint, options);
   }
@@ -88,5 +94,35 @@ export class LCDQueryClient {
   async balance(params: QueryBalanceRequest): Promise<QueryBalanceResponseSDKType> {
     const endpoint = `elys-network/elys/amm/balance/${params.address}/${params.denom}`;
     return await this.req.get<QueryBalanceResponseSDKType>(endpoint);
+  }
+  /* Queries a list of InRouteByDenom items. */
+  async inRouteByDenom(params: QueryInRouteByDenomRequest): Promise<QueryInRouteByDenomResponseSDKType> {
+    const endpoint = `elys-network/elys/amm/in_route_by_denom/${params.denomIn}/${params.denomOut}`;
+    return await this.req.get<QueryInRouteByDenomResponseSDKType>(endpoint);
+  }
+  /* Queries a list of OutRouteByDenom items. */
+  async outRouteByDenom(params: QueryOutRouteByDenomRequest): Promise<QueryOutRouteByDenomResponseSDKType> {
+    const endpoint = `elys-network/elys/amm/out_route_by_denom/${params.denomOut}/${params.denomIn}`;
+    return await this.req.get<QueryOutRouteByDenomResponseSDKType>(endpoint);
+  }
+  /* Queries a list of SwapEstimationByDenom items. */
+  async swapEstimationByDenom(params: QuerySwapEstimationByDenomRequest): Promise<QuerySwapEstimationByDenomResponseSDKType> {
+    const options: any = {
+      params: {}
+    };
+    if (typeof params?.amount !== "undefined") {
+      options.params.amount = params.amount;
+    }
+    if (typeof params?.denomIn !== "undefined") {
+      options.params.denom_in = params.denomIn;
+    }
+    if (typeof params?.denomOut !== "undefined") {
+      options.params.denom_out = params.denomOut;
+    }
+    if (typeof params?.discount !== "undefined") {
+      options.params.discount = params.discount;
+    }
+    const endpoint = `elys-network/elys/amm/swap_estimation_by_denom`;
+    return await this.req.get<QuerySwapEstimationByDenomResponseSDKType>(endpoint, options);
   }
 }

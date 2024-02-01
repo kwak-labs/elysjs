@@ -48,6 +48,7 @@ export interface MsgOpenResponseSDKType {}
 export interface MsgClose {
   creator: string;
   id: bigint;
+  lpAmount: string;
 }
 export interface MsgCloseProtoMsg {
   typeUrl: "/elys.leveragelp.MsgClose";
@@ -56,6 +57,7 @@ export interface MsgCloseProtoMsg {
 export interface MsgCloseAmino {
   creator: string;
   id: string;
+  lp_amount: string;
 }
 export interface MsgCloseAminoMsg {
   type: "/elys.leveragelp.MsgClose";
@@ -64,6 +66,7 @@ export interface MsgCloseAminoMsg {
 export interface MsgCloseSDKType {
   creator: string;
   id: bigint;
+  lp_amount: string;
 }
 export interface MsgCloseResponse {}
 export interface MsgCloseResponseProtoMsg {
@@ -373,7 +376,8 @@ export const MsgOpenResponse = {
 function createBaseMsgClose(): MsgClose {
   return {
     creator: "",
-    id: BigInt(0)
+    id: BigInt(0),
+    lpAmount: ""
   };
 }
 export const MsgClose = {
@@ -384,6 +388,9 @@ export const MsgClose = {
     }
     if (message.id !== BigInt(0)) {
       writer.uint32(16).uint64(message.id);
+    }
+    if (message.lpAmount !== "") {
+      writer.uint32(26).string(message.lpAmount);
     }
     return writer;
   },
@@ -400,6 +407,9 @@ export const MsgClose = {
         case 2:
           message.id = reader.uint64();
           break;
+        case 3:
+          message.lpAmount = reader.string();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -411,18 +421,21 @@ export const MsgClose = {
     const message = createBaseMsgClose();
     message.creator = object.creator ?? "";
     message.id = object.id !== undefined && object.id !== null ? BigInt(object.id.toString()) : BigInt(0);
+    message.lpAmount = object.lpAmount ?? "";
     return message;
   },
   fromAmino(object: MsgCloseAmino): MsgClose {
     return {
       creator: object.creator,
-      id: BigInt(object.id)
+      id: BigInt(object.id),
+      lpAmount: object.lp_amount
     };
   },
   toAmino(message: MsgClose): MsgCloseAmino {
     const obj: any = {};
     obj.creator = message.creator;
     obj.id = message.id ? message.id.toString() : undefined;
+    obj.lp_amount = message.lpAmount;
     return obj;
   },
   fromAminoMsg(object: MsgCloseAminoMsg): MsgClose {

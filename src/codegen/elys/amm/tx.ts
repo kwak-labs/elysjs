@@ -49,7 +49,6 @@ export interface MsgJoinPool {
   poolId: bigint;
   maxAmountsIn: Coin[];
   shareAmountOut: string;
-  noRemaining: boolean;
 }
 export interface MsgJoinPoolProtoMsg {
   typeUrl: "/elys.amm.MsgJoinPool";
@@ -60,7 +59,6 @@ export interface MsgJoinPoolAmino {
   pool_id: string;
   max_amounts_in: CoinAmino[];
   share_amount_out: string;
-  no_remaining: boolean;
 }
 export interface MsgJoinPoolAminoMsg {
   type: "/elys.amm.MsgJoinPool";
@@ -71,7 +69,6 @@ export interface MsgJoinPoolSDKType {
   pool_id: bigint;
   max_amounts_in: CoinSDKType[];
   share_amount_out: string;
-  no_remaining: boolean;
 }
 export interface MsgJoinPoolResponse {
   shareAmountOut: string;
@@ -144,6 +141,8 @@ export interface MsgSwapExactAmountIn {
   routes: SwapAmountInRoute[];
   tokenIn: Coin;
   tokenOutMinAmount: string;
+  discount: string;
+  recipient: string;
 }
 export interface MsgSwapExactAmountInProtoMsg {
   typeUrl: "/elys.amm.MsgSwapExactAmountIn";
@@ -154,6 +153,8 @@ export interface MsgSwapExactAmountInAmino {
   routes: SwapAmountInRouteAmino[];
   token_in?: CoinAmino;
   token_out_min_amount: string;
+  discount: string;
+  recipient: string;
 }
 export interface MsgSwapExactAmountInAminoMsg {
   type: "/elys.amm.MsgSwapExactAmountIn";
@@ -164,9 +165,14 @@ export interface MsgSwapExactAmountInSDKType {
   routes: SwapAmountInRouteSDKType[];
   token_in: CoinSDKType;
   token_out_min_amount: string;
+  discount: string;
+  recipient: string;
 }
 export interface MsgSwapExactAmountInResponse {
   tokenOutAmount: string;
+  swapFee: string;
+  discount: string;
+  recipient: string;
 }
 export interface MsgSwapExactAmountInResponseProtoMsg {
   typeUrl: "/elys.amm.MsgSwapExactAmountInResponse";
@@ -174,6 +180,9 @@ export interface MsgSwapExactAmountInResponseProtoMsg {
 }
 export interface MsgSwapExactAmountInResponseAmino {
   token_out_amount: string;
+  swap_fee: string;
+  discount: string;
+  recipient: string;
 }
 export interface MsgSwapExactAmountInResponseAminoMsg {
   type: "/elys.amm.MsgSwapExactAmountInResponse";
@@ -181,12 +190,17 @@ export interface MsgSwapExactAmountInResponseAminoMsg {
 }
 export interface MsgSwapExactAmountInResponseSDKType {
   token_out_amount: string;
+  swap_fee: string;
+  discount: string;
+  recipient: string;
 }
 export interface MsgSwapExactAmountOut {
   sender: string;
   routes: SwapAmountOutRoute[];
   tokenOut: Coin;
   tokenInMaxAmount: string;
+  discount: string;
+  recipient: string;
 }
 export interface MsgSwapExactAmountOutProtoMsg {
   typeUrl: "/elys.amm.MsgSwapExactAmountOut";
@@ -197,6 +211,8 @@ export interface MsgSwapExactAmountOutAmino {
   routes: SwapAmountOutRouteAmino[];
   token_out?: CoinAmino;
   token_in_max_amount: string;
+  discount: string;
+  recipient: string;
 }
 export interface MsgSwapExactAmountOutAminoMsg {
   type: "/elys.amm.MsgSwapExactAmountOut";
@@ -207,9 +223,14 @@ export interface MsgSwapExactAmountOutSDKType {
   routes: SwapAmountOutRouteSDKType[];
   token_out: CoinSDKType;
   token_in_max_amount: string;
+  discount: string;
+  recipient: string;
 }
 export interface MsgSwapExactAmountOutResponse {
   tokenInAmount: string;
+  swapFee: string;
+  discount: string;
+  recipient: string;
 }
 export interface MsgSwapExactAmountOutResponseProtoMsg {
   typeUrl: "/elys.amm.MsgSwapExactAmountOutResponse";
@@ -217,6 +238,9 @@ export interface MsgSwapExactAmountOutResponseProtoMsg {
 }
 export interface MsgSwapExactAmountOutResponseAmino {
   token_in_amount: string;
+  swap_fee: string;
+  discount: string;
+  recipient: string;
 }
 export interface MsgSwapExactAmountOutResponseAminoMsg {
   type: "/elys.amm.MsgSwapExactAmountOutResponse";
@@ -224,6 +248,9 @@ export interface MsgSwapExactAmountOutResponseAminoMsg {
 }
 export interface MsgSwapExactAmountOutResponseSDKType {
   token_in_amount: string;
+  swap_fee: string;
+  discount: string;
+  recipient: string;
 }
 export interface MsgFeedMultipleExternalLiquidity {
   sender: string;
@@ -301,6 +328,122 @@ export interface ExternalLiquidityAminoMsg {
 export interface ExternalLiquiditySDKType {
   pool_id: bigint;
   amount_depth_info: AssetAmountDepthSDKType[];
+}
+export interface MsgSwapByDenom {
+  sender: string;
+  amount: Coin;
+  minAmount: Coin;
+  maxAmount: Coin;
+  denomIn: string;
+  denomOut: string;
+  discount: string;
+  recipient: string;
+}
+export interface MsgSwapByDenomProtoMsg {
+  typeUrl: "/elys.amm.MsgSwapByDenom";
+  value: Uint8Array;
+}
+export interface MsgSwapByDenomAmino {
+  sender: string;
+  amount?: CoinAmino;
+  min_amount?: CoinAmino;
+  max_amount?: CoinAmino;
+  denom_in: string;
+  denom_out: string;
+  discount: string;
+  recipient: string;
+}
+export interface MsgSwapByDenomAminoMsg {
+  type: "/elys.amm.MsgSwapByDenom";
+  value: MsgSwapByDenomAmino;
+}
+export interface MsgSwapByDenomSDKType {
+  sender: string;
+  amount: CoinSDKType;
+  min_amount: CoinSDKType;
+  max_amount: CoinSDKType;
+  denom_in: string;
+  denom_out: string;
+  discount: string;
+  recipient: string;
+}
+export interface MsgSwapByDenomResponse {
+  amount: Coin;
+  inRoute: SwapAmountInRoute[];
+  outRoute: SwapAmountOutRoute[];
+  spotPrice: string;
+  swapFee: string;
+  discount: string;
+  recipient: string;
+}
+export interface MsgSwapByDenomResponseProtoMsg {
+  typeUrl: "/elys.amm.MsgSwapByDenomResponse";
+  value: Uint8Array;
+}
+export interface MsgSwapByDenomResponseAmino {
+  amount?: CoinAmino;
+  in_route: SwapAmountInRouteAmino[];
+  out_route: SwapAmountOutRouteAmino[];
+  spot_price: string;
+  swap_fee: string;
+  discount: string;
+  recipient: string;
+}
+export interface MsgSwapByDenomResponseAminoMsg {
+  type: "/elys.amm.MsgSwapByDenomResponse";
+  value: MsgSwapByDenomResponseAmino;
+}
+export interface MsgSwapByDenomResponseSDKType {
+  amount: CoinSDKType;
+  in_route: SwapAmountInRouteSDKType[];
+  out_route: SwapAmountOutRouteSDKType[];
+  spot_price: string;
+  swap_fee: string;
+  discount: string;
+  recipient: string;
+}
+export interface MsgUpdatePoolParams {
+  sender: string;
+  poolId: bigint;
+  poolParams?: PoolParams;
+}
+export interface MsgUpdatePoolParamsProtoMsg {
+  typeUrl: "/elys.amm.MsgUpdatePoolParams";
+  value: Uint8Array;
+}
+export interface MsgUpdatePoolParamsAmino {
+  sender: string;
+  pool_id: string;
+  pool_params?: PoolParamsAmino;
+}
+export interface MsgUpdatePoolParamsAminoMsg {
+  type: "/elys.amm.MsgUpdatePoolParams";
+  value: MsgUpdatePoolParamsAmino;
+}
+export interface MsgUpdatePoolParamsSDKType {
+  sender: string;
+  pool_id: bigint;
+  pool_params?: PoolParamsSDKType;
+}
+export interface MsgUpdatePoolParamsResponse {
+  poolId: bigint;
+  poolParams?: PoolParams;
+}
+export interface MsgUpdatePoolParamsResponseProtoMsg {
+  typeUrl: "/elys.amm.MsgUpdatePoolParamsResponse";
+  value: Uint8Array;
+}
+export interface MsgUpdatePoolParamsResponseAmino {
+  pool_id: string;
+  pool_params?: PoolParamsAmino;
+}
+export interface MsgUpdatePoolParamsResponseAminoMsg {
+  type: "/elys.amm.MsgUpdatePoolParamsResponse";
+  value: MsgUpdatePoolParamsResponseAmino;
+}
+export interface MsgUpdatePoolParamsResponseSDKType {
+  pool_id: bigint;
+  pool_params?: PoolParamsSDKType;
 }
 function createBaseMsgCreatePool(): MsgCreatePool {
   return {
@@ -453,8 +596,7 @@ function createBaseMsgJoinPool(): MsgJoinPool {
     sender: "",
     poolId: BigInt(0),
     maxAmountsIn: [],
-    shareAmountOut: "",
-    noRemaining: false
+    shareAmountOut: ""
   };
 }
 export const MsgJoinPool = {
@@ -471,9 +613,6 @@ export const MsgJoinPool = {
     }
     if (message.shareAmountOut !== "") {
       writer.uint32(34).string(message.shareAmountOut);
-    }
-    if (message.noRemaining === true) {
-      writer.uint32(40).bool(message.noRemaining);
     }
     return writer;
   },
@@ -496,9 +635,6 @@ export const MsgJoinPool = {
         case 4:
           message.shareAmountOut = reader.string();
           break;
-        case 5:
-          message.noRemaining = reader.bool();
-          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -512,7 +648,6 @@ export const MsgJoinPool = {
     message.poolId = object.poolId !== undefined && object.poolId !== null ? BigInt(object.poolId.toString()) : BigInt(0);
     message.maxAmountsIn = object.maxAmountsIn?.map(e => Coin.fromPartial(e)) || [];
     message.shareAmountOut = object.shareAmountOut ?? "";
-    message.noRemaining = object.noRemaining ?? false;
     return message;
   },
   fromAmino(object: MsgJoinPoolAmino): MsgJoinPool {
@@ -520,8 +655,7 @@ export const MsgJoinPool = {
       sender: object.sender,
       poolId: BigInt(object.pool_id),
       maxAmountsIn: Array.isArray(object?.max_amounts_in) ? object.max_amounts_in.map((e: any) => Coin.fromAmino(e)) : [],
-      shareAmountOut: object.share_amount_out,
-      noRemaining: object.no_remaining
+      shareAmountOut: object.share_amount_out
     };
   },
   toAmino(message: MsgJoinPool): MsgJoinPoolAmino {
@@ -534,7 +668,6 @@ export const MsgJoinPool = {
       obj.max_amounts_in = [];
     }
     obj.share_amount_out = message.shareAmountOut;
-    obj.no_remaining = message.noRemaining;
     return obj;
   },
   fromAminoMsg(object: MsgJoinPoolAminoMsg): MsgJoinPool {
@@ -803,7 +936,9 @@ function createBaseMsgSwapExactAmountIn(): MsgSwapExactAmountIn {
     sender: "",
     routes: [],
     tokenIn: Coin.fromPartial({}),
-    tokenOutMinAmount: ""
+    tokenOutMinAmount: "",
+    discount: "",
+    recipient: ""
   };
 }
 export const MsgSwapExactAmountIn = {
@@ -820,6 +955,12 @@ export const MsgSwapExactAmountIn = {
     }
     if (message.tokenOutMinAmount !== "") {
       writer.uint32(34).string(message.tokenOutMinAmount);
+    }
+    if (message.discount !== "") {
+      writer.uint32(42).string(Decimal.fromUserInput(message.discount, 18).atomics);
+    }
+    if (message.recipient !== "") {
+      writer.uint32(50).string(message.recipient);
     }
     return writer;
   },
@@ -842,6 +983,12 @@ export const MsgSwapExactAmountIn = {
         case 4:
           message.tokenOutMinAmount = reader.string();
           break;
+        case 5:
+          message.discount = Decimal.fromAtomics(reader.string(), 18).toString();
+          break;
+        case 6:
+          message.recipient = reader.string();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -855,6 +1002,8 @@ export const MsgSwapExactAmountIn = {
     message.routes = object.routes?.map(e => SwapAmountInRoute.fromPartial(e)) || [];
     message.tokenIn = object.tokenIn !== undefined && object.tokenIn !== null ? Coin.fromPartial(object.tokenIn) : undefined;
     message.tokenOutMinAmount = object.tokenOutMinAmount ?? "";
+    message.discount = object.discount ?? "";
+    message.recipient = object.recipient ?? "";
     return message;
   },
   fromAmino(object: MsgSwapExactAmountInAmino): MsgSwapExactAmountIn {
@@ -862,7 +1011,9 @@ export const MsgSwapExactAmountIn = {
       sender: object.sender,
       routes: Array.isArray(object?.routes) ? object.routes.map((e: any) => SwapAmountInRoute.fromAmino(e)) : [],
       tokenIn: object?.token_in ? Coin.fromAmino(object.token_in) : undefined,
-      tokenOutMinAmount: object.token_out_min_amount
+      tokenOutMinAmount: object.token_out_min_amount,
+      discount: object.discount,
+      recipient: object.recipient
     };
   },
   toAmino(message: MsgSwapExactAmountIn): MsgSwapExactAmountInAmino {
@@ -875,6 +1026,8 @@ export const MsgSwapExactAmountIn = {
     }
     obj.token_in = message.tokenIn ? Coin.toAmino(message.tokenIn) : undefined;
     obj.token_out_min_amount = message.tokenOutMinAmount;
+    obj.discount = message.discount;
+    obj.recipient = message.recipient;
     return obj;
   },
   fromAminoMsg(object: MsgSwapExactAmountInAminoMsg): MsgSwapExactAmountIn {
@@ -895,7 +1048,10 @@ export const MsgSwapExactAmountIn = {
 };
 function createBaseMsgSwapExactAmountInResponse(): MsgSwapExactAmountInResponse {
   return {
-    tokenOutAmount: ""
+    tokenOutAmount: "",
+    swapFee: "",
+    discount: "",
+    recipient: ""
   };
 }
 export const MsgSwapExactAmountInResponse = {
@@ -903,6 +1059,15 @@ export const MsgSwapExactAmountInResponse = {
   encode(message: MsgSwapExactAmountInResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.tokenOutAmount !== "") {
       writer.uint32(10).string(message.tokenOutAmount);
+    }
+    if (message.swapFee !== "") {
+      writer.uint32(18).string(Decimal.fromUserInput(message.swapFee, 18).atomics);
+    }
+    if (message.discount !== "") {
+      writer.uint32(26).string(Decimal.fromUserInput(message.discount, 18).atomics);
+    }
+    if (message.recipient !== "") {
+      writer.uint32(34).string(message.recipient);
     }
     return writer;
   },
@@ -916,6 +1081,15 @@ export const MsgSwapExactAmountInResponse = {
         case 1:
           message.tokenOutAmount = reader.string();
           break;
+        case 2:
+          message.swapFee = Decimal.fromAtomics(reader.string(), 18).toString();
+          break;
+        case 3:
+          message.discount = Decimal.fromAtomics(reader.string(), 18).toString();
+          break;
+        case 4:
+          message.recipient = reader.string();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -926,16 +1100,25 @@ export const MsgSwapExactAmountInResponse = {
   fromPartial(object: Partial<MsgSwapExactAmountInResponse>): MsgSwapExactAmountInResponse {
     const message = createBaseMsgSwapExactAmountInResponse();
     message.tokenOutAmount = object.tokenOutAmount ?? "";
+    message.swapFee = object.swapFee ?? "";
+    message.discount = object.discount ?? "";
+    message.recipient = object.recipient ?? "";
     return message;
   },
   fromAmino(object: MsgSwapExactAmountInResponseAmino): MsgSwapExactAmountInResponse {
     return {
-      tokenOutAmount: object.token_out_amount
+      tokenOutAmount: object.token_out_amount,
+      swapFee: object.swap_fee,
+      discount: object.discount,
+      recipient: object.recipient
     };
   },
   toAmino(message: MsgSwapExactAmountInResponse): MsgSwapExactAmountInResponseAmino {
     const obj: any = {};
     obj.token_out_amount = message.tokenOutAmount;
+    obj.swap_fee = message.swapFee;
+    obj.discount = message.discount;
+    obj.recipient = message.recipient;
     return obj;
   },
   fromAminoMsg(object: MsgSwapExactAmountInResponseAminoMsg): MsgSwapExactAmountInResponse {
@@ -959,7 +1142,9 @@ function createBaseMsgSwapExactAmountOut(): MsgSwapExactAmountOut {
     sender: "",
     routes: [],
     tokenOut: Coin.fromPartial({}),
-    tokenInMaxAmount: ""
+    tokenInMaxAmount: "",
+    discount: "",
+    recipient: ""
   };
 }
 export const MsgSwapExactAmountOut = {
@@ -976,6 +1161,12 @@ export const MsgSwapExactAmountOut = {
     }
     if (message.tokenInMaxAmount !== "") {
       writer.uint32(34).string(message.tokenInMaxAmount);
+    }
+    if (message.discount !== "") {
+      writer.uint32(42).string(Decimal.fromUserInput(message.discount, 18).atomics);
+    }
+    if (message.recipient !== "") {
+      writer.uint32(50).string(message.recipient);
     }
     return writer;
   },
@@ -998,6 +1189,12 @@ export const MsgSwapExactAmountOut = {
         case 4:
           message.tokenInMaxAmount = reader.string();
           break;
+        case 5:
+          message.discount = Decimal.fromAtomics(reader.string(), 18).toString();
+          break;
+        case 6:
+          message.recipient = reader.string();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -1011,6 +1208,8 @@ export const MsgSwapExactAmountOut = {
     message.routes = object.routes?.map(e => SwapAmountOutRoute.fromPartial(e)) || [];
     message.tokenOut = object.tokenOut !== undefined && object.tokenOut !== null ? Coin.fromPartial(object.tokenOut) : undefined;
     message.tokenInMaxAmount = object.tokenInMaxAmount ?? "";
+    message.discount = object.discount ?? "";
+    message.recipient = object.recipient ?? "";
     return message;
   },
   fromAmino(object: MsgSwapExactAmountOutAmino): MsgSwapExactAmountOut {
@@ -1018,7 +1217,9 @@ export const MsgSwapExactAmountOut = {
       sender: object.sender,
       routes: Array.isArray(object?.routes) ? object.routes.map((e: any) => SwapAmountOutRoute.fromAmino(e)) : [],
       tokenOut: object?.token_out ? Coin.fromAmino(object.token_out) : undefined,
-      tokenInMaxAmount: object.token_in_max_amount
+      tokenInMaxAmount: object.token_in_max_amount,
+      discount: object.discount,
+      recipient: object.recipient
     };
   },
   toAmino(message: MsgSwapExactAmountOut): MsgSwapExactAmountOutAmino {
@@ -1031,6 +1232,8 @@ export const MsgSwapExactAmountOut = {
     }
     obj.token_out = message.tokenOut ? Coin.toAmino(message.tokenOut) : undefined;
     obj.token_in_max_amount = message.tokenInMaxAmount;
+    obj.discount = message.discount;
+    obj.recipient = message.recipient;
     return obj;
   },
   fromAminoMsg(object: MsgSwapExactAmountOutAminoMsg): MsgSwapExactAmountOut {
@@ -1051,7 +1254,10 @@ export const MsgSwapExactAmountOut = {
 };
 function createBaseMsgSwapExactAmountOutResponse(): MsgSwapExactAmountOutResponse {
   return {
-    tokenInAmount: ""
+    tokenInAmount: "",
+    swapFee: "",
+    discount: "",
+    recipient: ""
   };
 }
 export const MsgSwapExactAmountOutResponse = {
@@ -1059,6 +1265,15 @@ export const MsgSwapExactAmountOutResponse = {
   encode(message: MsgSwapExactAmountOutResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.tokenInAmount !== "") {
       writer.uint32(10).string(message.tokenInAmount);
+    }
+    if (message.swapFee !== "") {
+      writer.uint32(18).string(Decimal.fromUserInput(message.swapFee, 18).atomics);
+    }
+    if (message.discount !== "") {
+      writer.uint32(26).string(Decimal.fromUserInput(message.discount, 18).atomics);
+    }
+    if (message.recipient !== "") {
+      writer.uint32(34).string(message.recipient);
     }
     return writer;
   },
@@ -1072,6 +1287,15 @@ export const MsgSwapExactAmountOutResponse = {
         case 1:
           message.tokenInAmount = reader.string();
           break;
+        case 2:
+          message.swapFee = Decimal.fromAtomics(reader.string(), 18).toString();
+          break;
+        case 3:
+          message.discount = Decimal.fromAtomics(reader.string(), 18).toString();
+          break;
+        case 4:
+          message.recipient = reader.string();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -1082,16 +1306,25 @@ export const MsgSwapExactAmountOutResponse = {
   fromPartial(object: Partial<MsgSwapExactAmountOutResponse>): MsgSwapExactAmountOutResponse {
     const message = createBaseMsgSwapExactAmountOutResponse();
     message.tokenInAmount = object.tokenInAmount ?? "";
+    message.swapFee = object.swapFee ?? "";
+    message.discount = object.discount ?? "";
+    message.recipient = object.recipient ?? "";
     return message;
   },
   fromAmino(object: MsgSwapExactAmountOutResponseAmino): MsgSwapExactAmountOutResponse {
     return {
-      tokenInAmount: object.token_in_amount
+      tokenInAmount: object.token_in_amount,
+      swapFee: object.swap_fee,
+      discount: object.discount,
+      recipient: object.recipient
     };
   },
   toAmino(message: MsgSwapExactAmountOutResponse): MsgSwapExactAmountOutResponseAmino {
     const obj: any = {};
     obj.token_in_amount = message.tokenInAmount;
+    obj.swap_fee = message.swapFee;
+    obj.discount = message.discount;
+    obj.recipient = message.recipient;
     return obj;
   },
   fromAminoMsg(object: MsgSwapExactAmountOutResponseAminoMsg): MsgSwapExactAmountOutResponse {
@@ -1387,6 +1620,418 @@ export const ExternalLiquidity = {
     return {
       typeUrl: "/elys.amm.ExternalLiquidity",
       value: ExternalLiquidity.encode(message).finish()
+    };
+  }
+};
+function createBaseMsgSwapByDenom(): MsgSwapByDenom {
+  return {
+    sender: "",
+    amount: Coin.fromPartial({}),
+    minAmount: Coin.fromPartial({}),
+    maxAmount: Coin.fromPartial({}),
+    denomIn: "",
+    denomOut: "",
+    discount: "",
+    recipient: ""
+  };
+}
+export const MsgSwapByDenom = {
+  typeUrl: "/elys.amm.MsgSwapByDenom",
+  encode(message: MsgSwapByDenom, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.sender !== "") {
+      writer.uint32(10).string(message.sender);
+    }
+    if (message.amount !== undefined) {
+      Coin.encode(message.amount, writer.uint32(18).fork()).ldelim();
+    }
+    if (message.minAmount !== undefined) {
+      Coin.encode(message.minAmount, writer.uint32(26).fork()).ldelim();
+    }
+    if (message.maxAmount !== undefined) {
+      Coin.encode(message.maxAmount, writer.uint32(34).fork()).ldelim();
+    }
+    if (message.denomIn !== "") {
+      writer.uint32(42).string(message.denomIn);
+    }
+    if (message.denomOut !== "") {
+      writer.uint32(50).string(message.denomOut);
+    }
+    if (message.discount !== "") {
+      writer.uint32(58).string(Decimal.fromUserInput(message.discount, 18).atomics);
+    }
+    if (message.recipient !== "") {
+      writer.uint32(66).string(message.recipient);
+    }
+    return writer;
+  },
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgSwapByDenom {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMsgSwapByDenom();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.sender = reader.string();
+          break;
+        case 2:
+          message.amount = Coin.decode(reader, reader.uint32());
+          break;
+        case 3:
+          message.minAmount = Coin.decode(reader, reader.uint32());
+          break;
+        case 4:
+          message.maxAmount = Coin.decode(reader, reader.uint32());
+          break;
+        case 5:
+          message.denomIn = reader.string();
+          break;
+        case 6:
+          message.denomOut = reader.string();
+          break;
+        case 7:
+          message.discount = Decimal.fromAtomics(reader.string(), 18).toString();
+          break;
+        case 8:
+          message.recipient = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromPartial(object: Partial<MsgSwapByDenom>): MsgSwapByDenom {
+    const message = createBaseMsgSwapByDenom();
+    message.sender = object.sender ?? "";
+    message.amount = object.amount !== undefined && object.amount !== null ? Coin.fromPartial(object.amount) : undefined;
+    message.minAmount = object.minAmount !== undefined && object.minAmount !== null ? Coin.fromPartial(object.minAmount) : undefined;
+    message.maxAmount = object.maxAmount !== undefined && object.maxAmount !== null ? Coin.fromPartial(object.maxAmount) : undefined;
+    message.denomIn = object.denomIn ?? "";
+    message.denomOut = object.denomOut ?? "";
+    message.discount = object.discount ?? "";
+    message.recipient = object.recipient ?? "";
+    return message;
+  },
+  fromAmino(object: MsgSwapByDenomAmino): MsgSwapByDenom {
+    return {
+      sender: object.sender,
+      amount: object?.amount ? Coin.fromAmino(object.amount) : undefined,
+      minAmount: object?.min_amount ? Coin.fromAmino(object.min_amount) : undefined,
+      maxAmount: object?.max_amount ? Coin.fromAmino(object.max_amount) : undefined,
+      denomIn: object.denom_in,
+      denomOut: object.denom_out,
+      discount: object.discount,
+      recipient: object.recipient
+    };
+  },
+  toAmino(message: MsgSwapByDenom): MsgSwapByDenomAmino {
+    const obj: any = {};
+    obj.sender = message.sender;
+    obj.amount = message.amount ? Coin.toAmino(message.amount) : undefined;
+    obj.min_amount = message.minAmount ? Coin.toAmino(message.minAmount) : undefined;
+    obj.max_amount = message.maxAmount ? Coin.toAmino(message.maxAmount) : undefined;
+    obj.denom_in = message.denomIn;
+    obj.denom_out = message.denomOut;
+    obj.discount = message.discount;
+    obj.recipient = message.recipient;
+    return obj;
+  },
+  fromAminoMsg(object: MsgSwapByDenomAminoMsg): MsgSwapByDenom {
+    return MsgSwapByDenom.fromAmino(object.value);
+  },
+  fromProtoMsg(message: MsgSwapByDenomProtoMsg): MsgSwapByDenom {
+    return MsgSwapByDenom.decode(message.value);
+  },
+  toProto(message: MsgSwapByDenom): Uint8Array {
+    return MsgSwapByDenom.encode(message).finish();
+  },
+  toProtoMsg(message: MsgSwapByDenom): MsgSwapByDenomProtoMsg {
+    return {
+      typeUrl: "/elys.amm.MsgSwapByDenom",
+      value: MsgSwapByDenom.encode(message).finish()
+    };
+  }
+};
+function createBaseMsgSwapByDenomResponse(): MsgSwapByDenomResponse {
+  return {
+    amount: Coin.fromPartial({}),
+    inRoute: [],
+    outRoute: [],
+    spotPrice: "",
+    swapFee: "",
+    discount: "",
+    recipient: ""
+  };
+}
+export const MsgSwapByDenomResponse = {
+  typeUrl: "/elys.amm.MsgSwapByDenomResponse",
+  encode(message: MsgSwapByDenomResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.amount !== undefined) {
+      Coin.encode(message.amount, writer.uint32(10).fork()).ldelim();
+    }
+    for (const v of message.inRoute) {
+      SwapAmountInRoute.encode(v!, writer.uint32(18).fork()).ldelim();
+    }
+    for (const v of message.outRoute) {
+      SwapAmountOutRoute.encode(v!, writer.uint32(26).fork()).ldelim();
+    }
+    if (message.spotPrice !== "") {
+      writer.uint32(34).string(Decimal.fromUserInput(message.spotPrice, 18).atomics);
+    }
+    if (message.swapFee !== "") {
+      writer.uint32(42).string(Decimal.fromUserInput(message.swapFee, 18).atomics);
+    }
+    if (message.discount !== "") {
+      writer.uint32(50).string(Decimal.fromUserInput(message.discount, 18).atomics);
+    }
+    if (message.recipient !== "") {
+      writer.uint32(58).string(message.recipient);
+    }
+    return writer;
+  },
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgSwapByDenomResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMsgSwapByDenomResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.amount = Coin.decode(reader, reader.uint32());
+          break;
+        case 2:
+          message.inRoute.push(SwapAmountInRoute.decode(reader, reader.uint32()));
+          break;
+        case 3:
+          message.outRoute.push(SwapAmountOutRoute.decode(reader, reader.uint32()));
+          break;
+        case 4:
+          message.spotPrice = Decimal.fromAtomics(reader.string(), 18).toString();
+          break;
+        case 5:
+          message.swapFee = Decimal.fromAtomics(reader.string(), 18).toString();
+          break;
+        case 6:
+          message.discount = Decimal.fromAtomics(reader.string(), 18).toString();
+          break;
+        case 7:
+          message.recipient = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromPartial(object: Partial<MsgSwapByDenomResponse>): MsgSwapByDenomResponse {
+    const message = createBaseMsgSwapByDenomResponse();
+    message.amount = object.amount !== undefined && object.amount !== null ? Coin.fromPartial(object.amount) : undefined;
+    message.inRoute = object.inRoute?.map(e => SwapAmountInRoute.fromPartial(e)) || [];
+    message.outRoute = object.outRoute?.map(e => SwapAmountOutRoute.fromPartial(e)) || [];
+    message.spotPrice = object.spotPrice ?? "";
+    message.swapFee = object.swapFee ?? "";
+    message.discount = object.discount ?? "";
+    message.recipient = object.recipient ?? "";
+    return message;
+  },
+  fromAmino(object: MsgSwapByDenomResponseAmino): MsgSwapByDenomResponse {
+    return {
+      amount: object?.amount ? Coin.fromAmino(object.amount) : undefined,
+      inRoute: Array.isArray(object?.in_route) ? object.in_route.map((e: any) => SwapAmountInRoute.fromAmino(e)) : [],
+      outRoute: Array.isArray(object?.out_route) ? object.out_route.map((e: any) => SwapAmountOutRoute.fromAmino(e)) : [],
+      spotPrice: object.spot_price,
+      swapFee: object.swap_fee,
+      discount: object.discount,
+      recipient: object.recipient
+    };
+  },
+  toAmino(message: MsgSwapByDenomResponse): MsgSwapByDenomResponseAmino {
+    const obj: any = {};
+    obj.amount = message.amount ? Coin.toAmino(message.amount) : undefined;
+    if (message.inRoute) {
+      obj.in_route = message.inRoute.map(e => e ? SwapAmountInRoute.toAmino(e) : undefined);
+    } else {
+      obj.in_route = [];
+    }
+    if (message.outRoute) {
+      obj.out_route = message.outRoute.map(e => e ? SwapAmountOutRoute.toAmino(e) : undefined);
+    } else {
+      obj.out_route = [];
+    }
+    obj.spot_price = message.spotPrice;
+    obj.swap_fee = message.swapFee;
+    obj.discount = message.discount;
+    obj.recipient = message.recipient;
+    return obj;
+  },
+  fromAminoMsg(object: MsgSwapByDenomResponseAminoMsg): MsgSwapByDenomResponse {
+    return MsgSwapByDenomResponse.fromAmino(object.value);
+  },
+  fromProtoMsg(message: MsgSwapByDenomResponseProtoMsg): MsgSwapByDenomResponse {
+    return MsgSwapByDenomResponse.decode(message.value);
+  },
+  toProto(message: MsgSwapByDenomResponse): Uint8Array {
+    return MsgSwapByDenomResponse.encode(message).finish();
+  },
+  toProtoMsg(message: MsgSwapByDenomResponse): MsgSwapByDenomResponseProtoMsg {
+    return {
+      typeUrl: "/elys.amm.MsgSwapByDenomResponse",
+      value: MsgSwapByDenomResponse.encode(message).finish()
+    };
+  }
+};
+function createBaseMsgUpdatePoolParams(): MsgUpdatePoolParams {
+  return {
+    sender: "",
+    poolId: BigInt(0),
+    poolParams: undefined
+  };
+}
+export const MsgUpdatePoolParams = {
+  typeUrl: "/elys.amm.MsgUpdatePoolParams",
+  encode(message: MsgUpdatePoolParams, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.sender !== "") {
+      writer.uint32(10).string(message.sender);
+    }
+    if (message.poolId !== BigInt(0)) {
+      writer.uint32(16).uint64(message.poolId);
+    }
+    if (message.poolParams !== undefined) {
+      PoolParams.encode(message.poolParams, writer.uint32(26).fork()).ldelim();
+    }
+    return writer;
+  },
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgUpdatePoolParams {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMsgUpdatePoolParams();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.sender = reader.string();
+          break;
+        case 2:
+          message.poolId = reader.uint64();
+          break;
+        case 3:
+          message.poolParams = PoolParams.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromPartial(object: Partial<MsgUpdatePoolParams>): MsgUpdatePoolParams {
+    const message = createBaseMsgUpdatePoolParams();
+    message.sender = object.sender ?? "";
+    message.poolId = object.poolId !== undefined && object.poolId !== null ? BigInt(object.poolId.toString()) : BigInt(0);
+    message.poolParams = object.poolParams !== undefined && object.poolParams !== null ? PoolParams.fromPartial(object.poolParams) : undefined;
+    return message;
+  },
+  fromAmino(object: MsgUpdatePoolParamsAmino): MsgUpdatePoolParams {
+    return {
+      sender: object.sender,
+      poolId: BigInt(object.pool_id),
+      poolParams: object?.pool_params ? PoolParams.fromAmino(object.pool_params) : undefined
+    };
+  },
+  toAmino(message: MsgUpdatePoolParams): MsgUpdatePoolParamsAmino {
+    const obj: any = {};
+    obj.sender = message.sender;
+    obj.pool_id = message.poolId ? message.poolId.toString() : undefined;
+    obj.pool_params = message.poolParams ? PoolParams.toAmino(message.poolParams) : undefined;
+    return obj;
+  },
+  fromAminoMsg(object: MsgUpdatePoolParamsAminoMsg): MsgUpdatePoolParams {
+    return MsgUpdatePoolParams.fromAmino(object.value);
+  },
+  fromProtoMsg(message: MsgUpdatePoolParamsProtoMsg): MsgUpdatePoolParams {
+    return MsgUpdatePoolParams.decode(message.value);
+  },
+  toProto(message: MsgUpdatePoolParams): Uint8Array {
+    return MsgUpdatePoolParams.encode(message).finish();
+  },
+  toProtoMsg(message: MsgUpdatePoolParams): MsgUpdatePoolParamsProtoMsg {
+    return {
+      typeUrl: "/elys.amm.MsgUpdatePoolParams",
+      value: MsgUpdatePoolParams.encode(message).finish()
+    };
+  }
+};
+function createBaseMsgUpdatePoolParamsResponse(): MsgUpdatePoolParamsResponse {
+  return {
+    poolId: BigInt(0),
+    poolParams: undefined
+  };
+}
+export const MsgUpdatePoolParamsResponse = {
+  typeUrl: "/elys.amm.MsgUpdatePoolParamsResponse",
+  encode(message: MsgUpdatePoolParamsResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.poolId !== BigInt(0)) {
+      writer.uint32(8).uint64(message.poolId);
+    }
+    if (message.poolParams !== undefined) {
+      PoolParams.encode(message.poolParams, writer.uint32(18).fork()).ldelim();
+    }
+    return writer;
+  },
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgUpdatePoolParamsResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMsgUpdatePoolParamsResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.poolId = reader.uint64();
+          break;
+        case 2:
+          message.poolParams = PoolParams.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromPartial(object: Partial<MsgUpdatePoolParamsResponse>): MsgUpdatePoolParamsResponse {
+    const message = createBaseMsgUpdatePoolParamsResponse();
+    message.poolId = object.poolId !== undefined && object.poolId !== null ? BigInt(object.poolId.toString()) : BigInt(0);
+    message.poolParams = object.poolParams !== undefined && object.poolParams !== null ? PoolParams.fromPartial(object.poolParams) : undefined;
+    return message;
+  },
+  fromAmino(object: MsgUpdatePoolParamsResponseAmino): MsgUpdatePoolParamsResponse {
+    return {
+      poolId: BigInt(object.pool_id),
+      poolParams: object?.pool_params ? PoolParams.fromAmino(object.pool_params) : undefined
+    };
+  },
+  toAmino(message: MsgUpdatePoolParamsResponse): MsgUpdatePoolParamsResponseAmino {
+    const obj: any = {};
+    obj.pool_id = message.poolId ? message.poolId.toString() : undefined;
+    obj.pool_params = message.poolParams ? PoolParams.toAmino(message.poolParams) : undefined;
+    return obj;
+  },
+  fromAminoMsg(object: MsgUpdatePoolParamsResponseAminoMsg): MsgUpdatePoolParamsResponse {
+    return MsgUpdatePoolParamsResponse.fromAmino(object.value);
+  },
+  fromProtoMsg(message: MsgUpdatePoolParamsResponseProtoMsg): MsgUpdatePoolParamsResponse {
+    return MsgUpdatePoolParamsResponse.decode(message.value);
+  },
+  toProto(message: MsgUpdatePoolParamsResponse): Uint8Array {
+    return MsgUpdatePoolParamsResponse.encode(message).finish();
+  },
+  toProtoMsg(message: MsgUpdatePoolParamsResponse): MsgUpdatePoolParamsResponseProtoMsg {
+    return {
+      typeUrl: "/elys.amm.MsgUpdatePoolParamsResponse",
+      value: MsgUpdatePoolParamsResponse.encode(message).finish()
     };
   }
 };

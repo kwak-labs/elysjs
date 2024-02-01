@@ -1,10 +1,8 @@
 import { Params, ParamsAmino, ParamsSDKType } from "./params";
-import { AnteHandlerParam, AnteHandlerParamAmino, AnteHandlerParamSDKType } from "./ante_handler_param";
 import { BinaryReader, BinaryWriter } from "../../binary";
 /** GenesisState defines the parameter module's genesis state. */
 export interface GenesisState {
   params: Params;
-  anteHandlerParam: AnteHandlerParam;
 }
 export interface GenesisStateProtoMsg {
   typeUrl: "/elys.parameter.GenesisState";
@@ -13,7 +11,6 @@ export interface GenesisStateProtoMsg {
 /** GenesisState defines the parameter module's genesis state. */
 export interface GenesisStateAmino {
   params?: ParamsAmino;
-  ante_handler_param?: AnteHandlerParamAmino;
 }
 export interface GenesisStateAminoMsg {
   type: "/elys.parameter.GenesisState";
@@ -22,12 +19,10 @@ export interface GenesisStateAminoMsg {
 /** GenesisState defines the parameter module's genesis state. */
 export interface GenesisStateSDKType {
   params: ParamsSDKType;
-  ante_handler_param: AnteHandlerParamSDKType;
 }
 function createBaseGenesisState(): GenesisState {
   return {
-    params: Params.fromPartial({}),
-    anteHandlerParam: AnteHandlerParam.fromPartial({})
+    params: Params.fromPartial({})
   };
 }
 export const GenesisState = {
@@ -35,9 +30,6 @@ export const GenesisState = {
   encode(message: GenesisState, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.params !== undefined) {
       Params.encode(message.params, writer.uint32(10).fork()).ldelim();
-    }
-    if (message.anteHandlerParam !== undefined) {
-      AnteHandlerParam.encode(message.anteHandlerParam, writer.uint32(18).fork()).ldelim();
     }
     return writer;
   },
@@ -51,9 +43,6 @@ export const GenesisState = {
         case 1:
           message.params = Params.decode(reader, reader.uint32());
           break;
-        case 2:
-          message.anteHandlerParam = AnteHandlerParam.decode(reader, reader.uint32());
-          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -64,19 +53,16 @@ export const GenesisState = {
   fromPartial(object: Partial<GenesisState>): GenesisState {
     const message = createBaseGenesisState();
     message.params = object.params !== undefined && object.params !== null ? Params.fromPartial(object.params) : undefined;
-    message.anteHandlerParam = object.anteHandlerParam !== undefined && object.anteHandlerParam !== null ? AnteHandlerParam.fromPartial(object.anteHandlerParam) : undefined;
     return message;
   },
   fromAmino(object: GenesisStateAmino): GenesisState {
     return {
-      params: object?.params ? Params.fromAmino(object.params) : undefined,
-      anteHandlerParam: object?.ante_handler_param ? AnteHandlerParam.fromAmino(object.ante_handler_param) : undefined
+      params: object?.params ? Params.fromAmino(object.params) : undefined
     };
   },
   toAmino(message: GenesisState): GenesisStateAmino {
     const obj: any = {};
     obj.params = message.params ? Params.toAmino(message.params) : undefined;
-    obj.ante_handler_param = message.anteHandlerParam ? AnteHandlerParam.toAmino(message.anteHandlerParam) : undefined;
     return obj;
   },
   fromAminoMsg(object: GenesisStateAminoMsg): GenesisState {

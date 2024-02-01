@@ -1,6 +1,8 @@
+import { EarnType, earnTypeFromJSON } from "../commitment/params";
 import { Params, ParamsAmino, ParamsSDKType } from "./params";
 import { DecCoin, DecCoinAmino, DecCoinSDKType } from "../../cosmos/base/v1beta1/coin";
 import { BinaryReader, BinaryWriter } from "../../binary";
+import { isSet } from "../../helpers";
 /** QueryParamsRequest is request type for the Query/Params RPC method. */
 export interface QueryParamsRequest {}
 export interface QueryParamsRequestProtoMsg {
@@ -66,6 +68,43 @@ export interface QueryCommunityPoolResponseAminoMsg {
 }
 export interface QueryCommunityPoolResponseSDKType {
   pool: DecCoinSDKType[];
+}
+export interface QueryAprRequest {
+  withdrawType: EarnType;
+  denom: string;
+}
+export interface QueryAprRequestProtoMsg {
+  typeUrl: "/elys.incentive.QueryAprRequest";
+  value: Uint8Array;
+}
+export interface QueryAprRequestAmino {
+  withdraw_type: EarnType;
+  denom: string;
+}
+export interface QueryAprRequestAminoMsg {
+  type: "/elys.incentive.QueryAprRequest";
+  value: QueryAprRequestAmino;
+}
+export interface QueryAprRequestSDKType {
+  withdraw_type: EarnType;
+  denom: string;
+}
+export interface QueryAprResponse {
+  apr: string;
+}
+export interface QueryAprResponseProtoMsg {
+  typeUrl: "/elys.incentive.QueryAprResponse";
+  value: Uint8Array;
+}
+export interface QueryAprResponseAmino {
+  apr: string;
+}
+export interface QueryAprResponseAminoMsg {
+  type: "/elys.incentive.QueryAprResponse";
+  value: QueryAprResponseAmino;
+}
+export interface QueryAprResponseSDKType {
+  apr: string;
 }
 function createBaseQueryParamsRequest(): QueryParamsRequest {
   return {};
@@ -288,6 +327,138 @@ export const QueryCommunityPoolResponse = {
     return {
       typeUrl: "/elys.incentive.QueryCommunityPoolResponse",
       value: QueryCommunityPoolResponse.encode(message).finish()
+    };
+  }
+};
+function createBaseQueryAprRequest(): QueryAprRequest {
+  return {
+    withdrawType: 0,
+    denom: ""
+  };
+}
+export const QueryAprRequest = {
+  typeUrl: "/elys.incentive.QueryAprRequest",
+  encode(message: QueryAprRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.withdrawType !== 0) {
+      writer.uint32(8).int32(message.withdrawType);
+    }
+    if (message.denom !== "") {
+      writer.uint32(18).string(message.denom);
+    }
+    return writer;
+  },
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryAprRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryAprRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.withdrawType = (reader.int32() as any);
+          break;
+        case 2:
+          message.denom = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromPartial(object: Partial<QueryAprRequest>): QueryAprRequest {
+    const message = createBaseQueryAprRequest();
+    message.withdrawType = object.withdrawType ?? 0;
+    message.denom = object.denom ?? "";
+    return message;
+  },
+  fromAmino(object: QueryAprRequestAmino): QueryAprRequest {
+    return {
+      withdrawType: isSet(object.withdraw_type) ? earnTypeFromJSON(object.withdraw_type) : -1,
+      denom: object.denom
+    };
+  },
+  toAmino(message: QueryAprRequest): QueryAprRequestAmino {
+    const obj: any = {};
+    obj.withdraw_type = message.withdrawType;
+    obj.denom = message.denom;
+    return obj;
+  },
+  fromAminoMsg(object: QueryAprRequestAminoMsg): QueryAprRequest {
+    return QueryAprRequest.fromAmino(object.value);
+  },
+  fromProtoMsg(message: QueryAprRequestProtoMsg): QueryAprRequest {
+    return QueryAprRequest.decode(message.value);
+  },
+  toProto(message: QueryAprRequest): Uint8Array {
+    return QueryAprRequest.encode(message).finish();
+  },
+  toProtoMsg(message: QueryAprRequest): QueryAprRequestProtoMsg {
+    return {
+      typeUrl: "/elys.incentive.QueryAprRequest",
+      value: QueryAprRequest.encode(message).finish()
+    };
+  }
+};
+function createBaseQueryAprResponse(): QueryAprResponse {
+  return {
+    apr: ""
+  };
+}
+export const QueryAprResponse = {
+  typeUrl: "/elys.incentive.QueryAprResponse",
+  encode(message: QueryAprResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.apr !== "") {
+      writer.uint32(10).string(message.apr);
+    }
+    return writer;
+  },
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryAprResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryAprResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.apr = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromPartial(object: Partial<QueryAprResponse>): QueryAprResponse {
+    const message = createBaseQueryAprResponse();
+    message.apr = object.apr ?? "";
+    return message;
+  },
+  fromAmino(object: QueryAprResponseAmino): QueryAprResponse {
+    return {
+      apr: object.apr
+    };
+  },
+  toAmino(message: QueryAprResponse): QueryAprResponseAmino {
+    const obj: any = {};
+    obj.apr = message.apr;
+    return obj;
+  },
+  fromAminoMsg(object: QueryAprResponseAminoMsg): QueryAprResponse {
+    return QueryAprResponse.fromAmino(object.value);
+  },
+  fromProtoMsg(message: QueryAprResponseProtoMsg): QueryAprResponse {
+    return QueryAprResponse.decode(message.value);
+  },
+  toProto(message: QueryAprResponse): Uint8Array {
+    return QueryAprResponse.encode(message).finish();
+  },
+  toProtoMsg(message: QueryAprResponse): QueryAprResponseProtoMsg {
+    return {
+      typeUrl: "/elys.incentive.QueryAprResponse",
+      value: QueryAprResponse.encode(message).finish()
     };
   }
 };

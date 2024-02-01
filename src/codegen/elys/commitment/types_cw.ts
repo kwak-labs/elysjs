@@ -1,4 +1,5 @@
 import { Coin, CoinAmino, CoinSDKType } from "../../cosmos/base/v1beta1/coin";
+import { Lockup, LockupAmino, LockupSDKType } from "./commitments";
 import { EarnType, earnTypeFromJSON } from "./params";
 import { BinaryReader, BinaryWriter } from "../../binary";
 import { Decimal } from "@cosmjs/math";
@@ -340,6 +341,29 @@ export interface BalanceAvailableAminoMsg {
 export interface BalanceAvailableSDKType {
   amount: string;
   usd_amount: string;
+}
+export interface StakedAvailable {
+  amount: string;
+  usdAmount: string;
+  lockups: Lockup[];
+}
+export interface StakedAvailableProtoMsg {
+  typeUrl: "/elys.commitment.StakedAvailable";
+  value: Uint8Array;
+}
+export interface StakedAvailableAmino {
+  amount: string;
+  usd_amount: string;
+  lockups: LockupAmino[];
+}
+export interface StakedAvailableAminoMsg {
+  type: "/elys.commitment.StakedAvailable";
+  value: StakedAvailableAmino;
+}
+export interface StakedAvailableSDKType {
+  amount: string;
+  usd_amount: string;
+  lockups: LockupSDKType[];
 }
 export interface ValidatorDetail {
   /** The validator address. */
@@ -1471,6 +1495,91 @@ export const BalanceAvailable = {
     return {
       typeUrl: "/elys.commitment.BalanceAvailable",
       value: BalanceAvailable.encode(message).finish()
+    };
+  }
+};
+function createBaseStakedAvailable(): StakedAvailable {
+  return {
+    amount: "",
+    usdAmount: "",
+    lockups: []
+  };
+}
+export const StakedAvailable = {
+  typeUrl: "/elys.commitment.StakedAvailable",
+  encode(message: StakedAvailable, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.amount !== "") {
+      writer.uint32(10).string(message.amount);
+    }
+    if (message.usdAmount !== "") {
+      writer.uint32(18).string(Decimal.fromUserInput(message.usdAmount, 18).atomics);
+    }
+    for (const v of message.lockups) {
+      Lockup.encode(v!, writer.uint32(26).fork()).ldelim();
+    }
+    return writer;
+  },
+  decode(input: BinaryReader | Uint8Array, length?: number): StakedAvailable {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseStakedAvailable();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.amount = reader.string();
+          break;
+        case 2:
+          message.usdAmount = Decimal.fromAtomics(reader.string(), 18).toString();
+          break;
+        case 3:
+          message.lockups.push(Lockup.decode(reader, reader.uint32()));
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromPartial(object: Partial<StakedAvailable>): StakedAvailable {
+    const message = createBaseStakedAvailable();
+    message.amount = object.amount ?? "";
+    message.usdAmount = object.usdAmount ?? "";
+    message.lockups = object.lockups?.map(e => Lockup.fromPartial(e)) || [];
+    return message;
+  },
+  fromAmino(object: StakedAvailableAmino): StakedAvailable {
+    return {
+      amount: object.amount,
+      usdAmount: object.usd_amount,
+      lockups: Array.isArray(object?.lockups) ? object.lockups.map((e: any) => Lockup.fromAmino(e)) : []
+    };
+  },
+  toAmino(message: StakedAvailable): StakedAvailableAmino {
+    const obj: any = {};
+    obj.amount = message.amount;
+    obj.usd_amount = message.usdAmount;
+    if (message.lockups) {
+      obj.lockups = message.lockups.map(e => e ? Lockup.toAmino(e) : undefined);
+    } else {
+      obj.lockups = [];
+    }
+    return obj;
+  },
+  fromAminoMsg(object: StakedAvailableAminoMsg): StakedAvailable {
+    return StakedAvailable.fromAmino(object.value);
+  },
+  fromProtoMsg(message: StakedAvailableProtoMsg): StakedAvailable {
+    return StakedAvailable.decode(message.value);
+  },
+  toProto(message: StakedAvailable): Uint8Array {
+    return StakedAvailable.encode(message).finish();
+  },
+  toProtoMsg(message: StakedAvailable): StakedAvailableProtoMsg {
+    return {
+      typeUrl: "/elys.commitment.StakedAvailable",
+      value: StakedAvailable.encode(message).finish()
     };
   }
 };

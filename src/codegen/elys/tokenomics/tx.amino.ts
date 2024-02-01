@@ -1,4 +1,4 @@
-import { MsgCreateAirdrop, MsgUpdateAirdrop, MsgDeleteAirdrop, MsgUpdateGenesisInflation, MsgCreateTimeBasedInflation, MsgUpdateTimeBasedInflation, MsgDeleteTimeBasedInflation } from "./tx";
+import { MsgCreateAirdrop, MsgUpdateAirdrop, MsgDeleteAirdrop, MsgClaimAirdrop, MsgUpdateGenesisInflation, MsgCreateTimeBasedInflation, MsgUpdateTimeBasedInflation, MsgDeleteTimeBasedInflation } from "./tx";
 export const AminoConverter = {
   "/elys.tokenomics.MsgCreateAirdrop": {
     aminoType: "/elys.tokenomics.MsgCreateAirdrop",
@@ -14,6 +14,11 @@ export const AminoConverter = {
     aminoType: "/elys.tokenomics.MsgDeleteAirdrop",
     toAmino: MsgDeleteAirdrop.toAmino,
     fromAmino: MsgDeleteAirdrop.fromAmino
+  },
+  "/elys.tokenomics.MsgClaimAirdrop": {
+    aminoType: "/elys.tokenomics.MsgClaimAirdrop",
+    toAmino: MsgClaimAirdrop.toAmino,
+    fromAmino: MsgClaimAirdrop.fromAmino
   },
   "/elys.tokenomics.MsgUpdateGenesisInflation": {
     aminoType: "/elys.tokenomics.MsgUpdateGenesisInflation",

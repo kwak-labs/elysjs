@@ -1,6 +1,6 @@
 import { setPaginationParams } from "../../helpers";
 import { LCDClient } from "@cosmology/lcd";
-import { QueryParamsRequest, QueryParamsResponseSDKType, QueryGetEntryRequest, QueryGetEntryResponseSDKType, QueryAllEntryRequest, QueryAllEntryResponseSDKType } from "./query";
+import { QueryParamsRequest, QueryParamsResponseSDKType, QueryGetEntryRequest, QueryGetEntryResponseSDKType, QueryGetEntryByDenomRequest, QueryGetEntryByDenomResponseSDKType, QueryAllEntryRequest, QueryAllEntryResponseSDKType } from "./query";
 export class LCDQueryClient {
   req: LCDClient;
   constructor({
@@ -11,6 +11,7 @@ export class LCDQueryClient {
     this.req = requestClient;
     this.params = this.params.bind(this);
     this.entry = this.entry.bind(this);
+    this.entryByDenom = this.entryByDenom.bind(this);
     this.entryAll = this.entryAll.bind(this);
   }
   /* Parameters queries the parameters of the module. */
@@ -22,6 +23,11 @@ export class LCDQueryClient {
   async entry(params: QueryGetEntryRequest): Promise<QueryGetEntryResponseSDKType> {
     const endpoint = `elys-network/elys/assetprofile/entry/${params.baseDenom}`;
     return await this.req.get<QueryGetEntryResponseSDKType>(endpoint);
+  }
+  /* EntryByDenom */
+  async entryByDenom(params: QueryGetEntryByDenomRequest): Promise<QueryGetEntryByDenomResponseSDKType> {
+    const endpoint = `elys-network/elys/assetprofile/entry/${params.denom}`;
+    return await this.req.get<QueryGetEntryByDenomResponseSDKType>(endpoint);
   }
   /* EntryAll */
   async entryAll(params: QueryAllEntryRequest = {

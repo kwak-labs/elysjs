@@ -1,6 +1,6 @@
 import { setPaginationParams } from "../../helpers";
 import { LCDClient } from "@cosmology/lcd";
-import { QueryParamsRequest, QueryParamsResponseSDKType, QueryGetAccountedPoolRequest, QueryGetAccountedPoolResponseSDKType, QueryAllAccountedPoolRequest, QueryAllAccountedPoolResponseSDKType } from "./query";
+import { QueryGetAccountedPoolRequest, QueryGetAccountedPoolResponseSDKType, QueryAllAccountedPoolRequest, QueryAllAccountedPoolResponseSDKType } from "./query";
 export class LCDQueryClient {
   req: LCDClient;
   constructor({
@@ -9,14 +9,8 @@ export class LCDQueryClient {
     requestClient: LCDClient;
   }) {
     this.req = requestClient;
-    this.params = this.params.bind(this);
     this.accountedPool = this.accountedPool.bind(this);
     this.accountedPoolAll = this.accountedPoolAll.bind(this);
-  }
-  /* Parameters queries the parameters of the module. */
-  async params(_params: QueryParamsRequest = {}): Promise<QueryParamsResponseSDKType> {
-    const endpoint = `elys-network/elys/accountedpool/params`;
-    return await this.req.get<QueryParamsResponseSDKType>(endpoint);
   }
   /* Queries a list of AccountedPool items. */
   async accountedPool(params: QueryGetAccountedPoolRequest): Promise<QueryGetAccountedPoolResponseSDKType> {

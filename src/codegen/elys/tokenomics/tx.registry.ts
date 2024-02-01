@@ -1,6 +1,6 @@
 import { GeneratedType, Registry } from "@cosmjs/proto-signing";
-import { MsgCreateAirdrop, MsgUpdateAirdrop, MsgDeleteAirdrop, MsgUpdateGenesisInflation, MsgCreateTimeBasedInflation, MsgUpdateTimeBasedInflation, MsgDeleteTimeBasedInflation } from "./tx";
-export const registry: ReadonlyArray<[string, GeneratedType]> = [["/elys.tokenomics.MsgCreateAirdrop", MsgCreateAirdrop], ["/elys.tokenomics.MsgUpdateAirdrop", MsgUpdateAirdrop], ["/elys.tokenomics.MsgDeleteAirdrop", MsgDeleteAirdrop], ["/elys.tokenomics.MsgUpdateGenesisInflation", MsgUpdateGenesisInflation], ["/elys.tokenomics.MsgCreateTimeBasedInflation", MsgCreateTimeBasedInflation], ["/elys.tokenomics.MsgUpdateTimeBasedInflation", MsgUpdateTimeBasedInflation], ["/elys.tokenomics.MsgDeleteTimeBasedInflation", MsgDeleteTimeBasedInflation]];
+import { MsgCreateAirdrop, MsgUpdateAirdrop, MsgDeleteAirdrop, MsgClaimAirdrop, MsgUpdateGenesisInflation, MsgCreateTimeBasedInflation, MsgUpdateTimeBasedInflation, MsgDeleteTimeBasedInflation } from "./tx";
+export const registry: ReadonlyArray<[string, GeneratedType]> = [["/elys.tokenomics.MsgCreateAirdrop", MsgCreateAirdrop], ["/elys.tokenomics.MsgUpdateAirdrop", MsgUpdateAirdrop], ["/elys.tokenomics.MsgDeleteAirdrop", MsgDeleteAirdrop], ["/elys.tokenomics.MsgClaimAirdrop", MsgClaimAirdrop], ["/elys.tokenomics.MsgUpdateGenesisInflation", MsgUpdateGenesisInflation], ["/elys.tokenomics.MsgCreateTimeBasedInflation", MsgCreateTimeBasedInflation], ["/elys.tokenomics.MsgUpdateTimeBasedInflation", MsgUpdateTimeBasedInflation], ["/elys.tokenomics.MsgDeleteTimeBasedInflation", MsgDeleteTimeBasedInflation]];
 export const load = (protoRegistry: Registry) => {
   registry.forEach(([typeUrl, mod]) => {
     protoRegistry.register(typeUrl, mod);
@@ -24,6 +24,12 @@ export const MessageComposer = {
       return {
         typeUrl: "/elys.tokenomics.MsgDeleteAirdrop",
         value: MsgDeleteAirdrop.encode(value).finish()
+      };
+    },
+    claimAirdrop(value: MsgClaimAirdrop) {
+      return {
+        typeUrl: "/elys.tokenomics.MsgClaimAirdrop",
+        value: MsgClaimAirdrop.encode(value).finish()
       };
     },
     updateGenesisInflation(value: MsgUpdateGenesisInflation) {
@@ -70,6 +76,12 @@ export const MessageComposer = {
         value
       };
     },
+    claimAirdrop(value: MsgClaimAirdrop) {
+      return {
+        typeUrl: "/elys.tokenomics.MsgClaimAirdrop",
+        value
+      };
+    },
     updateGenesisInflation(value: MsgUpdateGenesisInflation) {
       return {
         typeUrl: "/elys.tokenomics.MsgUpdateGenesisInflation",
@@ -112,6 +124,12 @@ export const MessageComposer = {
       return {
         typeUrl: "/elys.tokenomics.MsgDeleteAirdrop",
         value: MsgDeleteAirdrop.fromPartial(value)
+      };
+    },
+    claimAirdrop(value: MsgClaimAirdrop) {
+      return {
+        typeUrl: "/elys.tokenomics.MsgClaimAirdrop",
+        value: MsgClaimAirdrop.fromPartial(value)
       };
     },
     updateGenesisInflation(value: MsgUpdateGenesisInflation) {

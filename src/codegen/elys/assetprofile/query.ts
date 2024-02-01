@@ -55,6 +55,23 @@ export interface QueryGetEntryRequestAminoMsg {
 export interface QueryGetEntryRequestSDKType {
   base_denom: string;
 }
+export interface QueryGetEntryByDenomRequest {
+  denom: string;
+}
+export interface QueryGetEntryByDenomRequestProtoMsg {
+  typeUrl: "/elys.assetprofile.QueryGetEntryByDenomRequest";
+  value: Uint8Array;
+}
+export interface QueryGetEntryByDenomRequestAmino {
+  denom: string;
+}
+export interface QueryGetEntryByDenomRequestAminoMsg {
+  type: "/elys.assetprofile.QueryGetEntryByDenomRequest";
+  value: QueryGetEntryByDenomRequestAmino;
+}
+export interface QueryGetEntryByDenomRequestSDKType {
+  denom: string;
+}
 export interface QueryGetEntryResponse {
   entry: Entry;
 }
@@ -70,6 +87,23 @@ export interface QueryGetEntryResponseAminoMsg {
   value: QueryGetEntryResponseAmino;
 }
 export interface QueryGetEntryResponseSDKType {
+  entry: EntrySDKType;
+}
+export interface QueryGetEntryByDenomResponse {
+  entry: Entry;
+}
+export interface QueryGetEntryByDenomResponseProtoMsg {
+  typeUrl: "/elys.assetprofile.QueryGetEntryByDenomResponse";
+  value: Uint8Array;
+}
+export interface QueryGetEntryByDenomResponseAmino {
+  entry?: EntryAmino;
+}
+export interface QueryGetEntryByDenomResponseAminoMsg {
+  type: "/elys.assetprofile.QueryGetEntryByDenomResponse";
+  value: QueryGetEntryByDenomResponseAmino;
+}
+export interface QueryGetEntryByDenomResponseSDKType {
   entry: EntrySDKType;
 }
 export interface QueryAllEntryRequest {
@@ -280,6 +314,67 @@ export const QueryGetEntryRequest = {
     };
   }
 };
+function createBaseQueryGetEntryByDenomRequest(): QueryGetEntryByDenomRequest {
+  return {
+    denom: ""
+  };
+}
+export const QueryGetEntryByDenomRequest = {
+  typeUrl: "/elys.assetprofile.QueryGetEntryByDenomRequest",
+  encode(message: QueryGetEntryByDenomRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.denom !== "") {
+      writer.uint32(10).string(message.denom);
+    }
+    return writer;
+  },
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryGetEntryByDenomRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryGetEntryByDenomRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.denom = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromPartial(object: Partial<QueryGetEntryByDenomRequest>): QueryGetEntryByDenomRequest {
+    const message = createBaseQueryGetEntryByDenomRequest();
+    message.denom = object.denom ?? "";
+    return message;
+  },
+  fromAmino(object: QueryGetEntryByDenomRequestAmino): QueryGetEntryByDenomRequest {
+    return {
+      denom: object.denom
+    };
+  },
+  toAmino(message: QueryGetEntryByDenomRequest): QueryGetEntryByDenomRequestAmino {
+    const obj: any = {};
+    obj.denom = message.denom;
+    return obj;
+  },
+  fromAminoMsg(object: QueryGetEntryByDenomRequestAminoMsg): QueryGetEntryByDenomRequest {
+    return QueryGetEntryByDenomRequest.fromAmino(object.value);
+  },
+  fromProtoMsg(message: QueryGetEntryByDenomRequestProtoMsg): QueryGetEntryByDenomRequest {
+    return QueryGetEntryByDenomRequest.decode(message.value);
+  },
+  toProto(message: QueryGetEntryByDenomRequest): Uint8Array {
+    return QueryGetEntryByDenomRequest.encode(message).finish();
+  },
+  toProtoMsg(message: QueryGetEntryByDenomRequest): QueryGetEntryByDenomRequestProtoMsg {
+    return {
+      typeUrl: "/elys.assetprofile.QueryGetEntryByDenomRequest",
+      value: QueryGetEntryByDenomRequest.encode(message).finish()
+    };
+  }
+};
 function createBaseQueryGetEntryResponse(): QueryGetEntryResponse {
   return {
     entry: Entry.fromPartial({})
@@ -338,6 +433,67 @@ export const QueryGetEntryResponse = {
     return {
       typeUrl: "/elys.assetprofile.QueryGetEntryResponse",
       value: QueryGetEntryResponse.encode(message).finish()
+    };
+  }
+};
+function createBaseQueryGetEntryByDenomResponse(): QueryGetEntryByDenomResponse {
+  return {
+    entry: Entry.fromPartial({})
+  };
+}
+export const QueryGetEntryByDenomResponse = {
+  typeUrl: "/elys.assetprofile.QueryGetEntryByDenomResponse",
+  encode(message: QueryGetEntryByDenomResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.entry !== undefined) {
+      Entry.encode(message.entry, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryGetEntryByDenomResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryGetEntryByDenomResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.entry = Entry.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromPartial(object: Partial<QueryGetEntryByDenomResponse>): QueryGetEntryByDenomResponse {
+    const message = createBaseQueryGetEntryByDenomResponse();
+    message.entry = object.entry !== undefined && object.entry !== null ? Entry.fromPartial(object.entry) : undefined;
+    return message;
+  },
+  fromAmino(object: QueryGetEntryByDenomResponseAmino): QueryGetEntryByDenomResponse {
+    return {
+      entry: object?.entry ? Entry.fromAmino(object.entry) : undefined
+    };
+  },
+  toAmino(message: QueryGetEntryByDenomResponse): QueryGetEntryByDenomResponseAmino {
+    const obj: any = {};
+    obj.entry = message.entry ? Entry.toAmino(message.entry) : undefined;
+    return obj;
+  },
+  fromAminoMsg(object: QueryGetEntryByDenomResponseAminoMsg): QueryGetEntryByDenomResponse {
+    return QueryGetEntryByDenomResponse.fromAmino(object.value);
+  },
+  fromProtoMsg(message: QueryGetEntryByDenomResponseProtoMsg): QueryGetEntryByDenomResponse {
+    return QueryGetEntryByDenomResponse.decode(message.value);
+  },
+  toProto(message: QueryGetEntryByDenomResponse): Uint8Array {
+    return QueryGetEntryByDenomResponse.encode(message).finish();
+  },
+  toProtoMsg(message: QueryGetEntryByDenomResponse): QueryGetEntryByDenomResponseProtoMsg {
+    return {
+      typeUrl: "/elys.assetprofile.QueryGetEntryByDenomResponse",
+      value: QueryGetEntryByDenomResponse.encode(message).finish()
     };
   }
 };

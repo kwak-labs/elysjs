@@ -8,6 +8,16 @@ export interface PoolInfo {
   rewardWallet: string;
   /** multiplier for lp rewards */
   multiplier: string;
+  /** Block number since the creation of PoolInfo */
+  numBlocks: string;
+  /** Total dex rewards given */
+  dexRewardAmountGiven: string;
+  /** Total eden rewards given */
+  edenRewardAmountGiven: string;
+  /** Eden APR, updated at every distribution */
+  edenApr: string;
+  /** Dex APR, updated at every distribution */
+  dexApr: string;
 }
 export interface PoolInfoProtoMsg {
   typeUrl: "/elys.incentive.PoolInfo";
@@ -21,6 +31,16 @@ export interface PoolInfoAmino {
   reward_wallet: string;
   /** multiplier for lp rewards */
   multiplier: string;
+  /** Block number since the creation of PoolInfo */
+  num_blocks: string;
+  /** Total dex rewards given */
+  dex_reward_amount_given: string;
+  /** Total eden rewards given */
+  eden_reward_amount_given: string;
+  /** Eden APR, updated at every distribution */
+  eden_apr: string;
+  /** Dex APR, updated at every distribution */
+  dex_apr: string;
 }
 export interface PoolInfoAminoMsg {
   type: "/elys.incentive.PoolInfo";
@@ -31,12 +51,22 @@ export interface PoolInfoSDKType {
   pool_id: bigint;
   reward_wallet: string;
   multiplier: string;
+  num_blocks: string;
+  dex_reward_amount_given: string;
+  eden_reward_amount_given: string;
+  eden_apr: string;
+  dex_apr: string;
 }
 function createBasePoolInfo(): PoolInfo {
   return {
     poolId: BigInt(0),
     rewardWallet: "",
-    multiplier: ""
+    multiplier: "",
+    numBlocks: "",
+    dexRewardAmountGiven: "",
+    edenRewardAmountGiven: "",
+    edenApr: "",
+    dexApr: ""
   };
 }
 export const PoolInfo = {
@@ -50,6 +80,21 @@ export const PoolInfo = {
     }
     if (message.multiplier !== "") {
       writer.uint32(26).string(Decimal.fromUserInput(message.multiplier, 18).atomics);
+    }
+    if (message.numBlocks !== "") {
+      writer.uint32(34).string(message.numBlocks);
+    }
+    if (message.dexRewardAmountGiven !== "") {
+      writer.uint32(42).string(Decimal.fromUserInput(message.dexRewardAmountGiven, 18).atomics);
+    }
+    if (message.edenRewardAmountGiven !== "") {
+      writer.uint32(50).string(message.edenRewardAmountGiven);
+    }
+    if (message.edenApr !== "") {
+      writer.uint32(58).string(Decimal.fromUserInput(message.edenApr, 18).atomics);
+    }
+    if (message.dexApr !== "") {
+      writer.uint32(66).string(Decimal.fromUserInput(message.dexApr, 18).atomics);
     }
     return writer;
   },
@@ -69,6 +114,21 @@ export const PoolInfo = {
         case 3:
           message.multiplier = Decimal.fromAtomics(reader.string(), 18).toString();
           break;
+        case 4:
+          message.numBlocks = reader.string();
+          break;
+        case 5:
+          message.dexRewardAmountGiven = Decimal.fromAtomics(reader.string(), 18).toString();
+          break;
+        case 6:
+          message.edenRewardAmountGiven = reader.string();
+          break;
+        case 7:
+          message.edenApr = Decimal.fromAtomics(reader.string(), 18).toString();
+          break;
+        case 8:
+          message.dexApr = Decimal.fromAtomics(reader.string(), 18).toString();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -81,13 +141,23 @@ export const PoolInfo = {
     message.poolId = object.poolId !== undefined && object.poolId !== null ? BigInt(object.poolId.toString()) : BigInt(0);
     message.rewardWallet = object.rewardWallet ?? "";
     message.multiplier = object.multiplier ?? "";
+    message.numBlocks = object.numBlocks ?? "";
+    message.dexRewardAmountGiven = object.dexRewardAmountGiven ?? "";
+    message.edenRewardAmountGiven = object.edenRewardAmountGiven ?? "";
+    message.edenApr = object.edenApr ?? "";
+    message.dexApr = object.dexApr ?? "";
     return message;
   },
   fromAmino(object: PoolInfoAmino): PoolInfo {
     return {
       poolId: BigInt(object.pool_id),
       rewardWallet: object.reward_wallet,
-      multiplier: object.multiplier
+      multiplier: object.multiplier,
+      numBlocks: object.num_blocks,
+      dexRewardAmountGiven: object.dex_reward_amount_given,
+      edenRewardAmountGiven: object.eden_reward_amount_given,
+      edenApr: object.eden_apr,
+      dexApr: object.dex_apr
     };
   },
   toAmino(message: PoolInfo): PoolInfoAmino {
@@ -95,6 +165,11 @@ export const PoolInfo = {
     obj.pool_id = message.poolId ? message.poolId.toString() : undefined;
     obj.reward_wallet = message.rewardWallet;
     obj.multiplier = message.multiplier;
+    obj.num_blocks = message.numBlocks;
+    obj.dex_reward_amount_given = message.dexRewardAmountGiven;
+    obj.eden_reward_amount_given = message.edenRewardAmountGiven;
+    obj.eden_apr = message.edenApr;
+    obj.dex_apr = message.dexApr;
     return obj;
   },
   fromAminoMsg(object: PoolInfoAminoMsg): PoolInfo {

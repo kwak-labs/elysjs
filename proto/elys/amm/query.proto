@@ -17,55 +17,54 @@ option go_package = "github.com/elys-network/elys/x/amm/types";
 
 // Query defines the gRPC querier service.
 service Query {
-  
   // Parameters queries the parameters of the module.
   rpc Params (QueryParamsRequest) returns (QueryParamsResponse) {
     option (google.api.http).get = "/elys-network/elys/amm/params";
-  
   }
-  
   // Queries a list of Pool items.
   rpc Pool    (QueryGetPoolRequest) returns (QueryGetPoolResponse) {
     option (google.api.http).get = "/elys-network/elys/amm/pool/{pool_id}";
-  
   }
   rpc PoolAll (QueryAllPoolRequest) returns (QueryAllPoolResponse) {
     option (google.api.http).get = "/elys-network/elys/amm/pool";
-  
   }
-  
   // Queries a list of DenomLiquidity items.
   rpc DenomLiquidity    (QueryGetDenomLiquidityRequest) returns (QueryGetDenomLiquidityResponse) {
     option (google.api.http).get = "/elys-network/elys/amm/denom_liquidity/{denom}";
-  
   }
   rpc DenomLiquidityAll (QueryAllDenomLiquidityRequest) returns (QueryAllDenomLiquidityResponse) {
     option (google.api.http).get = "/elys-network/elys/amm/denom_liquidity";
-  
   }
-  
   // Queries a list of SwapEstimation items.
   rpc SwapEstimation (QuerySwapEstimationRequest) returns (QuerySwapEstimationResponse) {
     option (google.api.http).get = "/elys-network/elys/amm/swap_estimation";
-  
   }
-  
   // Queries slippage track for a week.
   rpc SlippageTrack (QuerySlippageTrackRequest) returns (QuerySlippageTrackResponse) {
     option (google.api.http).get = "/elys-network/elys/amm/slippage_track/{pool_id}";
-  
   }
-  
   // Queries all slippage tracks for a week.
   rpc SlippageTrackAll (QuerySlippageTrackAllRequest) returns (QuerySlippageTrackAllResponse) {
     option (google.api.http).get = "/elys-network/elys/amm/slippage_tracks";
-  
   }
-  
   // Queries a list of Balance items.
   rpc Balance (QueryBalanceRequest) returns (QueryBalanceResponse) {
     option (google.api.http).get = "/elys-network/elys/amm/balance/{address}/{denom}";
+  }
   
+  // Queries a list of InRouteByDenom items.
+  rpc InRouteByDenom (QueryInRouteByDenomRequest) returns (QueryInRouteByDenomResponse) {
+    option (google.api.http).get = "/elys-network/elys/amm/in_route_by_denom/{denom_in}/{denom_out}";
+  }
+  
+  // Queries a list of OutRouteByDenom items.
+  rpc OutRouteByDenom (QueryOutRouteByDenomRequest) returns (QueryOutRouteByDenomResponse) {
+    option (google.api.http).get = "/elys-network/elys/amm/out_route_by_denom/{denom_out}/{denom_in}";
+  }
+  
+  // Queries a list of SwapEstimationByDenom items.
+  rpc SwapEstimationByDenom (QuerySwapEstimationByDenomRequest) returns (QuerySwapEstimationByDenomResponse) {
+    option (google.api.http).get = "/elys-network/elys/amm/swap_estimation_by_denom";
   }
 }
 // QueryParamsRequest is request type for the Query/Params RPC method.
@@ -109,17 +108,22 @@ message QueryAllDenomLiquidityRequest {
 
 message QueryAllDenomLiquidityResponse {
   repeated DenomLiquidity                         denom_liquidity = 1 [(gogoproto.nullable) = false];
-           cosmos.base.query.v1beta1.PageResponse pagination     = 2;
+           cosmos.base.query.v1beta1.PageResponse pagination      = 2;
 }
 
 message QuerySwapEstimationRequest {
-  repeated SwapAmountInRoute        routes  = 1;
+  repeated SwapAmountInRoute        routes   = 1;
            cosmos.base.v1beta1.Coin token_in = 2 [(gogoproto.nullable) = false];
+           string                   discount   = 3 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec", (gogoproto.nullable) = false];
 }
 
 message QuerySwapEstimationResponse {
   string                   spot_price = 1 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec", (gogoproto.nullable) = false];
   cosmos.base.v1beta1.Coin token_out  = 2 [(gogoproto.nullable)   = false                                   ] ;
+  string                   swap_fee   = 3 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec", (gogoproto.nullable) = false];
+  string                   discount   = 4 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec", (gogoproto.nullable) = false];
+  cosmos.base.v1beta1.Coin available_liquidity  = 5 [(gogoproto.nullable)   = false];
+  string                   weight_balance_ratio = 6 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec", (gogoproto.nullable) = false];
 }
 
 message QuerySlippageTrackRequest {
@@ -145,3 +149,44 @@ message QueryBalanceResponse {
   cosmos.base.v1beta1.Coin balance = 1 [(gogoproto.nullable) = false];
 }
 
+message QueryInRouteByDenomRequest {
+  string denom_in  = 1;
+  string denom_out = 2;
+}
+
+message QueryInRouteByDenomResponse {
+  repeated SwapAmountInRoute in_route = 1;
+}
+
+message QueryOutRouteByDenomRequest {
+  string denom_out = 1;
+  string denom_in  = 2;
+}
+
+message QueryOutRouteByDenomResponse {
+  repeated SwapAmountOutRoute out_route = 1;
+}
+
+message QuerySwapEstimationByDenomRequest {
+  cosmos.base.v1beta1.Coin amount   = 1 [(gogoproto.nullable) = false];
+  string                   denom_in  = 2;
+  string                   denom_out = 3;
+  string                   discount   = 4 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec", (gogoproto.nullable) = false];
+}
+
+message QuerySwapEstimationByDenomResponse {
+  repeated SwapAmountInRoute        in_route   = 1;
+  repeated SwapAmountOutRoute       out_route  = 2;
+           string                   spot_price = 3 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec", (gogoproto.nullable) = false];
+           cosmos.base.v1beta1.Coin amount    = 4 [(gogoproto.nullable) = false];
+           string                   swap_fee   = 5 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec", (gogoproto.nullable) = false];
+           string                   discount   = 6 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec", (gogoproto.nullable) = false];
+           cosmos.base.v1beta1.Coin available_liquidity  = 7 [(gogoproto.nullable)   = false ] ;
+           string                   weight_balance_ratio = 8 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec", (gogoproto.nullable) = false];
+           string price_impact = 9 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec", (gogoproto.nullable) = false];
+}
+
+message QueryAMMPriceRequest {
+  cosmos.base.v1beta1.Coin token_in = 1 [(gogoproto.nullable) = false];
+  string                   discount   = 2 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec", (gogoproto.nullable) = false];
+}

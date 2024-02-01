@@ -3,6 +3,7 @@ export interface Airdrop {
   intent: string;
   amount: bigint;
   authority: string;
+  expiry: bigint;
 }
 export interface AirdropProtoMsg {
   typeUrl: "/elys.tokenomics.Airdrop";
@@ -12,6 +13,7 @@ export interface AirdropAmino {
   intent: string;
   amount: string;
   authority: string;
+  expiry: string;
 }
 export interface AirdropAminoMsg {
   type: "/elys.tokenomics.Airdrop";
@@ -21,12 +23,14 @@ export interface AirdropSDKType {
   intent: string;
   amount: bigint;
   authority: string;
+  expiry: bigint;
 }
 function createBaseAirdrop(): Airdrop {
   return {
     intent: "",
     amount: BigInt(0),
-    authority: ""
+    authority: "",
+    expiry: BigInt(0)
   };
 }
 export const Airdrop = {
@@ -40,6 +44,9 @@ export const Airdrop = {
     }
     if (message.authority !== "") {
       writer.uint32(26).string(message.authority);
+    }
+    if (message.expiry !== BigInt(0)) {
+      writer.uint32(32).uint64(message.expiry);
     }
     return writer;
   },
@@ -59,6 +66,9 @@ export const Airdrop = {
         case 3:
           message.authority = reader.string();
           break;
+        case 4:
+          message.expiry = reader.uint64();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -71,13 +81,15 @@ export const Airdrop = {
     message.intent = object.intent ?? "";
     message.amount = object.amount !== undefined && object.amount !== null ? BigInt(object.amount.toString()) : BigInt(0);
     message.authority = object.authority ?? "";
+    message.expiry = object.expiry !== undefined && object.expiry !== null ? BigInt(object.expiry.toString()) : BigInt(0);
     return message;
   },
   fromAmino(object: AirdropAmino): Airdrop {
     return {
       intent: object.intent,
       amount: BigInt(object.amount),
-      authority: object.authority
+      authority: object.authority,
+      expiry: BigInt(object.expiry)
     };
   },
   toAmino(message: Airdrop): AirdropAmino {
@@ -85,6 +97,7 @@ export const Airdrop = {
     obj.intent = message.intent;
     obj.amount = message.amount ? message.amount.toString() : undefined;
     obj.authority = message.authority;
+    obj.expiry = message.expiry ? message.expiry.toString() : undefined;
     return obj;
   },
   fromAminoMsg(object: AirdropAminoMsg): Airdrop {

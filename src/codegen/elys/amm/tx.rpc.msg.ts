@@ -1,6 +1,6 @@
 import { Rpc } from "../../helpers";
 import { BinaryReader } from "../../binary";
-import { MsgCreatePool, MsgCreatePoolResponse, MsgJoinPool, MsgJoinPoolResponse, MsgExitPool, MsgExitPoolResponse, MsgSwapExactAmountIn, MsgSwapExactAmountInResponse, MsgSwapExactAmountOut, MsgSwapExactAmountOutResponse, MsgFeedMultipleExternalLiquidity, MsgFeedMultipleExternalLiquidityResponse } from "./tx";
+import { MsgCreatePool, MsgCreatePoolResponse, MsgJoinPool, MsgJoinPoolResponse, MsgExitPool, MsgExitPoolResponse, MsgSwapExactAmountIn, MsgSwapExactAmountInResponse, MsgSwapExactAmountOut, MsgSwapExactAmountOutResponse, MsgSwapByDenom, MsgSwapByDenomResponse, MsgFeedMultipleExternalLiquidity, MsgFeedMultipleExternalLiquidityResponse, MsgUpdatePoolParams, MsgUpdatePoolParamsResponse } from "./tx";
 /** Msg defines the Msg service. */
 export interface Msg {
   createPool(request: MsgCreatePool): Promise<MsgCreatePoolResponse>;
@@ -8,7 +8,9 @@ export interface Msg {
   exitPool(request: MsgExitPool): Promise<MsgExitPoolResponse>;
   swapExactAmountIn(request: MsgSwapExactAmountIn): Promise<MsgSwapExactAmountInResponse>;
   swapExactAmountOut(request: MsgSwapExactAmountOut): Promise<MsgSwapExactAmountOutResponse>;
+  swapByDenom(request: MsgSwapByDenom): Promise<MsgSwapByDenomResponse>;
   feedMultipleExternalLiquidity(request: MsgFeedMultipleExternalLiquidity): Promise<MsgFeedMultipleExternalLiquidityResponse>;
+  updatePoolParams(request: MsgUpdatePoolParams): Promise<MsgUpdatePoolParamsResponse>;
 }
 export class MsgClientImpl implements Msg {
   private readonly rpc: Rpc;
@@ -19,7 +21,9 @@ export class MsgClientImpl implements Msg {
     this.exitPool = this.exitPool.bind(this);
     this.swapExactAmountIn = this.swapExactAmountIn.bind(this);
     this.swapExactAmountOut = this.swapExactAmountOut.bind(this);
+    this.swapByDenom = this.swapByDenom.bind(this);
     this.feedMultipleExternalLiquidity = this.feedMultipleExternalLiquidity.bind(this);
+    this.updatePoolParams = this.updatePoolParams.bind(this);
   }
   createPool(request: MsgCreatePool): Promise<MsgCreatePoolResponse> {
     const data = MsgCreatePool.encode(request).finish();
@@ -46,9 +50,19 @@ export class MsgClientImpl implements Msg {
     const promise = this.rpc.request("elys.amm.Msg", "SwapExactAmountOut", data);
     return promise.then(data => MsgSwapExactAmountOutResponse.decode(new BinaryReader(data)));
   }
+  swapByDenom(request: MsgSwapByDenom): Promise<MsgSwapByDenomResponse> {
+    const data = MsgSwapByDenom.encode(request).finish();
+    const promise = this.rpc.request("elys.amm.Msg", "SwapByDenom", data);
+    return promise.then(data => MsgSwapByDenomResponse.decode(new BinaryReader(data)));
+  }
   feedMultipleExternalLiquidity(request: MsgFeedMultipleExternalLiquidity): Promise<MsgFeedMultipleExternalLiquidityResponse> {
     const data = MsgFeedMultipleExternalLiquidity.encode(request).finish();
     const promise = this.rpc.request("elys.amm.Msg", "FeedMultipleExternalLiquidity", data);
     return promise.then(data => MsgFeedMultipleExternalLiquidityResponse.decode(new BinaryReader(data)));
+  }
+  updatePoolParams(request: MsgUpdatePoolParams): Promise<MsgUpdatePoolParamsResponse> {
+    const data = MsgUpdatePoolParams.encode(request).finish();
+    const promise = this.rpc.request("elys.amm.Msg", "UpdatePoolParams", data);
+    return promise.then(data => MsgUpdatePoolParamsResponse.decode(new BinaryReader(data)));
   }
 }

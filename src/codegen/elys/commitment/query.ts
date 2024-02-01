@@ -55,7 +55,7 @@ export interface QueryShowCommitmentsRequestSDKType {
   creator: string;
 }
 export interface QueryShowCommitmentsResponse {
-  commitments?: Commitments;
+  commitments: Commitments;
 }
 export interface QueryShowCommitmentsResponseProtoMsg {
   typeUrl: "/elys.commitment.QueryShowCommitmentsResponse";
@@ -69,7 +69,7 @@ export interface QueryShowCommitmentsResponseAminoMsg {
   value: QueryShowCommitmentsResponseAmino;
 }
 export interface QueryShowCommitmentsResponseSDKType {
-  commitments?: CommitmentsSDKType;
+  commitments: CommitmentsSDKType;
 }
 function createBaseQueryParamsRequest(): QueryParamsRequest {
   return {};
@@ -244,7 +244,7 @@ export const QueryShowCommitmentsRequest = {
 };
 function createBaseQueryShowCommitmentsResponse(): QueryShowCommitmentsResponse {
   return {
-    commitments: undefined
+    commitments: Commitments.fromPartial({})
   };
 }
 export const QueryShowCommitmentsResponse = {

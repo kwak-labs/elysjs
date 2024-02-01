@@ -55,8 +55,9 @@ export const createRPCMsgClient = async ({
     commitment: new (await import("./commitment/tx.rpc.msg")).MsgClientImpl(rpc),
     incentive: new (await import("./incentive/tx.rpc.msg")).MsgClientImpl(rpc),
     leveragelp: new (await import("./leveragelp/tx.rpc.msg")).MsgClientImpl(rpc),
-    margin: new (await import("./margin/tx.rpc.msg")).MsgClientImpl(rpc),
     oracle: new (await import("./oracle/tx.rpc.msg")).MsgClientImpl(rpc),
+    parameter: new (await import("./parameter/tx.rpc.msg")).MsgClientImpl(rpc),
+    perpetual: new (await import("./perpetual/tx.rpc.msg")).MsgClientImpl(rpc),
     stablestake: new (await import("./stablestake/tx.rpc.msg")).MsgClientImpl(rpc),
     tokenomics: new (await import("./tokenomics/tx.rpc.msg")).MsgClientImpl(rpc)
   }

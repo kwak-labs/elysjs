@@ -1,6 +1,6 @@
 import { GeneratedType, Registry } from "@cosmjs/proto-signing";
-import { MsgFeedPrice, MsgFeedMultiplePrices, MsgRequestBandPrice, MsgSetPriceFeeder, MsgDeletePriceFeeder } from "./tx";
-export const registry: ReadonlyArray<[string, GeneratedType]> = [["/elys.oracle.MsgFeedPrice", MsgFeedPrice], ["/elys.oracle.MsgFeedMultiplePrices", MsgFeedMultiplePrices], ["/elys.oracle.MsgRequestBandPrice", MsgRequestBandPrice], ["/elys.oracle.MsgSetPriceFeeder", MsgSetPriceFeeder], ["/elys.oracle.MsgDeletePriceFeeder", MsgDeletePriceFeeder]];
+import { MsgFeedPrice, MsgFeedMultiplePrices, MsgSetPriceFeeder, MsgDeletePriceFeeder } from "./tx";
+export const registry: ReadonlyArray<[string, GeneratedType]> = [["/elys.oracle.MsgFeedPrice", MsgFeedPrice], ["/elys.oracle.MsgFeedMultiplePrices", MsgFeedMultiplePrices], ["/elys.oracle.MsgSetPriceFeeder", MsgSetPriceFeeder], ["/elys.oracle.MsgDeletePriceFeeder", MsgDeletePriceFeeder]];
 export const load = (protoRegistry: Registry) => {
   registry.forEach(([typeUrl, mod]) => {
     protoRegistry.register(typeUrl, mod);
@@ -18,12 +18,6 @@ export const MessageComposer = {
       return {
         typeUrl: "/elys.oracle.MsgFeedMultiplePrices",
         value: MsgFeedMultiplePrices.encode(value).finish()
-      };
-    },
-    requestBandPrice(value: MsgRequestBandPrice) {
-      return {
-        typeUrl: "/elys.oracle.MsgRequestBandPrice",
-        value: MsgRequestBandPrice.encode(value).finish()
       };
     },
     setPriceFeeder(value: MsgSetPriceFeeder) {
@@ -52,12 +46,6 @@ export const MessageComposer = {
         value
       };
     },
-    requestBandPrice(value: MsgRequestBandPrice) {
-      return {
-        typeUrl: "/elys.oracle.MsgRequestBandPrice",
-        value
-      };
-    },
     setPriceFeeder(value: MsgSetPriceFeeder) {
       return {
         typeUrl: "/elys.oracle.MsgSetPriceFeeder",
@@ -82,12 +70,6 @@ export const MessageComposer = {
       return {
         typeUrl: "/elys.oracle.MsgFeedMultiplePrices",
         value: MsgFeedMultiplePrices.fromPartial(value)
-      };
-    },
-    requestBandPrice(value: MsgRequestBandPrice) {
-      return {
-        typeUrl: "/elys.oracle.MsgRequestBandPrice",
-        value: MsgRequestBandPrice.fromPartial(value)
       };
     },
     setPriceFeeder(value: MsgSetPriceFeeder) {

@@ -5,9 +5,8 @@ export interface PoolParams {
   exitFee: string;
   useOracle: boolean;
   weightBreakingFeeMultiplier: string;
+  weightBreakingFeeExponent: string;
   externalLiquidityRatio: string;
-  lpFeePortion: string;
-  stakingFeePortion: string;
   weightRecoveryFeePortion: string;
   thresholdWeightDifference: string;
   /** denom for fee collection */
@@ -22,9 +21,8 @@ export interface PoolParamsAmino {
   exit_fee: string;
   use_oracle: boolean;
   weight_breaking_fee_multiplier: string;
+  weight_breaking_fee_exponent: string;
   external_liquidity_ratio: string;
-  lp_fee_portion: string;
-  staking_fee_portion: string;
   weight_recovery_fee_portion: string;
   threshold_weight_difference: string;
   /** denom for fee collection */
@@ -39,9 +37,8 @@ export interface PoolParamsSDKType {
   exit_fee: string;
   use_oracle: boolean;
   weight_breaking_fee_multiplier: string;
+  weight_breaking_fee_exponent: string;
   external_liquidity_ratio: string;
-  lp_fee_portion: string;
-  staking_fee_portion: string;
   weight_recovery_fee_portion: string;
   threshold_weight_difference: string;
   fee_denom: string;
@@ -52,9 +49,8 @@ function createBasePoolParams(): PoolParams {
     exitFee: "",
     useOracle: false,
     weightBreakingFeeMultiplier: "",
+    weightBreakingFeeExponent: "",
     externalLiquidityRatio: "",
-    lpFeePortion: "",
-    stakingFeePortion: "",
     weightRecoveryFeePortion: "",
     thresholdWeightDifference: "",
     feeDenom: ""
@@ -75,23 +71,20 @@ export const PoolParams = {
     if (message.weightBreakingFeeMultiplier !== "") {
       writer.uint32(34).string(Decimal.fromUserInput(message.weightBreakingFeeMultiplier, 18).atomics);
     }
+    if (message.weightBreakingFeeExponent !== "") {
+      writer.uint32(90).string(Decimal.fromUserInput(message.weightBreakingFeeExponent, 18).atomics);
+    }
     if (message.externalLiquidityRatio !== "") {
       writer.uint32(42).string(Decimal.fromUserInput(message.externalLiquidityRatio, 18).atomics);
     }
-    if (message.lpFeePortion !== "") {
-      writer.uint32(50).string(Decimal.fromUserInput(message.lpFeePortion, 18).atomics);
-    }
-    if (message.stakingFeePortion !== "") {
-      writer.uint32(58).string(Decimal.fromUserInput(message.stakingFeePortion, 18).atomics);
-    }
     if (message.weightRecoveryFeePortion !== "") {
-      writer.uint32(66).string(Decimal.fromUserInput(message.weightRecoveryFeePortion, 18).atomics);
+      writer.uint32(50).string(Decimal.fromUserInput(message.weightRecoveryFeePortion, 18).atomics);
     }
     if (message.thresholdWeightDifference !== "") {
-      writer.uint32(74).string(Decimal.fromUserInput(message.thresholdWeightDifference, 18).atomics);
+      writer.uint32(58).string(Decimal.fromUserInput(message.thresholdWeightDifference, 18).atomics);
     }
     if (message.feeDenom !== "") {
-      writer.uint32(82).string(message.feeDenom);
+      writer.uint32(66).string(message.feeDenom);
     }
     return writer;
   },
@@ -114,22 +107,19 @@ export const PoolParams = {
         case 4:
           message.weightBreakingFeeMultiplier = Decimal.fromAtomics(reader.string(), 18).toString();
           break;
+        case 11:
+          message.weightBreakingFeeExponent = Decimal.fromAtomics(reader.string(), 18).toString();
+          break;
         case 5:
           message.externalLiquidityRatio = Decimal.fromAtomics(reader.string(), 18).toString();
           break;
         case 6:
-          message.lpFeePortion = Decimal.fromAtomics(reader.string(), 18).toString();
-          break;
-        case 7:
-          message.stakingFeePortion = Decimal.fromAtomics(reader.string(), 18).toString();
-          break;
-        case 8:
           message.weightRecoveryFeePortion = Decimal.fromAtomics(reader.string(), 18).toString();
           break;
-        case 9:
+        case 7:
           message.thresholdWeightDifference = Decimal.fromAtomics(reader.string(), 18).toString();
           break;
-        case 10:
+        case 8:
           message.feeDenom = reader.string();
           break;
         default:
@@ -145,9 +135,8 @@ export const PoolParams = {
     message.exitFee = object.exitFee ?? "";
     message.useOracle = object.useOracle ?? false;
     message.weightBreakingFeeMultiplier = object.weightBreakingFeeMultiplier ?? "";
+    message.weightBreakingFeeExponent = object.weightBreakingFeeExponent ?? "";
     message.externalLiquidityRatio = object.externalLiquidityRatio ?? "";
-    message.lpFeePortion = object.lpFeePortion ?? "";
-    message.stakingFeePortion = object.stakingFeePortion ?? "";
     message.weightRecoveryFeePortion = object.weightRecoveryFeePortion ?? "";
     message.thresholdWeightDifference = object.thresholdWeightDifference ?? "";
     message.feeDenom = object.feeDenom ?? "";
@@ -159,9 +148,8 @@ export const PoolParams = {
       exitFee: object.exit_fee,
       useOracle: object.use_oracle,
       weightBreakingFeeMultiplier: object.weight_breaking_fee_multiplier,
+      weightBreakingFeeExponent: object.weight_breaking_fee_exponent,
       externalLiquidityRatio: object.external_liquidity_ratio,
-      lpFeePortion: object.lp_fee_portion,
-      stakingFeePortion: object.staking_fee_portion,
       weightRecoveryFeePortion: object.weight_recovery_fee_portion,
       thresholdWeightDifference: object.threshold_weight_difference,
       feeDenom: object.fee_denom
@@ -173,9 +161,8 @@ export const PoolParams = {
     obj.exit_fee = message.exitFee;
     obj.use_oracle = message.useOracle;
     obj.weight_breaking_fee_multiplier = message.weightBreakingFeeMultiplier;
+    obj.weight_breaking_fee_exponent = message.weightBreakingFeeExponent;
     obj.external_liquidity_ratio = message.externalLiquidityRatio;
-    obj.lp_fee_portion = message.lpFeePortion;
-    obj.staking_fee_portion = message.stakingFeePortion;
     obj.weight_recovery_fee_portion = message.weightRecoveryFeePortion;
     obj.threshold_weight_difference = message.thresholdWeightDifference;
     obj.fee_denom = message.feeDenom;

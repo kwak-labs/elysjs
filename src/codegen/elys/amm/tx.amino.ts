@@ -1,4 +1,4 @@
-import { MsgCreatePool, MsgJoinPool, MsgExitPool, MsgSwapExactAmountIn, MsgSwapExactAmountOut, MsgFeedMultipleExternalLiquidity } from "./tx";
+import { MsgCreatePool, MsgJoinPool, MsgExitPool, MsgSwapExactAmountIn, MsgSwapExactAmountOut, MsgSwapByDenom, MsgFeedMultipleExternalLiquidity, MsgUpdatePoolParams } from "./tx";
 export const AminoConverter = {
   "/elys.amm.MsgCreatePool": {
     aminoType: "/elys.amm.MsgCreatePool",
@@ -25,9 +25,19 @@ export const AminoConverter = {
     toAmino: MsgSwapExactAmountOut.toAmino,
     fromAmino: MsgSwapExactAmountOut.fromAmino
   },
+  "/elys.amm.MsgSwapByDenom": {
+    aminoType: "/elys.amm.MsgSwapByDenom",
+    toAmino: MsgSwapByDenom.toAmino,
+    fromAmino: MsgSwapByDenom.fromAmino
+  },
   "/elys.amm.MsgFeedMultipleExternalLiquidity": {
     aminoType: "/elys.amm.MsgFeedMultipleExternalLiquidity",
     toAmino: MsgFeedMultipleExternalLiquidity.toAmino,
     fromAmino: MsgFeedMultipleExternalLiquidity.fromAmino
+  },
+  "/elys.amm.MsgUpdatePoolParams": {
+    aminoType: "/elys.amm.MsgUpdatePoolParams",
+    toAmino: MsgUpdatePoolParams.toAmino,
+    fromAmino: MsgUpdatePoolParams.fromAmino
   }
 };

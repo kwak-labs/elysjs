@@ -1,18 +1,20 @@
-import { Timestamp } from "../../google/protobuf/timestamp";
 import { BinaryReader, BinaryWriter } from "../../binary";
-import { toTimestamp, fromTimestamp } from "../../helpers";
 /** Incentive Info */
 export interface IncentiveInfo {
-  /** reward amount */
-  amount: string;
-  /** epoch identifier */
-  epochIdentifier: string;
-  /** start_time of the distribution */
-  startTime: Date;
-  /** distribution duration */
-  numEpochs: bigint;
-  currentEpoch: bigint;
-  edenBoostApr: bigint;
+  /** reward amount in eden for 1 year */
+  edenAmountPerYear: string;
+  /** starting block height of the distribution */
+  distributionStartBlock: string;
+  /** distribution duration - block number per year */
+  totalBlocksPerYear: string;
+  /** we set block count in 24 hrs */
+  epochNumBlocks: string;
+  /** maximum eden allocation per day that won't exceed 30% apr */
+  maxEdenPerAllocation: string;
+  /** number of block intervals that distribute rewards, set from params.distribution_interval */
+  distributionEpochInBlocks: string;
+  /** current epoch in block number */
+  currentEpochInBlocks: string;
 }
 export interface IncentiveInfoProtoMsg {
   typeUrl: "/elys.incentive.IncentiveInfo";
@@ -20,16 +22,20 @@ export interface IncentiveInfoProtoMsg {
 }
 /** Incentive Info */
 export interface IncentiveInfoAmino {
-  /** reward amount */
-  amount: string;
-  /** epoch identifier */
-  epoch_identifier: string;
-  /** start_time of the distribution */
-  start_time?: Date;
-  /** distribution duration */
-  num_epochs: string;
-  current_epoch: string;
-  eden_boost_apr: string;
+  /** reward amount in eden for 1 year */
+  eden_amount_per_year: string;
+  /** starting block height of the distribution */
+  distribution_start_block: string;
+  /** distribution duration - block number per year */
+  total_blocks_per_year: string;
+  /** we set block count in 24 hrs */
+  epoch_num_blocks: string;
+  /** maximum eden allocation per day that won't exceed 30% apr */
+  max_eden_per_allocation: string;
+  /** number of block intervals that distribute rewards, set from params.distribution_interval */
+  distribution_epoch_in_blocks: string;
+  /** current epoch in block number */
+  current_epoch_in_blocks: string;
 }
 export interface IncentiveInfoAminoMsg {
   type: "/elys.incentive.IncentiveInfo";
@@ -37,43 +43,48 @@ export interface IncentiveInfoAminoMsg {
 }
 /** Incentive Info */
 export interface IncentiveInfoSDKType {
-  amount: string;
-  epoch_identifier: string;
-  start_time: Date;
-  num_epochs: bigint;
-  current_epoch: bigint;
-  eden_boost_apr: bigint;
+  eden_amount_per_year: string;
+  distribution_start_block: string;
+  total_blocks_per_year: string;
+  epoch_num_blocks: string;
+  max_eden_per_allocation: string;
+  distribution_epoch_in_blocks: string;
+  current_epoch_in_blocks: string;
 }
 function createBaseIncentiveInfo(): IncentiveInfo {
   return {
-    amount: "",
-    epochIdentifier: "",
-    startTime: new Date(),
-    numEpochs: BigInt(0),
-    currentEpoch: BigInt(0),
-    edenBoostApr: BigInt(0)
+    edenAmountPerYear: "",
+    distributionStartBlock: "",
+    totalBlocksPerYear: "",
+    epochNumBlocks: "",
+    maxEdenPerAllocation: "",
+    distributionEpochInBlocks: "",
+    currentEpochInBlocks: ""
   };
 }
 export const IncentiveInfo = {
   typeUrl: "/elys.incentive.IncentiveInfo",
   encode(message: IncentiveInfo, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
-    if (message.amount !== "") {
-      writer.uint32(10).string(message.amount);
+    if (message.edenAmountPerYear !== "") {
+      writer.uint32(10).string(message.edenAmountPerYear);
     }
-    if (message.epochIdentifier !== "") {
-      writer.uint32(18).string(message.epochIdentifier);
+    if (message.distributionStartBlock !== "") {
+      writer.uint32(18).string(message.distributionStartBlock);
     }
-    if (message.startTime !== undefined) {
-      Timestamp.encode(toTimestamp(message.startTime), writer.uint32(26).fork()).ldelim();
+    if (message.totalBlocksPerYear !== "") {
+      writer.uint32(26).string(message.totalBlocksPerYear);
     }
-    if (message.numEpochs !== BigInt(0)) {
-      writer.uint32(32).int64(message.numEpochs);
+    if (message.epochNumBlocks !== "") {
+      writer.uint32(34).string(message.epochNumBlocks);
     }
-    if (message.currentEpoch !== BigInt(0)) {
-      writer.uint32(40).int64(message.currentEpoch);
+    if (message.maxEdenPerAllocation !== "") {
+      writer.uint32(42).string(message.maxEdenPerAllocation);
     }
-    if (message.edenBoostApr !== BigInt(0)) {
-      writer.uint32(48).int64(message.edenBoostApr);
+    if (message.distributionEpochInBlocks !== "") {
+      writer.uint32(50).string(message.distributionEpochInBlocks);
+    }
+    if (message.currentEpochInBlocks !== "") {
+      writer.uint32(58).string(message.currentEpochInBlocks);
     }
     return writer;
   },
@@ -85,22 +96,25 @@ export const IncentiveInfo = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.amount = reader.string();
+          message.edenAmountPerYear = reader.string();
           break;
         case 2:
-          message.epochIdentifier = reader.string();
+          message.distributionStartBlock = reader.string();
           break;
         case 3:
-          message.startTime = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
+          message.totalBlocksPerYear = reader.string();
           break;
         case 4:
-          message.numEpochs = reader.int64();
+          message.epochNumBlocks = reader.string();
           break;
         case 5:
-          message.currentEpoch = reader.int64();
+          message.maxEdenPerAllocation = reader.string();
           break;
         case 6:
-          message.edenBoostApr = reader.int64();
+          message.distributionEpochInBlocks = reader.string();
+          break;
+        case 7:
+          message.currentEpochInBlocks = reader.string();
           break;
         default:
           reader.skipType(tag & 7);
@@ -111,32 +125,35 @@ export const IncentiveInfo = {
   },
   fromPartial(object: Partial<IncentiveInfo>): IncentiveInfo {
     const message = createBaseIncentiveInfo();
-    message.amount = object.amount ?? "";
-    message.epochIdentifier = object.epochIdentifier ?? "";
-    message.startTime = object.startTime ?? undefined;
-    message.numEpochs = object.numEpochs !== undefined && object.numEpochs !== null ? BigInt(object.numEpochs.toString()) : BigInt(0);
-    message.currentEpoch = object.currentEpoch !== undefined && object.currentEpoch !== null ? BigInt(object.currentEpoch.toString()) : BigInt(0);
-    message.edenBoostApr = object.edenBoostApr !== undefined && object.edenBoostApr !== null ? BigInt(object.edenBoostApr.toString()) : BigInt(0);
+    message.edenAmountPerYear = object.edenAmountPerYear ?? "";
+    message.distributionStartBlock = object.distributionStartBlock ?? "";
+    message.totalBlocksPerYear = object.totalBlocksPerYear ?? "";
+    message.epochNumBlocks = object.epochNumBlocks ?? "";
+    message.maxEdenPerAllocation = object.maxEdenPerAllocation ?? "";
+    message.distributionEpochInBlocks = object.distributionEpochInBlocks ?? "";
+    message.currentEpochInBlocks = object.currentEpochInBlocks ?? "";
     return message;
   },
   fromAmino(object: IncentiveInfoAmino): IncentiveInfo {
     return {
-      amount: object.amount,
-      epochIdentifier: object.epoch_identifier,
-      startTime: object.start_time,
-      numEpochs: BigInt(object.num_epochs),
-      currentEpoch: BigInt(object.current_epoch),
-      edenBoostApr: BigInt(object.eden_boost_apr)
+      edenAmountPerYear: object.eden_amount_per_year,
+      distributionStartBlock: object.distribution_start_block,
+      totalBlocksPerYear: object.total_blocks_per_year,
+      epochNumBlocks: object.epoch_num_blocks,
+      maxEdenPerAllocation: object.max_eden_per_allocation,
+      distributionEpochInBlocks: object.distribution_epoch_in_blocks,
+      currentEpochInBlocks: object.current_epoch_in_blocks
     };
   },
   toAmino(message: IncentiveInfo): IncentiveInfoAmino {
     const obj: any = {};
-    obj.amount = message.amount;
-    obj.epoch_identifier = message.epochIdentifier;
-    obj.start_time = message.startTime;
-    obj.num_epochs = message.numEpochs ? message.numEpochs.toString() : undefined;
-    obj.current_epoch = message.currentEpoch ? message.currentEpoch.toString() : undefined;
-    obj.eden_boost_apr = message.edenBoostApr ? message.edenBoostApr.toString() : undefined;
+    obj.eden_amount_per_year = message.edenAmountPerYear;
+    obj.distribution_start_block = message.distributionStartBlock;
+    obj.total_blocks_per_year = message.totalBlocksPerYear;
+    obj.epoch_num_blocks = message.epochNumBlocks;
+    obj.max_eden_per_allocation = message.maxEdenPerAllocation;
+    obj.distribution_epoch_in_blocks = message.distributionEpochInBlocks;
+    obj.current_epoch_in_blocks = message.currentEpochInBlocks;
     return obj;
   },
   fromAminoMsg(object: IncentiveInfoAminoMsg): IncentiveInfo {

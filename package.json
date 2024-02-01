@@ -1,6 +1,6 @@
 {
   "name": "elysjs",
-  "version": "0.15.0",
+  "version": "0.29.0",
   "description": "Interact with Elys blockchain (testnet v0.13.x)",
   "author": "ducksquaddd <duck@kwak.tech>",
   "homepage": "https://github.com/ducksquaddd/elysjs#readme",

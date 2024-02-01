@@ -1,5 +1,8 @@
 import { BinaryReader, BinaryWriter } from "../../binary";
-/** Elys staked */
+/**
+ * Elys staked amount is tracked because EdenBoost has to be burnt when unstake ELYS event happens,
+ * and there's no way to track staked amount change from staking hook and this struct is added.
+ */
 export interface ElysStaked {
   address: string;
   amount: string;
@@ -8,7 +11,10 @@ export interface ElysStakedProtoMsg {
   typeUrl: "/elys.incentive.ElysStaked";
   value: Uint8Array;
 }
-/** Elys staked */
+/**
+ * Elys staked amount is tracked because EdenBoost has to be burnt when unstake ELYS event happens,
+ * and there's no way to track staked amount change from staking hook and this struct is added.
+ */
 export interface ElysStakedAmino {
   address: string;
   amount: string;
@@ -17,7 +23,10 @@ export interface ElysStakedAminoMsg {
   type: "/elys.incentive.ElysStaked";
   value: ElysStakedAmino;
 }
-/** Elys staked */
+/**
+ * Elys staked amount is tracked because EdenBoost has to be burnt when unstake ELYS event happens,
+ * and there's no way to track staked amount change from staking hook and this struct is added.
+ */
 export interface ElysStakedSDKType {
   address: string;
   amount: string;

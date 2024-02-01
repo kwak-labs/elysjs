@@ -114,6 +114,7 @@ export interface VestingTokens {
   epochIdentifier: string;
   numEpochs: bigint;
   currentEpoch: bigint;
+  vestStartedTimestamp: bigint;
 }
 export interface VestingTokensProtoMsg {
   typeUrl: "/elys.commitment.VestingTokens";
@@ -126,6 +127,7 @@ export interface VestingTokensAmino {
   epoch_identifier: string;
   num_epochs: string;
   current_epoch: string;
+  vest_started_timestamp: string;
 }
 export interface VestingTokensAminoMsg {
   type: "/elys.commitment.VestingTokens";
@@ -138,6 +140,7 @@ export interface VestingTokensSDKType {
   epoch_identifier: string;
   num_epochs: bigint;
   current_epoch: bigint;
+  vest_started_timestamp: bigint;
 }
 function createBaseCommitments(): Commitments {
   return {
@@ -546,7 +549,8 @@ function createBaseVestingTokens(): VestingTokens {
     unvestedAmount: "",
     epochIdentifier: "",
     numEpochs: BigInt(0),
-    currentEpoch: BigInt(0)
+    currentEpoch: BigInt(0),
+    vestStartedTimestamp: BigInt(0)
   };
 }
 export const VestingTokens = {
@@ -569,6 +573,9 @@ export const VestingTokens = {
     }
     if (message.currentEpoch !== BigInt(0)) {
       writer.uint32(48).int64(message.currentEpoch);
+    }
+    if (message.vestStartedTimestamp !== BigInt(0)) {
+      writer.uint32(56).int64(message.vestStartedTimestamp);
     }
     return writer;
   },
@@ -597,6 +604,9 @@ export const VestingTokens = {
         case 6:
           message.currentEpoch = reader.int64();
           break;
+        case 7:
+          message.vestStartedTimestamp = reader.int64();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -612,6 +622,7 @@ export const VestingTokens = {
     message.epochIdentifier = object.epochIdentifier ?? "";
     message.numEpochs = object.numEpochs !== undefined && object.numEpochs !== null ? BigInt(object.numEpochs.toString()) : BigInt(0);
     message.currentEpoch = object.currentEpoch !== undefined && object.currentEpoch !== null ? BigInt(object.currentEpoch.toString()) : BigInt(0);
+    message.vestStartedTimestamp = object.vestStartedTimestamp !== undefined && object.vestStartedTimestamp !== null ? BigInt(object.vestStartedTimestamp.toString()) : BigInt(0);
     return message;
   },
   fromAmino(object: VestingTokensAmino): VestingTokens {
@@ -621,7 +632,8 @@ export const VestingTokens = {
       unvestedAmount: object.unvested_amount,
       epochIdentifier: object.epoch_identifier,
       numEpochs: BigInt(object.num_epochs),
-      currentEpoch: BigInt(object.current_epoch)
+      currentEpoch: BigInt(object.current_epoch),
+      vestStartedTimestamp: BigInt(object.vest_started_timestamp)
     };
   },
   toAmino(message: VestingTokens): VestingTokensAmino {
@@ -632,6 +644,7 @@ export const VestingTokens = {
     obj.epoch_identifier = message.epochIdentifier;
     obj.num_epochs = message.numEpochs ? message.numEpochs.toString() : undefined;
     obj.current_epoch = message.currentEpoch ? message.currentEpoch.toString() : undefined;
+    obj.vest_started_timestamp = message.vestStartedTimestamp ? message.vestStartedTimestamp.toString() : undefined;
     return obj;
   },
   fromAminoMsg(object: VestingTokensAminoMsg): VestingTokens {

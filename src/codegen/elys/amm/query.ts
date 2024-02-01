@@ -1,5 +1,5 @@
 import { PageRequest, PageRequestAmino, PageRequestSDKType, PageResponse, PageResponseAmino, PageResponseSDKType } from "../../cosmos/base/query/v1beta1/pagination";
-import { SwapAmountInRoute, SwapAmountInRouteAmino, SwapAmountInRouteSDKType } from "./swap_route";
+import { SwapAmountInRoute, SwapAmountInRouteAmino, SwapAmountInRouteSDKType, SwapAmountOutRoute, SwapAmountOutRouteAmino, SwapAmountOutRouteSDKType } from "./swap_route";
 import { Coin, CoinAmino, CoinSDKType } from "../../cosmos/base/v1beta1/coin";
 import { Params, ParamsAmino, ParamsSDKType } from "./params";
 import { Pool, PoolAmino, PoolSDKType, OraclePoolSlippageTrack, OraclePoolSlippageTrackAmino, OraclePoolSlippageTrackSDKType } from "./pool";
@@ -187,6 +187,7 @@ export interface QueryAllDenomLiquidityResponseSDKType {
 export interface QuerySwapEstimationRequest {
   routes: SwapAmountInRoute[];
   tokenIn: Coin;
+  discount: string;
 }
 export interface QuerySwapEstimationRequestProtoMsg {
   typeUrl: "/elys.amm.QuerySwapEstimationRequest";
@@ -195,6 +196,7 @@ export interface QuerySwapEstimationRequestProtoMsg {
 export interface QuerySwapEstimationRequestAmino {
   routes: SwapAmountInRouteAmino[];
   token_in?: CoinAmino;
+  discount: string;
 }
 export interface QuerySwapEstimationRequestAminoMsg {
   type: "/elys.amm.QuerySwapEstimationRequest";
@@ -203,10 +205,15 @@ export interface QuerySwapEstimationRequestAminoMsg {
 export interface QuerySwapEstimationRequestSDKType {
   routes: SwapAmountInRouteSDKType[];
   token_in: CoinSDKType;
+  discount: string;
 }
 export interface QuerySwapEstimationResponse {
   spotPrice: string;
   tokenOut: Coin;
+  swapFee: string;
+  discount: string;
+  availableLiquidity: Coin;
+  weightBalanceRatio: string;
 }
 export interface QuerySwapEstimationResponseProtoMsg {
   typeUrl: "/elys.amm.QuerySwapEstimationResponse";
@@ -215,6 +222,10 @@ export interface QuerySwapEstimationResponseProtoMsg {
 export interface QuerySwapEstimationResponseAmino {
   spot_price: string;
   token_out?: CoinAmino;
+  swap_fee: string;
+  discount: string;
+  available_liquidity?: CoinAmino;
+  weight_balance_ratio: string;
 }
 export interface QuerySwapEstimationResponseAminoMsg {
   type: "/elys.amm.QuerySwapEstimationResponse";
@@ -223,6 +234,10 @@ export interface QuerySwapEstimationResponseAminoMsg {
 export interface QuerySwapEstimationResponseSDKType {
   spot_price: string;
   token_out: CoinSDKType;
+  swap_fee: string;
+  discount: string;
+  available_liquidity: CoinSDKType;
+  weight_balance_ratio: string;
 }
 export interface QuerySlippageTrackRequest {
   poolId: bigint;
@@ -322,6 +337,167 @@ export interface QueryBalanceResponseAminoMsg {
 }
 export interface QueryBalanceResponseSDKType {
   balance: CoinSDKType;
+}
+export interface QueryInRouteByDenomRequest {
+  denomIn: string;
+  denomOut: string;
+}
+export interface QueryInRouteByDenomRequestProtoMsg {
+  typeUrl: "/elys.amm.QueryInRouteByDenomRequest";
+  value: Uint8Array;
+}
+export interface QueryInRouteByDenomRequestAmino {
+  denom_in: string;
+  denom_out: string;
+}
+export interface QueryInRouteByDenomRequestAminoMsg {
+  type: "/elys.amm.QueryInRouteByDenomRequest";
+  value: QueryInRouteByDenomRequestAmino;
+}
+export interface QueryInRouteByDenomRequestSDKType {
+  denom_in: string;
+  denom_out: string;
+}
+export interface QueryInRouteByDenomResponse {
+  inRoute: SwapAmountInRoute[];
+}
+export interface QueryInRouteByDenomResponseProtoMsg {
+  typeUrl: "/elys.amm.QueryInRouteByDenomResponse";
+  value: Uint8Array;
+}
+export interface QueryInRouteByDenomResponseAmino {
+  in_route: SwapAmountInRouteAmino[];
+}
+export interface QueryInRouteByDenomResponseAminoMsg {
+  type: "/elys.amm.QueryInRouteByDenomResponse";
+  value: QueryInRouteByDenomResponseAmino;
+}
+export interface QueryInRouteByDenomResponseSDKType {
+  in_route: SwapAmountInRouteSDKType[];
+}
+export interface QueryOutRouteByDenomRequest {
+  denomOut: string;
+  denomIn: string;
+}
+export interface QueryOutRouteByDenomRequestProtoMsg {
+  typeUrl: "/elys.amm.QueryOutRouteByDenomRequest";
+  value: Uint8Array;
+}
+export interface QueryOutRouteByDenomRequestAmino {
+  denom_out: string;
+  denom_in: string;
+}
+export interface QueryOutRouteByDenomRequestAminoMsg {
+  type: "/elys.amm.QueryOutRouteByDenomRequest";
+  value: QueryOutRouteByDenomRequestAmino;
+}
+export interface QueryOutRouteByDenomRequestSDKType {
+  denom_out: string;
+  denom_in: string;
+}
+export interface QueryOutRouteByDenomResponse {
+  outRoute: SwapAmountOutRoute[];
+}
+export interface QueryOutRouteByDenomResponseProtoMsg {
+  typeUrl: "/elys.amm.QueryOutRouteByDenomResponse";
+  value: Uint8Array;
+}
+export interface QueryOutRouteByDenomResponseAmino {
+  out_route: SwapAmountOutRouteAmino[];
+}
+export interface QueryOutRouteByDenomResponseAminoMsg {
+  type: "/elys.amm.QueryOutRouteByDenomResponse";
+  value: QueryOutRouteByDenomResponseAmino;
+}
+export interface QueryOutRouteByDenomResponseSDKType {
+  out_route: SwapAmountOutRouteSDKType[];
+}
+export interface QuerySwapEstimationByDenomRequest {
+  amount: Coin;
+  denomIn: string;
+  denomOut: string;
+  discount: string;
+}
+export interface QuerySwapEstimationByDenomRequestProtoMsg {
+  typeUrl: "/elys.amm.QuerySwapEstimationByDenomRequest";
+  value: Uint8Array;
+}
+export interface QuerySwapEstimationByDenomRequestAmino {
+  amount?: CoinAmino;
+  denom_in: string;
+  denom_out: string;
+  discount: string;
+}
+export interface QuerySwapEstimationByDenomRequestAminoMsg {
+  type: "/elys.amm.QuerySwapEstimationByDenomRequest";
+  value: QuerySwapEstimationByDenomRequestAmino;
+}
+export interface QuerySwapEstimationByDenomRequestSDKType {
+  amount: CoinSDKType;
+  denom_in: string;
+  denom_out: string;
+  discount: string;
+}
+export interface QuerySwapEstimationByDenomResponse {
+  inRoute: SwapAmountInRoute[];
+  outRoute: SwapAmountOutRoute[];
+  spotPrice: string;
+  amount: Coin;
+  swapFee: string;
+  discount: string;
+  availableLiquidity: Coin;
+  weightBalanceRatio: string;
+  priceImpact: string;
+}
+export interface QuerySwapEstimationByDenomResponseProtoMsg {
+  typeUrl: "/elys.amm.QuerySwapEstimationByDenomResponse";
+  value: Uint8Array;
+}
+export interface QuerySwapEstimationByDenomResponseAmino {
+  in_route: SwapAmountInRouteAmino[];
+  out_route: SwapAmountOutRouteAmino[];
+  spot_price: string;
+  amount?: CoinAmino;
+  swap_fee: string;
+  discount: string;
+  available_liquidity?: CoinAmino;
+  weight_balance_ratio: string;
+  price_impact: string;
+}
+export interface QuerySwapEstimationByDenomResponseAminoMsg {
+  type: "/elys.amm.QuerySwapEstimationByDenomResponse";
+  value: QuerySwapEstimationByDenomResponseAmino;
+}
+export interface QuerySwapEstimationByDenomResponseSDKType {
+  in_route: SwapAmountInRouteSDKType[];
+  out_route: SwapAmountOutRouteSDKType[];
+  spot_price: string;
+  amount: CoinSDKType;
+  swap_fee: string;
+  discount: string;
+  available_liquidity: CoinSDKType;
+  weight_balance_ratio: string;
+  price_impact: string;
+}
+export interface QueryAMMPriceRequest {
+  tokenIn: Coin;
+  discount: string;
+}
+export interface QueryAMMPriceRequestProtoMsg {
+  typeUrl: "/elys.amm.QueryAMMPriceRequest";
+  value: Uint8Array;
+}
+export interface QueryAMMPriceRequestAmino {
+  token_in?: CoinAmino;
+  discount: string;
+}
+export interface QueryAMMPriceRequestAminoMsg {
+  type: "/elys.amm.QueryAMMPriceRequest";
+  value: QueryAMMPriceRequestAmino;
+}
+export interface QueryAMMPriceRequestSDKType {
+  token_in: CoinSDKType;
+  discount: string;
 }
 function createBaseQueryParamsRequest(): QueryParamsRequest {
   return {};
@@ -952,7 +1128,8 @@ export const QueryAllDenomLiquidityResponse = {
 function createBaseQuerySwapEstimationRequest(): QuerySwapEstimationRequest {
   return {
     routes: [],
-    tokenIn: Coin.fromPartial({})
+    tokenIn: Coin.fromPartial({}),
+    discount: ""
   };
 }
 export const QuerySwapEstimationRequest = {
@@ -963,6 +1140,9 @@ export const QuerySwapEstimationRequest = {
     }
     if (message.tokenIn !== undefined) {
       Coin.encode(message.tokenIn, writer.uint32(18).fork()).ldelim();
+    }
+    if (message.discount !== "") {
+      writer.uint32(26).string(Decimal.fromUserInput(message.discount, 18).atomics);
     }
     return writer;
   },
@@ -979,6 +1159,9 @@ export const QuerySwapEstimationRequest = {
         case 2:
           message.tokenIn = Coin.decode(reader, reader.uint32());
           break;
+        case 3:
+          message.discount = Decimal.fromAtomics(reader.string(), 18).toString();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -990,12 +1173,14 @@ export const QuerySwapEstimationRequest = {
     const message = createBaseQuerySwapEstimationRequest();
     message.routes = object.routes?.map(e => SwapAmountInRoute.fromPartial(e)) || [];
     message.tokenIn = object.tokenIn !== undefined && object.tokenIn !== null ? Coin.fromPartial(object.tokenIn) : undefined;
+    message.discount = object.discount ?? "";
     return message;
   },
   fromAmino(object: QuerySwapEstimationRequestAmino): QuerySwapEstimationRequest {
     return {
       routes: Array.isArray(object?.routes) ? object.routes.map((e: any) => SwapAmountInRoute.fromAmino(e)) : [],
-      tokenIn: object?.token_in ? Coin.fromAmino(object.token_in) : undefined
+      tokenIn: object?.token_in ? Coin.fromAmino(object.token_in) : undefined,
+      discount: object.discount
     };
   },
   toAmino(message: QuerySwapEstimationRequest): QuerySwapEstimationRequestAmino {
@@ -1006,6 +1191,7 @@ export const QuerySwapEstimationRequest = {
       obj.routes = [];
     }
     obj.token_in = message.tokenIn ? Coin.toAmino(message.tokenIn) : undefined;
+    obj.discount = message.discount;
     return obj;
   },
   fromAminoMsg(object: QuerySwapEstimationRequestAminoMsg): QuerySwapEstimationRequest {
@@ -1027,7 +1213,11 @@ export const QuerySwapEstimationRequest = {
 function createBaseQuerySwapEstimationResponse(): QuerySwapEstimationResponse {
   return {
     spotPrice: "",
-    tokenOut: Coin.fromPartial({})
+    tokenOut: Coin.fromPartial({}),
+    swapFee: "",
+    discount: "",
+    availableLiquidity: Coin.fromPartial({}),
+    weightBalanceRatio: ""
   };
 }
 export const QuerySwapEstimationResponse = {
@@ -1038,6 +1228,18 @@ export const QuerySwapEstimationResponse = {
     }
     if (message.tokenOut !== undefined) {
       Coin.encode(message.tokenOut, writer.uint32(18).fork()).ldelim();
+    }
+    if (message.swapFee !== "") {
+      writer.uint32(26).string(Decimal.fromUserInput(message.swapFee, 18).atomics);
+    }
+    if (message.discount !== "") {
+      writer.uint32(34).string(Decimal.fromUserInput(message.discount, 18).atomics);
+    }
+    if (message.availableLiquidity !== undefined) {
+      Coin.encode(message.availableLiquidity, writer.uint32(42).fork()).ldelim();
+    }
+    if (message.weightBalanceRatio !== "") {
+      writer.uint32(50).string(Decimal.fromUserInput(message.weightBalanceRatio, 18).atomics);
     }
     return writer;
   },
@@ -1054,6 +1256,18 @@ export const QuerySwapEstimationResponse = {
         case 2:
           message.tokenOut = Coin.decode(reader, reader.uint32());
           break;
+        case 3:
+          message.swapFee = Decimal.fromAtomics(reader.string(), 18).toString();
+          break;
+        case 4:
+          message.discount = Decimal.fromAtomics(reader.string(), 18).toString();
+          break;
+        case 5:
+          message.availableLiquidity = Coin.decode(reader, reader.uint32());
+          break;
+        case 6:
+          message.weightBalanceRatio = Decimal.fromAtomics(reader.string(), 18).toString();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -1065,18 +1279,30 @@ export const QuerySwapEstimationResponse = {
     const message = createBaseQuerySwapEstimationResponse();
     message.spotPrice = object.spotPrice ?? "";
     message.tokenOut = object.tokenOut !== undefined && object.tokenOut !== null ? Coin.fromPartial(object.tokenOut) : undefined;
+    message.swapFee = object.swapFee ?? "";
+    message.discount = object.discount ?? "";
+    message.availableLiquidity = object.availableLiquidity !== undefined && object.availableLiquidity !== null ? Coin.fromPartial(object.availableLiquidity) : undefined;
+    message.weightBalanceRatio = object.weightBalanceRatio ?? "";
     return message;
   },
   fromAmino(object: QuerySwapEstimationResponseAmino): QuerySwapEstimationResponse {
     return {
       spotPrice: object.spot_price,
-      tokenOut: object?.token_out ? Coin.fromAmino(object.token_out) : undefined
+      tokenOut: object?.token_out ? Coin.fromAmino(object.token_out) : undefined,
+      swapFee: object.swap_fee,
+      discount: object.discount,
+      availableLiquidity: object?.available_liquidity ? Coin.fromAmino(object.available_liquidity) : undefined,
+      weightBalanceRatio: object.weight_balance_ratio
     };
   },
   toAmino(message: QuerySwapEstimationResponse): QuerySwapEstimationResponseAmino {
     const obj: any = {};
     obj.spot_price = message.spotPrice;
     obj.token_out = message.tokenOut ? Coin.toAmino(message.tokenOut) : undefined;
+    obj.swap_fee = message.swapFee;
+    obj.discount = message.discount;
+    obj.available_liquidity = message.availableLiquidity ? Coin.toAmino(message.availableLiquidity) : undefined;
+    obj.weight_balance_ratio = message.weightBalanceRatio;
     return obj;
   },
   fromAminoMsg(object: QuerySwapEstimationResponseAminoMsg): QuerySwapEstimationResponse {
@@ -1460,6 +1686,589 @@ export const QueryBalanceResponse = {
     return {
       typeUrl: "/elys.amm.QueryBalanceResponse",
       value: QueryBalanceResponse.encode(message).finish()
+    };
+  }
+};
+function createBaseQueryInRouteByDenomRequest(): QueryInRouteByDenomRequest {
+  return {
+    denomIn: "",
+    denomOut: ""
+  };
+}
+export const QueryInRouteByDenomRequest = {
+  typeUrl: "/elys.amm.QueryInRouteByDenomRequest",
+  encode(message: QueryInRouteByDenomRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.denomIn !== "") {
+      writer.uint32(10).string(message.denomIn);
+    }
+    if (message.denomOut !== "") {
+      writer.uint32(18).string(message.denomOut);
+    }
+    return writer;
+  },
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryInRouteByDenomRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryInRouteByDenomRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.denomIn = reader.string();
+          break;
+        case 2:
+          message.denomOut = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromPartial(object: Partial<QueryInRouteByDenomRequest>): QueryInRouteByDenomRequest {
+    const message = createBaseQueryInRouteByDenomRequest();
+    message.denomIn = object.denomIn ?? "";
+    message.denomOut = object.denomOut ?? "";
+    return message;
+  },
+  fromAmino(object: QueryInRouteByDenomRequestAmino): QueryInRouteByDenomRequest {
+    return {
+      denomIn: object.denom_in,
+      denomOut: object.denom_out
+    };
+  },
+  toAmino(message: QueryInRouteByDenomRequest): QueryInRouteByDenomRequestAmino {
+    const obj: any = {};
+    obj.denom_in = message.denomIn;
+    obj.denom_out = message.denomOut;
+    return obj;
+  },
+  fromAminoMsg(object: QueryInRouteByDenomRequestAminoMsg): QueryInRouteByDenomRequest {
+    return QueryInRouteByDenomRequest.fromAmino(object.value);
+  },
+  fromProtoMsg(message: QueryInRouteByDenomRequestProtoMsg): QueryInRouteByDenomRequest {
+    return QueryInRouteByDenomRequest.decode(message.value);
+  },
+  toProto(message: QueryInRouteByDenomRequest): Uint8Array {
+    return QueryInRouteByDenomRequest.encode(message).finish();
+  },
+  toProtoMsg(message: QueryInRouteByDenomRequest): QueryInRouteByDenomRequestProtoMsg {
+    return {
+      typeUrl: "/elys.amm.QueryInRouteByDenomRequest",
+      value: QueryInRouteByDenomRequest.encode(message).finish()
+    };
+  }
+};
+function createBaseQueryInRouteByDenomResponse(): QueryInRouteByDenomResponse {
+  return {
+    inRoute: []
+  };
+}
+export const QueryInRouteByDenomResponse = {
+  typeUrl: "/elys.amm.QueryInRouteByDenomResponse",
+  encode(message: QueryInRouteByDenomResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    for (const v of message.inRoute) {
+      SwapAmountInRoute.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryInRouteByDenomResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryInRouteByDenomResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.inRoute.push(SwapAmountInRoute.decode(reader, reader.uint32()));
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromPartial(object: Partial<QueryInRouteByDenomResponse>): QueryInRouteByDenomResponse {
+    const message = createBaseQueryInRouteByDenomResponse();
+    message.inRoute = object.inRoute?.map(e => SwapAmountInRoute.fromPartial(e)) || [];
+    return message;
+  },
+  fromAmino(object: QueryInRouteByDenomResponseAmino): QueryInRouteByDenomResponse {
+    return {
+      inRoute: Array.isArray(object?.in_route) ? object.in_route.map((e: any) => SwapAmountInRoute.fromAmino(e)) : []
+    };
+  },
+  toAmino(message: QueryInRouteByDenomResponse): QueryInRouteByDenomResponseAmino {
+    const obj: any = {};
+    if (message.inRoute) {
+      obj.in_route = message.inRoute.map(e => e ? SwapAmountInRoute.toAmino(e) : undefined);
+    } else {
+      obj.in_route = [];
+    }
+    return obj;
+  },
+  fromAminoMsg(object: QueryInRouteByDenomResponseAminoMsg): QueryInRouteByDenomResponse {
+    return QueryInRouteByDenomResponse.fromAmino(object.value);
+  },
+  fromProtoMsg(message: QueryInRouteByDenomResponseProtoMsg): QueryInRouteByDenomResponse {
+    return QueryInRouteByDenomResponse.decode(message.value);
+  },
+  toProto(message: QueryInRouteByDenomResponse): Uint8Array {
+    return QueryInRouteByDenomResponse.encode(message).finish();
+  },
+  toProtoMsg(message: QueryInRouteByDenomResponse): QueryInRouteByDenomResponseProtoMsg {
+    return {
+      typeUrl: "/elys.amm.QueryInRouteByDenomResponse",
+      value: QueryInRouteByDenomResponse.encode(message).finish()
+    };
+  }
+};
+function createBaseQueryOutRouteByDenomRequest(): QueryOutRouteByDenomRequest {
+  return {
+    denomOut: "",
+    denomIn: ""
+  };
+}
+export const QueryOutRouteByDenomRequest = {
+  typeUrl: "/elys.amm.QueryOutRouteByDenomRequest",
+  encode(message: QueryOutRouteByDenomRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.denomOut !== "") {
+      writer.uint32(10).string(message.denomOut);
+    }
+    if (message.denomIn !== "") {
+      writer.uint32(18).string(message.denomIn);
+    }
+    return writer;
+  },
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryOutRouteByDenomRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryOutRouteByDenomRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.denomOut = reader.string();
+          break;
+        case 2:
+          message.denomIn = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromPartial(object: Partial<QueryOutRouteByDenomRequest>): QueryOutRouteByDenomRequest {
+    const message = createBaseQueryOutRouteByDenomRequest();
+    message.denomOut = object.denomOut ?? "";
+    message.denomIn = object.denomIn ?? "";
+    return message;
+  },
+  fromAmino(object: QueryOutRouteByDenomRequestAmino): QueryOutRouteByDenomRequest {
+    return {
+      denomOut: object.denom_out,
+      denomIn: object.denom_in
+    };
+  },
+  toAmino(message: QueryOutRouteByDenomRequest): QueryOutRouteByDenomRequestAmino {
+    const obj: any = {};
+    obj.denom_out = message.denomOut;
+    obj.denom_in = message.denomIn;
+    return obj;
+  },
+  fromAminoMsg(object: QueryOutRouteByDenomRequestAminoMsg): QueryOutRouteByDenomRequest {
+    return QueryOutRouteByDenomRequest.fromAmino(object.value);
+  },
+  fromProtoMsg(message: QueryOutRouteByDenomRequestProtoMsg): QueryOutRouteByDenomRequest {
+    return QueryOutRouteByDenomRequest.decode(message.value);
+  },
+  toProto(message: QueryOutRouteByDenomRequest): Uint8Array {
+    return QueryOutRouteByDenomRequest.encode(message).finish();
+  },
+  toProtoMsg(message: QueryOutRouteByDenomRequest): QueryOutRouteByDenomRequestProtoMsg {
+    return {
+      typeUrl: "/elys.amm.QueryOutRouteByDenomRequest",
+      value: QueryOutRouteByDenomRequest.encode(message).finish()
+    };
+  }
+};
+function createBaseQueryOutRouteByDenomResponse(): QueryOutRouteByDenomResponse {
+  return {
+    outRoute: []
+  };
+}
+export const QueryOutRouteByDenomResponse = {
+  typeUrl: "/elys.amm.QueryOutRouteByDenomResponse",
+  encode(message: QueryOutRouteByDenomResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    for (const v of message.outRoute) {
+      SwapAmountOutRoute.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryOutRouteByDenomResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryOutRouteByDenomResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.outRoute.push(SwapAmountOutRoute.decode(reader, reader.uint32()));
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromPartial(object: Partial<QueryOutRouteByDenomResponse>): QueryOutRouteByDenomResponse {
+    const message = createBaseQueryOutRouteByDenomResponse();
+    message.outRoute = object.outRoute?.map(e => SwapAmountOutRoute.fromPartial(e)) || [];
+    return message;
+  },
+  fromAmino(object: QueryOutRouteByDenomResponseAmino): QueryOutRouteByDenomResponse {
+    return {
+      outRoute: Array.isArray(object?.out_route) ? object.out_route.map((e: any) => SwapAmountOutRoute.fromAmino(e)) : []
+    };
+  },
+  toAmino(message: QueryOutRouteByDenomResponse): QueryOutRouteByDenomResponseAmino {
+    const obj: any = {};
+    if (message.outRoute) {
+      obj.out_route = message.outRoute.map(e => e ? SwapAmountOutRoute.toAmino(e) : undefined);
+    } else {
+      obj.out_route = [];
+    }
+    return obj;
+  },
+  fromAminoMsg(object: QueryOutRouteByDenomResponseAminoMsg): QueryOutRouteByDenomResponse {
+    return QueryOutRouteByDenomResponse.fromAmino(object.value);
+  },
+  fromProtoMsg(message: QueryOutRouteByDenomResponseProtoMsg): QueryOutRouteByDenomResponse {
+    return QueryOutRouteByDenomResponse.decode(message.value);
+  },
+  toProto(message: QueryOutRouteByDenomResponse): Uint8Array {
+    return QueryOutRouteByDenomResponse.encode(message).finish();
+  },
+  toProtoMsg(message: QueryOutRouteByDenomResponse): QueryOutRouteByDenomResponseProtoMsg {
+    return {
+      typeUrl: "/elys.amm.QueryOutRouteByDenomResponse",
+      value: QueryOutRouteByDenomResponse.encode(message).finish()
+    };
+  }
+};
+function createBaseQuerySwapEstimationByDenomRequest(): QuerySwapEstimationByDenomRequest {
+  return {
+    amount: Coin.fromPartial({}),
+    denomIn: "",
+    denomOut: "",
+    discount: ""
+  };
+}
+export const QuerySwapEstimationByDenomRequest = {
+  typeUrl: "/elys.amm.QuerySwapEstimationByDenomRequest",
+  encode(message: QuerySwapEstimationByDenomRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.amount !== undefined) {
+      Coin.encode(message.amount, writer.uint32(10).fork()).ldelim();
+    }
+    if (message.denomIn !== "") {
+      writer.uint32(18).string(message.denomIn);
+    }
+    if (message.denomOut !== "") {
+      writer.uint32(26).string(message.denomOut);
+    }
+    if (message.discount !== "") {
+      writer.uint32(34).string(Decimal.fromUserInput(message.discount, 18).atomics);
+    }
+    return writer;
+  },
+  decode(input: BinaryReader | Uint8Array, length?: number): QuerySwapEstimationByDenomRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQuerySwapEstimationByDenomRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.amount = Coin.decode(reader, reader.uint32());
+          break;
+        case 2:
+          message.denomIn = reader.string();
+          break;
+        case 3:
+          message.denomOut = reader.string();
+          break;
+        case 4:
+          message.discount = Decimal.fromAtomics(reader.string(), 18).toString();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromPartial(object: Partial<QuerySwapEstimationByDenomRequest>): QuerySwapEstimationByDenomRequest {
+    const message = createBaseQuerySwapEstimationByDenomRequest();
+    message.amount = object.amount !== undefined && object.amount !== null ? Coin.fromPartial(object.amount) : undefined;
+    message.denomIn = object.denomIn ?? "";
+    message.denomOut = object.denomOut ?? "";
+    message.discount = object.discount ?? "";
+    return message;
+  },
+  fromAmino(object: QuerySwapEstimationByDenomRequestAmino): QuerySwapEstimationByDenomRequest {
+    return {
+      amount: object?.amount ? Coin.fromAmino(object.amount) : undefined,
+      denomIn: object.denom_in,
+      denomOut: object.denom_out,
+      discount: object.discount
+    };
+  },
+  toAmino(message: QuerySwapEstimationByDenomRequest): QuerySwapEstimationByDenomRequestAmino {
+    const obj: any = {};
+    obj.amount = message.amount ? Coin.toAmino(message.amount) : undefined;
+    obj.denom_in = message.denomIn;
+    obj.denom_out = message.denomOut;
+    obj.discount = message.discount;
+    return obj;
+  },
+  fromAminoMsg(object: QuerySwapEstimationByDenomRequestAminoMsg): QuerySwapEstimationByDenomRequest {
+    return QuerySwapEstimationByDenomRequest.fromAmino(object.value);
+  },
+  fromProtoMsg(message: QuerySwapEstimationByDenomRequestProtoMsg): QuerySwapEstimationByDenomRequest {
+    return QuerySwapEstimationByDenomRequest.decode(message.value);
+  },
+  toProto(message: QuerySwapEstimationByDenomRequest): Uint8Array {
+    return QuerySwapEstimationByDenomRequest.encode(message).finish();
+  },
+  toProtoMsg(message: QuerySwapEstimationByDenomRequest): QuerySwapEstimationByDenomRequestProtoMsg {
+    return {
+      typeUrl: "/elys.amm.QuerySwapEstimationByDenomRequest",
+      value: QuerySwapEstimationByDenomRequest.encode(message).finish()
+    };
+  }
+};
+function createBaseQuerySwapEstimationByDenomResponse(): QuerySwapEstimationByDenomResponse {
+  return {
+    inRoute: [],
+    outRoute: [],
+    spotPrice: "",
+    amount: Coin.fromPartial({}),
+    swapFee: "",
+    discount: "",
+    availableLiquidity: Coin.fromPartial({}),
+    weightBalanceRatio: "",
+    priceImpact: ""
+  };
+}
+export const QuerySwapEstimationByDenomResponse = {
+  typeUrl: "/elys.amm.QuerySwapEstimationByDenomResponse",
+  encode(message: QuerySwapEstimationByDenomResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    for (const v of message.inRoute) {
+      SwapAmountInRoute.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    for (const v of message.outRoute) {
+      SwapAmountOutRoute.encode(v!, writer.uint32(18).fork()).ldelim();
+    }
+    if (message.spotPrice !== "") {
+      writer.uint32(26).string(Decimal.fromUserInput(message.spotPrice, 18).atomics);
+    }
+    if (message.amount !== undefined) {
+      Coin.encode(message.amount, writer.uint32(34).fork()).ldelim();
+    }
+    if (message.swapFee !== "") {
+      writer.uint32(42).string(Decimal.fromUserInput(message.swapFee, 18).atomics);
+    }
+    if (message.discount !== "") {
+      writer.uint32(50).string(Decimal.fromUserInput(message.discount, 18).atomics);
+    }
+    if (message.availableLiquidity !== undefined) {
+      Coin.encode(message.availableLiquidity, writer.uint32(58).fork()).ldelim();
+    }
+    if (message.weightBalanceRatio !== "") {
+      writer.uint32(66).string(Decimal.fromUserInput(message.weightBalanceRatio, 18).atomics);
+    }
+    if (message.priceImpact !== "") {
+      writer.uint32(74).string(Decimal.fromUserInput(message.priceImpact, 18).atomics);
+    }
+    return writer;
+  },
+  decode(input: BinaryReader | Uint8Array, length?: number): QuerySwapEstimationByDenomResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQuerySwapEstimationByDenomResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.inRoute.push(SwapAmountInRoute.decode(reader, reader.uint32()));
+          break;
+        case 2:
+          message.outRoute.push(SwapAmountOutRoute.decode(reader, reader.uint32()));
+          break;
+        case 3:
+          message.spotPrice = Decimal.fromAtomics(reader.string(), 18).toString();
+          break;
+        case 4:
+          message.amount = Coin.decode(reader, reader.uint32());
+          break;
+        case 5:
+          message.swapFee = Decimal.fromAtomics(reader.string(), 18).toString();
+          break;
+        case 6:
+          message.discount = Decimal.fromAtomics(reader.string(), 18).toString();
+          break;
+        case 7:
+          message.availableLiquidity = Coin.decode(reader, reader.uint32());
+          break;
+        case 8:
+          message.weightBalanceRatio = Decimal.fromAtomics(reader.string(), 18).toString();
+          break;
+        case 9:
+          message.priceImpact = Decimal.fromAtomics(reader.string(), 18).toString();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromPartial(object: Partial<QuerySwapEstimationByDenomResponse>): QuerySwapEstimationByDenomResponse {
+    const message = createBaseQuerySwapEstimationByDenomResponse();
+    message.inRoute = object.inRoute?.map(e => SwapAmountInRoute.fromPartial(e)) || [];
+    message.outRoute = object.outRoute?.map(e => SwapAmountOutRoute.fromPartial(e)) || [];
+    message.spotPrice = object.spotPrice ?? "";
+    message.amount = object.amount !== undefined && object.amount !== null ? Coin.fromPartial(object.amount) : undefined;
+    message.swapFee = object.swapFee ?? "";
+    message.discount = object.discount ?? "";
+    message.availableLiquidity = object.availableLiquidity !== undefined && object.availableLiquidity !== null ? Coin.fromPartial(object.availableLiquidity) : undefined;
+    message.weightBalanceRatio = object.weightBalanceRatio ?? "";
+    message.priceImpact = object.priceImpact ?? "";
+    return message;
+  },
+  fromAmino(object: QuerySwapEstimationByDenomResponseAmino): QuerySwapEstimationByDenomResponse {
+    return {
+      inRoute: Array.isArray(object?.in_route) ? object.in_route.map((e: any) => SwapAmountInRoute.fromAmino(e)) : [],
+      outRoute: Array.isArray(object?.out_route) ? object.out_route.map((e: any) => SwapAmountOutRoute.fromAmino(e)) : [],
+      spotPrice: object.spot_price,
+      amount: object?.amount ? Coin.fromAmino(object.amount) : undefined,
+      swapFee: object.swap_fee,
+      discount: object.discount,
+      availableLiquidity: object?.available_liquidity ? Coin.fromAmino(object.available_liquidity) : undefined,
+      weightBalanceRatio: object.weight_balance_ratio,
+      priceImpact: object.price_impact
+    };
+  },
+  toAmino(message: QuerySwapEstimationByDenomResponse): QuerySwapEstimationByDenomResponseAmino {
+    const obj: any = {};
+    if (message.inRoute) {
+      obj.in_route = message.inRoute.map(e => e ? SwapAmountInRoute.toAmino(e) : undefined);
+    } else {
+      obj.in_route = [];
+    }
+    if (message.outRoute) {
+      obj.out_route = message.outRoute.map(e => e ? SwapAmountOutRoute.toAmino(e) : undefined);
+    } else {
+      obj.out_route = [];
+    }
+    obj.spot_price = message.spotPrice;
+    obj.amount = message.amount ? Coin.toAmino(message.amount) : undefined;
+    obj.swap_fee = message.swapFee;
+    obj.discount = message.discount;
+    obj.available_liquidity = message.availableLiquidity ? Coin.toAmino(message.availableLiquidity) : undefined;
+    obj.weight_balance_ratio = message.weightBalanceRatio;
+    obj.price_impact = message.priceImpact;
+    return obj;
+  },
+  fromAminoMsg(object: QuerySwapEstimationByDenomResponseAminoMsg): QuerySwapEstimationByDenomResponse {
+    return QuerySwapEstimationByDenomResponse.fromAmino(object.value);
+  },
+  fromProtoMsg(message: QuerySwapEstimationByDenomResponseProtoMsg): QuerySwapEstimationByDenomResponse {
+    return QuerySwapEstimationByDenomResponse.decode(message.value);
+  },
+  toProto(message: QuerySwapEstimationByDenomResponse): Uint8Array {
+    return QuerySwapEstimationByDenomResponse.encode(message).finish();
+  },
+  toProtoMsg(message: QuerySwapEstimationByDenomResponse): QuerySwapEstimationByDenomResponseProtoMsg {
+    return {
+      typeUrl: "/elys.amm.QuerySwapEstimationByDenomResponse",
+      value: QuerySwapEstimationByDenomResponse.encode(message).finish()
+    };
+  }
+};
+function createBaseQueryAMMPriceRequest(): QueryAMMPriceRequest {
+  return {
+    tokenIn: Coin.fromPartial({}),
+    discount: ""
+  };
+}
+export const QueryAMMPriceRequest = {
+  typeUrl: "/elys.amm.QueryAMMPriceRequest",
+  encode(message: QueryAMMPriceRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.tokenIn !== undefined) {
+      Coin.encode(message.tokenIn, writer.uint32(10).fork()).ldelim();
+    }
+    if (message.discount !== "") {
+      writer.uint32(18).string(Decimal.fromUserInput(message.discount, 18).atomics);
+    }
+    return writer;
+  },
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryAMMPriceRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryAMMPriceRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.tokenIn = Coin.decode(reader, reader.uint32());
+          break;
+        case 2:
+          message.discount = Decimal.fromAtomics(reader.string(), 18).toString();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromPartial(object: Partial<QueryAMMPriceRequest>): QueryAMMPriceRequest {
+    const message = createBaseQueryAMMPriceRequest();
+    message.tokenIn = object.tokenIn !== undefined && object.tokenIn !== null ? Coin.fromPartial(object.tokenIn) : undefined;
+    message.discount = object.discount ?? "";
+    return message;
+  },
+  fromAmino(object: QueryAMMPriceRequestAmino): QueryAMMPriceRequest {
+    return {
+      tokenIn: object?.token_in ? Coin.fromAmino(object.token_in) : undefined,
+      discount: object.discount
+    };
+  },
+  toAmino(message: QueryAMMPriceRequest): QueryAMMPriceRequestAmino {
+    const obj: any = {};
+    obj.token_in = message.tokenIn ? Coin.toAmino(message.tokenIn) : undefined;
+    obj.discount = message.discount;
+    return obj;
+  },
+  fromAminoMsg(object: QueryAMMPriceRequestAminoMsg): QueryAMMPriceRequest {
+    return QueryAMMPriceRequest.fromAmino(object.value);
+  },
+  fromProtoMsg(message: QueryAMMPriceRequestProtoMsg): QueryAMMPriceRequest {
+    return QueryAMMPriceRequest.decode(message.value);
+  },
+  toProto(message: QueryAMMPriceRequest): Uint8Array {
+    return QueryAMMPriceRequest.encode(message).finish();
+  },
+  toProtoMsg(message: QueryAMMPriceRequest): QueryAMMPriceRequestProtoMsg {
+    return {
+      typeUrl: "/elys.amm.QueryAMMPriceRequest",
+      value: QueryAMMPriceRequest.encode(message).finish()
     };
   }
 };
