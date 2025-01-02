@@ -2285,6 +2285,78 @@
   resolved "https://registry.yarnpkg.com/@protobufjs/utf8/-/utf8-1.1.0.tgz#a777360b5b39a1a2e5106f8e858f2fd2d060c570"
   integrity sha512-Vvn3zZrhQZkkBE8LSuW3em98c0FwgO4nxzv6OdSxPKJIEKY2bGbHn+mhGIPerzI4twdxaP8/0+06HBpwf345Lw==
 
+"@protobufs/amino@^0.0.11":
+  version "0.0.11"
+  resolved "https://registry.yarnpkg.com/@protobufs/amino/-/amino-0.0.11.tgz#5eb6b8193da8ea818484818dff2800a981cb7a61"
+  integrity sha512-JRIkW6/YGIUfbdDuASt3wsuxzC0Xj3U2sV0Arqa9iNwCvv4HtOpbqdWVVVgvQBnR0/ZkwQeXnt+GH7yT/DvsYQ==
+  dependencies:
+    "@protobufs/google" "^0.0.10"
+
+"@protobufs/confio@^0.0.6":
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/@protobufs/confio/-/confio-0.0.6.tgz#a6ddf44eca2cbe535384228312ae7ef5dff29644"
+  integrity sha512-abZ0ntTJBuB8q2aMBvOerAFk8CSzafB09YdttKFEqwxokZsLFZ3+o7YaH3RIk863oeM//8sonwTaxRV8r4rmSA==
+
+"@protobufs/cosmos@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@protobufs/cosmos/-/cosmos-0.1.0.tgz#492251de16be3e0a89820f48637cd3f42114f24c"
+  integrity sha512-L3NZ+z0kI6GMTiD2HASNe3WbopPhQlaQaKZNRue+8LiGEv/vbbxD1lox8cwOqes3AN5dHiT0i3+gvzIbKBb7gw==
+  dependencies:
+    "@protobufs/amino" "^0.0.11"
+    "@protobufs/cosmos_proto" "^0.0.10"
+    "@protobufs/gogoproto" "^0.0.10"
+    "@protobufs/google" "^0.0.10"
+    "@protobufs/tendermint" "^0.0.10"
+
+"@protobufs/cosmos_proto@^0.0.10":
+  version "0.0.10"
+  resolved "https://registry.yarnpkg.com/@protobufs/cosmos_proto/-/cosmos_proto-0.0.10.tgz#622726ee227f220f608df180f938e5d8ebb1534a"
+  integrity sha512-4nMopXxN23udy1HEe+vS49zD9dxrA7i0E3n15QUz1x0tbrowYLHzJKeyCUNlsh5PKpEIXGxHXpPZWXs7vVCwUw==
+  dependencies:
+    "@protobufs/google" "^0.0.10"
+
+"@protobufs/cosmwasm@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@protobufs/cosmwasm/-/cosmwasm-0.1.1.tgz#313466d02ae7c010f64e6dd6edc06cdc1e676084"
+  integrity sha512-7rRkQVo7zWjTX+WKdtgM72KEnioGumA7ivYG+3ZGs/uuf8rwN8PmdWFYhLbMkSbPbyJf1bFSyjpP/+kxpH71ew==
+  dependencies:
+    "@protobufs/cosmos" "^0.1.0"
+    "@protobufs/cosmos_proto" "^0.0.10"
+    "@protobufs/gogoproto" "^0.0.10"
+    "@protobufs/google" "^0.0.10"
+
+"@protobufs/gogoproto@^0.0.10":
+  version "0.0.10"
+  resolved "https://registry.yarnpkg.com/@protobufs/gogoproto/-/gogoproto-0.0.10.tgz#0181e17142c800b60c7ca5f92c76a614d86c5c54"
+  integrity sha512-u3eK1aSO3KOuX4RVFpqKPTaT/WLV50GFLuIC3slVGfD7Z1CfZ5ivHbFYUib96gihu1Mq2OZpNVj3dNws9YsVoQ==
+  dependencies:
+    "@protobufs/google" "^0.0.10"
+
+"@protobufs/google@^0.0.10":
+  version "0.0.10"
+  resolved "https://registry.yarnpkg.com/@protobufs/google/-/google-0.0.10.tgz#820f741b0c53f688550c74c7ddb25a5ee131a6bf"
+  integrity sha512-3yo+liabFM1519smwwfzh1C535CntXVsS7zT98xmo21tZUX7vxeFpQDMx38EzMGYSy/Reo8wEMWJUHqZzYsCUw==
+
+"@protobufs/ibc@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@protobufs/ibc/-/ibc-0.1.0.tgz#36aeadc9f09d185d683f66a650dad9dc40437875"
+  integrity sha512-GmGkX81yyd55Tm34SCOmcOiB0QRwFBHGmZpDRAsks33TBx4efAtT9rKAdtn/oPujx9sha1TqU2s3trnMPVvKyg==
+  dependencies:
+    "@protobufs/amino" "^0.0.11"
+    "@protobufs/confio" "^0.0.6"
+    "@protobufs/cosmos" "^0.1.0"
+    "@protobufs/gogoproto" "^0.0.10"
+    "@protobufs/google" "^0.0.10"
+    "@protobufs/tendermint" "^0.0.10"
+
+"@protobufs/tendermint@^0.0.10":
+  version "0.0.10"
+  resolved "https://registry.yarnpkg.com/@protobufs/tendermint/-/tendermint-0.0.10.tgz#816b27410afcecd8b6d403df149f3c2b9b80655e"
+  integrity sha512-hAAMLFhKdAovslKeWnLTp2gGn5bxSTDVcQLKs4C4cC91R/KfHOh+Klt4PqSGUv/APINAmREzsX2LDUbIQ2dCpg==
+  dependencies:
+    "@protobufs/gogoproto" "^0.0.10"
+    "@protobufs/google" "^0.0.10"
+
 "@pyramation/json-schema-ref-parser@9.0.6":
   version "9.0.6"
   resolved "https://registry.yarnpkg.com/@pyramation/json-schema-ref-parser/-/json-schema-ref-parser-9.0.6.tgz#556e416ce7dcc15a3c1afd04d6a059e03ed09aeb"
@@ -7202,15 +7274,10 @@ prelude-ls@^1.2.1:
   resolved "https://registry.yarnpkg.com/prelude-ls/-/prelude-ls-1.2.1.tgz#debc6489d7a6e6b0e7611888cec880337d316396"
   integrity sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==
 
-prettier@^2.6.2:
+prettier@^2.6.2, prettier@^2.8.8:
   version "2.8.8"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.8.8.tgz#e8c5d7e98a4305ffe3de2e1fc4aca1a71c28b1da"
   integrity sha512-tdN8qQGvNjw4CHbY+XXk0JgCXn9QiF21a55rBe5LJAU+kDyC4WQn4+awm2Xfk2lQMk5fKup9XgzTZtGkjBdP9Q==
-
-prettier@^3.0.2:
-  version "3.4.2"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-3.4.2.tgz#a5ce1fb522a588bf2b78ca44c6e6fe5aa5a2b13f"
-  integrity sha512-e9MewbtFo+Fevyuxn/4rrcDAaq0IYxPGLvObpQjiZBMAzB9IGmzlnG9RZy3FFas+eBMu2vA0CszMeduow5dIuQ==
 
 pretty-format@29.4.3:
   version "29.4.3"
