@@ -6,7 +6,7 @@
   "main": "index.js",
   "module": "esm/index.js",
   "types": "index.d.ts",
-  "homepage": "https://github.com/ducksquaddd/elysjs",
+  "homepage": "https://github.com/kwak-labs/elysjs",
   "license": "SEE LICENSE IN LICENSE",
   "publishConfig": {
     "access": "public",
@@ -14,10 +14,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/ducksquaddd/elysjs"
+    "url": "https://github.com/kwak-labs/elysjs"
   },
   "bugs": {
-    "url": "https://github.com/ducksquaddd/elysjs/issues"
+    "url": "https://github.com/kwak-labs/elysjs/issues"
   },
   "scripts": {
     "copy": "copyfiles -f ../../LICENSE README.md package.json dist",
