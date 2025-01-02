@@ -1,4 +1,4 @@
-# elysjs
+# Elys.js - Built with Telescope
 
 ## install
 
