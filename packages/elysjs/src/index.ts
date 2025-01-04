@@ -19,6 +19,8 @@ export * from "./google/bundle";
 export * from "./ibc/bundle";
 export * from "./ibc/client";
 export * from "./tendermint/bundle";
+export * from "./extern";
+export * from "./pinia-endpoint";
 export * from "./varint";
 export * from "./utf8";
 export * from "./binary";
