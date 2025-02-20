@@ -71,7 +71,7 @@ export const options: TelescopeInput = {
     },
 
     pinia: {
-      enabled: true
+      enabled: false
     }
   }
 };
