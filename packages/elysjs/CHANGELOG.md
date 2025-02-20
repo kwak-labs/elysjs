@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.2](https://github.com/kwak-labs/elysjs/compare/elysjs@2.0.1...elysjs@2.0.2) (2025-02-20)
+
+**Note:** Version bump only for package elysjs
+
 ## [2.0.1](https://github.com/kwak-labs/elysjs/compare/elysjs@1.4.29...elysjs@2.0.1) (2025-02-20)
 
 **Note:** Version bump only for package elysjs
