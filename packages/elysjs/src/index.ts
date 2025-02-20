@@ -12,6 +12,8 @@ export * from "./cosmos/bundle";
 export * from "./cosmos/client";
 export * from "./cosmwasm/bundle";
 export * from "./cosmwasm/client";
+export * from "./elys/bundle";
+export * from "./elys/client";
 export * from "./gogoproto/bundle";
 export * from "./google/bundle";
 export * from "./ibc/bundle";

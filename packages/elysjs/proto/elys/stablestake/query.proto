@@ -1,0 +1,78 @@
+syntax = "proto3";
+package elys.stablestake;
+
+import "gogoproto/gogo.proto";
+import "google/api/annotations.proto";
+import "cosmos/base/query/v1beta1/pagination.proto";
+import "elys/stablestake/params.proto";
+import "elys/stablestake/pool.proto";
+import "cosmos_proto/cosmos.proto";
+
+option go_package = "github.com/elys-network/elys/x/stablestake/types";
+
+// Query defines the gRPC querier service.
+service Query {
+  // Parameters queries the parameters of the module.
+  rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
+    option (google.api.http).get = "/elys-network/elys/stablestake/params";
+  }
+  // BorrowRatio queries the borrow ratio compared to total deposit
+  rpc BorrowRatio(QueryBorrowRatioRequest) returns (QueryBorrowRatioResponse) {
+    option (google.api.http).get =
+        "/elys-network/elys/stablestake/borrow-ratio";
+  }
+
+  rpc AmmPool(QueryAmmPoolRequest) returns (QueryAmmPoolResponse) {
+    option (google.api.http).get =
+        "/elys-network/elys/stablestake/amm-pool/{id}";
+  }
+
+  rpc AllAmmPools(QueryAllAmmPoolsRequest) returns (QueryAllAmmPoolsResponse) {
+    option (google.api.http).get =
+        "/elys-network/elys/stablestake/all-amm-pools";
+  }
+}
+
+// QueryParamsRequest is request type for the Query/Params RPC method.
+message QueryParamsRequest {}
+
+// QueryParamsResponse is response type for the Query/Params RPC method.
+message QueryParamsResponse {
+  // params holds all the parameters of this module.
+  Params params = 1 [ (gogoproto.nullable) = false ];
+}
+
+message QueryAmmPoolRequest { uint64 id = 1; }
+
+message QueryAmmPoolResponse {
+  AmmPool amm_pool = 1 [ (gogoproto.nullable) = false ];
+}
+
+message QueryAllAmmPoolsRequest {}
+
+message QueryAllAmmPoolsResponse {
+  repeated AmmPool amm_pools = 1 [ (gogoproto.nullable) = false ];
+}
+
+// QueryBorrowRatioRequest is request type for the Query/BorrowRatio RPC method.
+message QueryBorrowRatioRequest {}
+
+// QueryBorrowRatioResponse is response type for the Query/BorrowRatio RPC
+// method.
+message QueryBorrowRatioResponse {
+  string total_deposit = 1 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "cosmossdk.io/math.Int",
+    (gogoproto.nullable) = false
+  ];
+  string total_borrow = 2 [
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "cosmossdk.io/math.Int",
+    (gogoproto.nullable) = false
+  ];
+  string borrow_ratio = 3 [
+    (cosmos_proto.scalar) = "cosmos.Dec",
+    (gogoproto.customtype) = "cosmossdk.io/math.LegacyDec",
+    (gogoproto.nullable) = false
+  ];
+}
