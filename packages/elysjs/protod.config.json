@@ -1,0 +1,59 @@
+{
+    "repos": [
+        {
+            "owner": "cosmos",
+            "repo": "cosmos-sdk",
+            "branch": "main"
+        },
+        {
+            "owner": "CosmWasm",
+            "repo": "wasmd",
+            "branch": "main"
+        },
+        {
+            "owner": "cosmos",
+            "repo": "ibc-go",
+            "branch": "main"
+        },
+        {
+            "owner": "elys-network",
+            "repo": "elys",
+            "branch": "main"
+        },
+        {
+            "owner": "gogo",
+            "repo": "protobuf",
+            "branch": "master"
+        },
+        {
+            "owner": "tendermint",
+            "repo": "tendermint",
+            "branch": "main"
+        },
+        {
+            "owner": "cosmos",
+            "repo": "cosmos-proto",
+            "branch": "main"
+        }
+    ],
+    "protoDirMapping": {
+        "cosmos-sdk/main": "proto",
+        "wasmd/main": "proto",
+        "ibc-go/main": "proto",
+        "elys/main": "proto",
+        "protobuf/master": "protobuf/gogoproto",
+        "tendermint/main": "proto",
+        "cosmos-proto/main": "proto"
+    },
+    "outDir": "./protos",
+    "ssh": false,
+    "targets": [
+        "cosmos/**/*.proto",
+        "cosmwasm/**/*.proto",
+        "ibc/**/*.proto",
+        "elys/**/*.proto",
+        "gogoproto/**/*.proto",
+        "tendermint/**/*.proto",
+        "google/**/*.proto"
+    ]
+}
