@@ -55,7 +55,7 @@ export const options: TelescopeInput = {
       },
     },
     lcdClients: {
-      enabled: false
+      enabled: true
     },
     rpcClients: {
       type: 'tendermint',
